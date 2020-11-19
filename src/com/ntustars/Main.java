@@ -1,0 +1,42 @@
+package com.ntustars;
+
+import com.ntustars.controller.AdminManager;
+import com.ntustars.controller.CourseManager;
+import com.ntustars.entity.Course;
+import com.ntustars.entity.CourseCompo;
+import com.ntustars.entity.CourseIndex;
+import com.ntustars.entity.Student;
+
+import java.io.IOException;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        CourseManager courseManager = new CourseManager();
+        AdminManager mgr = new AdminManager();
+       CourseIndex index = new CourseIndex("CZ2005","12345",9,3);
+       Student student = new Student("LOLO123","123456","WANG LOLO","U1920000G","male","China");
+       index.addStudent(student);
+       index.addCourseCompo(new CourseCompo("LEC","THU","1500-1600"));
+       index.addCourseCompo(new CourseCompo("TUT","THU","1500-1600"));
+       index.addCourseCompo(new CourseCompo("LAB","THU","1500-1600"));
+        Course course = new Course("CZ2005","SCSE",2);
+        course.addCourseIndex(index);
+        mgr.addCourse(course);
+        CourseIndex index2 = new CourseIndex("CZ2005","12346",9,3);
+        Student student2 = new Student("PUPU123","123456","LEE PUPU","U1920000K","female","Singapore");
+        index2.addStudent(student2);
+        index2.addCourseCompo(new CourseCompo("LEC","THU","1500-1600"));
+        index2.addCourseCompo(new CourseCompo("TUT","THU","1500-1600"));
+        index2.addCourseCompo(new CourseCompo("LAB","THU","1500-1600"));
+
+
+       course.addCourseIndex(index2);
+       CourseIndex courseIndex = courseManager.readCourseIndexbyID("12345");
+       courseIndex.setSlot(4);
+
+       mgr.updateCourse(course);
+
+	// write your code here
+    }
+}
