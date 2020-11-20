@@ -1,4 +1,4 @@
-package com.ntustars.Boundary;
+package com.ntustars.controller;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -98,7 +98,4 @@ public class passwordManager {
             System.out.println("after decry：" + cm.decrypt(msg));
         }
     
-        
-
-
 }

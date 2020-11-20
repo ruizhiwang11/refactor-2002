@@ -1,6 +1,6 @@
 package com.ntustars.Boundary;
 import java.io.Console;
-//import com.ntustars.Boundary;
+//import com.ntustars.controller.passwordManager;
 
 
 
@@ -8,6 +8,8 @@ import java.io.Console;
 public class LoginBoundary  {
     
     public static void main (String []args){
+        System.out.println("");
+        System.out.println("");
         System.out.println("    ============================ - Console mode - ======================    "); 
         System.out.println("");
         System.out.println("                            Welcome to XXXXX program                          ");
