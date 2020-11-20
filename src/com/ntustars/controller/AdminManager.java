@@ -33,6 +33,5 @@ public class AdminManager {
     public int updateCourse(Course course) throws IOException{
         return courseManager.updateCoursetoDB(course);
     }
-
 }
 

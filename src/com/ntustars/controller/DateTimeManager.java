@@ -13,8 +13,6 @@ import java.util.StringTokenizer;
 
 public class DateTimeManager {
 
-
-
     private static ArrayList loadAdminInformationDB() throws IOException {
         ArrayList stringArray = (ArrayList)TextReaderWriter.readtxt("adminInformation.txt");
         return  stringArray;
@@ -36,7 +34,7 @@ public class DateTimeManager {
     public static Calendar convertAccessStringToCalendar(String dateTimeString){
         Calendar cal = Calendar.getInstance();
         Date tempDate = null;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         try{
             tempDate = dateFormat.parse(dateTimeString);
         }catch (ParseException e){
@@ -45,13 +43,13 @@ public class DateTimeManager {
         cal.setTime(tempDate);
         return cal;
     }
-    private static Calendar convertCourseCompoToCalendar(String courseCompoTime){
+    public static Calendar convertCourseCompoStrToCalendar(String courseCompoTime) {
         Calendar cal = Calendar.getInstance();
         Date tempDate = null;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE hh:mm");
-        try{
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE HH:mm");
+        try {
             tempDate = dateFormat.parse(courseCompoTime);
-        }catch (ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         cal.setTime(tempDate);
@@ -66,8 +64,21 @@ public class DateTimeManager {
         currentCal.setTime(now);
         return  (starting.getTimeInMillis()<=currentCal.getTimeInMillis()) && (currentCal.getTimeInMillis()<= ending.getTimeInMillis());
     }
+    public static boolean isTimeCollision(Calendar firstStartingTime,Calendar firstEndingTime,Calendar secondStartingTime,Calendar secondEndingTime ){
+        int firstCompareResult =  firstEndingTime.compareTo(secondEndingTime);
+        int secondCompareResult =  firstEndingTime.compareTo(secondStartingTime);
+        int thirdCompareResult =  firstStartingTime.compareTo(secondEndingTime);
+        int forthCompareResult =  firstStartingTime.compareTo(secondStartingTime);
+        boolean tempResult1 = !(firstCompareResult == secondCompareResult);
+        boolean tempResult2 = !(thirdCompareResult == forthCompareResult);
+        return tempResult1 || tempResult2;
+    }
 
-    public static void main(String[] args) throws IOException {
-        System.out.println(isAccessible());
+    public static void main(String[] args) {
+        Calendar cal1 = convertCourseCompoStrToCalendar("Thu 12:00");
+        Calendar cal2 = convertCourseCompoStrToCalendar("Thu 13:00");
+        Calendar cal3 = convertCourseCompoStrToCalendar("Thu 12:50");
+        Calendar cal4 = convertCourseCompoStrToCalendar("Thu 13:00");
+        System.out.println(isTimeCollision(cal1,cal2,cal3,cal4));
     }
 }
