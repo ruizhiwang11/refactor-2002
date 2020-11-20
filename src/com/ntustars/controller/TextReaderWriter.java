@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class TextReaderWriter{
     // an example of reading
     /** Write fixed content to the given file. */
-    public void writetxt(String fileName, List data) throws IOException {
+    public static void writetxt(String fileName, List data) throws IOException {
         PrintWriter out = new PrintWriter(new FileWriter(fileName));
 
         try {
@@ -25,7 +25,7 @@ public class TextReaderWriter{
     }
 
     /** Read the contents of the given file. */
-    public  List readtxt(String fileName) throws IOException {
+    public static List readtxt(String fileName) throws IOException {
         List data = new ArrayList() ;
         Scanner scanner = new Scanner(new FileInputStream(fileName));
         try {
