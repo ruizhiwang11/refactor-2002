@@ -32,10 +32,10 @@ public class Main {
 //
 //
 //       course.addCourseIndex(index2);
-       CourseIndex courseIndex = courseManager.readCourseIndexbyID("12345");
-       courseIndex.setSlot(3);
+       CourseIndex courseIndex = courseManager.readCourseIndexbyID("12222");
+       CourseIndex courseIndex1 = courseManager.readCourseIndexbyID("12223");
 
-       mgr.updateCourseIndex(courseIndex);
+       System.out.print(courseManager.isCourseIndexCollision(courseIndex,courseIndex1));
 
 	// write your code here
     }

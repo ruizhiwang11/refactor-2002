@@ -8,6 +8,7 @@ import com.ntustars.entity.Student;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.StringTokenizer;
 
@@ -331,6 +332,30 @@ public class CourseManager {
             }
         }
         return null;
+    }
+    public boolean isCourseIndexCollision(CourseIndex courseIndex1, CourseIndex courseIndex2){
+        for(CourseCompo courseCompo : courseIndex1.getCourseCompos()){
+            String day = courseCompo.getDay();
+            String timeSlot = courseCompo.getTimeSlot();
+            StringTokenizer star = new StringTokenizer(timeSlot,"-");
+            String firstStartingStr = day + " " + star.nextToken().trim();
+            String firstEndingStr = day + " " + star.nextToken().trim();
+            Calendar cal1 = DateTimeManager.convertCourseCompoStrToCalendar(firstStartingStr);
+            Calendar cal2 = DateTimeManager.convertCourseCompoStrToCalendar(firstEndingStr);
+            for(CourseCompo courseCompo1 : courseIndex2.getCourseCompos()){
+                String day2 = courseCompo1.getDay();
+                String timeSlot2 = courseCompo1.getTimeSlot();
+                StringTokenizer star2 = new StringTokenizer(timeSlot2,"-");
+                String secondStartingStr = day2 + " " + star2.nextToken().trim();
+                String secondEndingStr = day2 + " " + star2.nextToken().trim();
+                Calendar cal3 = DateTimeManager.convertCourseCompoStrToCalendar(secondStartingStr);
+                Calendar cal4 = DateTimeManager.convertCourseCompoStrToCalendar(secondEndingStr);
+                if(DateTimeManager.isTimeCollision(cal1, cal2,cal3, cal4)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 
