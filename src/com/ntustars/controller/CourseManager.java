@@ -36,6 +36,16 @@ public class CourseManager {
         ArrayList stringArray = (ArrayList)textReaderWriter.readtxt("courseIndexAndCourseCompo.txt");
         return  stringArray;
     }
+    public ArrayList readAllCourseIDFromDB() throws IOException{
+        ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
+        ArrayList<String> courseIdArrayList = new ArrayList<>();
+        for(int i =0; i<courseAndCourseIndex.size();i++){
+            String st = (String) courseAndCourseIndex.get(i);
+            StringTokenizer star = new StringTokenizer(st, SEPARATOR);
+            courseIdArrayList.add(star.nextToken().trim());
+        }
+        return courseAndCourseIndex;
+    }
     public int addCourseIndexInCourseAndCourseIndexDB(CourseIndex courseIndex) throws IOException{
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
         for(int i = 0; i< courseAndCourseIndex.size(); i++){
