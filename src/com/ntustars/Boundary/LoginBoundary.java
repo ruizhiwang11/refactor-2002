@@ -69,6 +69,7 @@ public class LoginBoundary  {
             Console consoleLogin = System.console();
             String user = consoleLogin.readLine("Enter You User Name : ");
             String password = new String (consoleLogin.readPassword("Enter Your Passoword : "));
+            /*
             passwordManager crypt = new passwordManager(password);
             
             byte[] msg = crypt.encrypt();
@@ -76,7 +77,7 @@ public class LoginBoundary  {
             System.out.println("origina password : " + password);            
             System.out.println("Encrypted password : " + new String(msg));
             System.out.println("After decrypted password : " + crypt.decrypt(msg));
-
+*/
         }
 
     }

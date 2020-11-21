@@ -12,20 +12,19 @@ import java.io.IOException;
 
 public class passwordManager {
 
-        private Key key; 
+        private Key  key = keyGenerator();;
         private String plainPassword; 
     
         KeyGenerator keyGenerator;
         Cipher cipher;
-    
-        passwordManager(String password) {
-            Key key = keyGenerator();
+/*
+        public passwordManager(String password) {
             plainPassword = password;
         }
-    
-        public byte[] encrypt() {
+*/
+        public byte[] encrypt(String password) {
             byte[] cipherText = null;
-    
+            plainPassword = password;
             try {
                 cipher = Cipher.getInstance("DES");
                 cipher.init(Cipher.ENCRYPT_MODE, key); 
@@ -86,19 +85,13 @@ public class passwordManager {
 
 // testing for function
         public static void main(String[] args) throws IOException {
-            String thePassword = "I am the password"; 
-            passwordManager cm2 = new passwordManager(thePassword);
-            ArrayList<String> abc=  cm2.passwordEncrypt();
-            System.out.println(abc.get(0));
+            String thePassword = "I am the password";
 
-            passwordManager cm = new passwordManager(abc.get(0));
+            passwordManager cm = new passwordManager();
 
-            byte[] msg = cm.encrypt();
+            byte[] msg = cm.encrypt(thePassword);
             System.out.println("after encry" + new String(msg));
             System.out.println("after decry：" + cm.decrypt(msg));
         }
-    
-        
-
 
 }

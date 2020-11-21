@@ -1,6 +1,7 @@
 package com.ntustars.controller;
 
 import com.ntustars.Boundary.ErrorCodeBoundary;
+import com.ntustars.Boundary.passwordManager;
 import com.ntustars.entity.Course;
 import com.ntustars.entity.CourseCompo;
 import com.ntustars.entity.CourseIndex;
@@ -8,6 +9,7 @@ import com.ntustars.entity.Student;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.StringTokenizer;
 
@@ -31,9 +33,20 @@ public class CourseManager {
         ArrayList stringArray = (ArrayList)textReaderWriter.readtxt("studentInformation.txt");
         return  stringArray;
     }
+
     private ArrayList loadDBCourseIndexAndCourseCompo() throws IOException{
         ArrayList stringArray = (ArrayList)textReaderWriter.readtxt("courseIndexAndCourseCompo.txt");
         return  stringArray;
+    }
+    public ArrayList readAllCourseIDFromDB() throws IOException{
+        ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
+        ArrayList<String> courseIdArrayList = new ArrayList<>();
+        for(int i =0; i<courseAndCourseIndex.size();i++){
+            String st = (String) courseAndCourseIndex.get(i);
+            StringTokenizer star = new StringTokenizer(st, SEPARATOR);
+            courseIdArrayList.add(star.nextToken().trim());
+        }
+        return courseAndCourseIndex;
     }
     public int addCourseIndexInCourseAndCourseIndexDB(CourseIndex courseIndex) throws IOException{
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
@@ -245,6 +258,7 @@ public class CourseManager {
         }
         return null;
     }
+
     public Student readStudentbyID(String studentID) throws IOException{
         ArrayList studentInformation = loadDBStudentInformation();
         for(int i =0; i <studentInformation.size(); i++){
@@ -252,7 +266,9 @@ public class CourseManager {
             if(st.contains(studentID)){
                 StringTokenizer star = new StringTokenizer(st, SEPARATOR);
                 studentID = star.nextToken().trim();
-                String password = star.nextToken().trim();
+                String encryPassword =  star.nextToken().trim();
+                passwordManager crypt = new passwordManager();
+                String password = crypt.decrypt(encryPassword.getBytes());
                 String name = star.nextToken().trim();;
                 String matricNumber = star.nextToken().trim();
                 String gender = star.nextToken().trim();
@@ -265,6 +281,45 @@ public class CourseManager {
         }
         return null;
     }
+
+    private ArrayList writeDBStudentInformation(ArrayList stringArray) throws IOException{
+
+        textReaderWriter.writetxt("studentInformation.txt", stringArray);
+        return  stringArray;
+    }
+
+    public int addStudent(Student student) throws IOException{
+        ArrayList studentInformation = loadDBStudentInformation();
+        String stUserName = student.getUsername();
+        // encrypt password
+        passwordManager crypt = new passwordManager();
+        String encryStPassword = new String(crypt.encrypt(student.getPassword()));
+        String stName = student.getName();
+        String stGender = student.getGender();
+        String stMatricNumber = student.getMatricNumber();
+        String stNationality = student.getNationality();
+        //student.getAuTaken();
+        StringBuilder builder = new StringBuilder();
+        builder.append(stUserName);
+        builder.append(",");
+        //builder.append(encryStPassword);
+        builder.append(",");
+        builder.append(stName);
+        builder.append(",");
+        builder.append(stGender);
+        builder.append(",");
+        builder.append(stMatricNumber);
+        builder.append(",");
+        builder.append(stNationality);
+        studentInformation.set(0,builder.toString());
+
+        // add student data to student db
+        writeDBStudentInformation(studentInformation);
+        return 0;
+
+    }
+
+
     public CourseIndex readCourseIndexbyID(String index) throws IOException
     {
         ArrayList courseIndexAndCourseCompo = loadDBCourseIndexAndCourseCompo();
@@ -331,6 +386,30 @@ public class CourseManager {
             }
         }
         return null;
+    }
+    public boolean isCourseIndexCollision(CourseIndex courseIndex1, CourseIndex courseIndex2){
+        for(CourseCompo courseCompo : courseIndex1.getCourseCompos()){
+            String day = courseCompo.getDay();
+            String timeSlot = courseCompo.getTimeSlot();
+            StringTokenizer star = new StringTokenizer(timeSlot,"-");
+            String firstStartingStr = day + " " + star.nextToken().trim();
+            String firstEndingStr = day + " " + star.nextToken().trim();
+            Calendar cal1 = DateTimeManager.convertCourseCompoStrToCalendar(firstStartingStr);
+            Calendar cal2 = DateTimeManager.convertCourseCompoStrToCalendar(firstEndingStr);
+            for(CourseCompo courseCompo1 : courseIndex2.getCourseCompos()){
+                String day2 = courseCompo1.getDay();
+                String timeSlot2 = courseCompo1.getTimeSlot();
+                StringTokenizer star2 = new StringTokenizer(timeSlot2,"-");
+                String secondStartingStr = day2 + " " + star2.nextToken().trim();
+                String secondEndingStr = day2 + " " + star2.nextToken().trim();
+                Calendar cal3 = DateTimeManager.convertCourseCompoStrToCalendar(secondStartingStr);
+                Calendar cal4 = DateTimeManager.convertCourseCompoStrToCalendar(secondEndingStr);
+                if(DateTimeManager.isTimeCollision(cal1, cal2,cal3, cal4)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 
