@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         CourseManager courseManager = new CourseManager();
         AdminManager mgr = new AdminManager();
 //       CourseIndex index = new CourseIndex("CZ2005","12345",9,3);

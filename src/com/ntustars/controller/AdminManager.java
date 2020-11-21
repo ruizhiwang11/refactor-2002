@@ -11,9 +11,14 @@ import java.util.Calendar;
 import java.util.StringTokenizer;
 
 public class AdminManager {
-
+    private static TextReaderWriter textReaderWriter;
     private ArrayList loadAdminInformationDB() throws IOException {
         ArrayList stringArray = (ArrayList)TextReaderWriter.readtxt("adminInformation.txt");
+        return  stringArray;
+    }
+
+    public static ArrayList loadDBStudentInformation() throws IOException {
+        ArrayList stringArray = (ArrayList)textReaderWriter.readtxt("studentInformation.txt");
         return  stringArray;
     }
     private CourseManager courseManager = new CourseManager();
@@ -57,7 +62,7 @@ public class AdminManager {
         TextReaderWriter.writetxt("adminInformation",adminInformation);
         return 0;
     }
-    public ArrayList getStudentByIndex(String index) throws IOException{
+    public ArrayList getStudentByIndex(String index) throws Exception {
         CourseIndex courseIndex = courseManager.readCourseIndexbyID(index);
         ArrayList<String> studentUserNameList = new ArrayList<>();
         for(Student student : courseIndex.getStudentList()){
@@ -65,7 +70,7 @@ public class AdminManager {
         }
         return studentUserNameList;
     }
-    public ArrayList getStudentByCourse(String courseID) throws IOException{
+    public ArrayList getStudentByCourse(String courseID) throws Exception {
         Course course = courseManager.readCourseByID(courseID);
         ArrayList<String> studentUserNameList = new ArrayList<>();
         for(CourseIndex courseIndex : course.getCourseIndices()){
@@ -73,6 +78,40 @@ public class AdminManager {
         }
         return studentUserNameList;
     }
+
+
+
+    public int addStudent(Student student) throws Exception {
+        ArrayList studentInformation = loadDBStudentInformation();
+        String stUserName = student.getUsername();
+        // encrypt password
+        String encryStPassword = PasswordManager.encrypt(student.getPassword());
+        String stName = student.getName();
+        String stGender = student.getGender();
+        String stMatricNumber = student.getMatricNumber();
+        String stNationality = student.getNationality();
+        //student.getAuTaken();
+        StringBuilder builder = new StringBuilder();
+        builder.append(stUserName);
+        builder.append(",");
+        builder.append(encryStPassword);
+        builder.append(",");
+        builder.append(stName);
+        builder.append(",");
+        builder.append(stGender);
+        builder.append(",");
+        builder.append(stMatricNumber);
+        builder.append(",");
+        builder.append(stNationality);
+        studentInformation.set(0,builder.toString());
+        // add student data to student db
+        //FileManager.writeDBStudentInformation1111(studentInformation);
+        textReaderWriter.writetxt("studentInformation.txt", studentInformation);
+
+        return 0;
+
+    }
+
 
 }
 

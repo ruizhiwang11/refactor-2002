@@ -256,19 +256,21 @@ public class CourseManager {
         }
         return null;
     }
-    public Student readStudentbyID(String studentID) throws IOException{
+    public Student readStudentbyID(String studentID) throws Exception {
         ArrayList studentInformation = loadDBStudentInformation();
         for(int i =0; i <studentInformation.size(); i++){
             String st = (String) studentInformation.get(i);
             if(st.contains(studentID)){
                 StringTokenizer star = new StringTokenizer(st, SEPARATOR);
                 studentID = star.nextToken().trim();
-                String password = star.nextToken().trim();
+                //String password = star.nextToken().trim();
+                // decryp password to string
+                String decryStPassword = PasswordManager.decrypt(star.nextToken().trim());
                 String name = star.nextToken().trim();;
                 String matricNumber = star.nextToken().trim();
                 String gender = star.nextToken().trim();
                 String nationality = star.nextToken().trim();
-                Student student = new Student(studentID, password, name , matricNumber, gender , nationality);
+                Student student = new Student(studentID, decryStPassword, name , matricNumber, gender , nationality);
                 int auTaken = Integer.parseInt(star.nextToken().trim());
                 student.setAuTaken(auTaken);
                 return student;
@@ -276,7 +278,7 @@ public class CourseManager {
         }
         return null;
     }
-    public CourseIndex readCourseIndexbyID(String index) throws IOException
+    public CourseIndex readCourseIndexbyID(String index) throws Exception
     {
         ArrayList courseIndexAndCourseCompo = loadDBCourseIndexAndCourseCompo();
         ArrayList courseIndexInfo = loadDBCourseIndexInfo();
@@ -323,7 +325,7 @@ public class CourseManager {
         }
         return null;
     }
-    public Course readCourseByID(String courseID) throws IOException
+    public Course readCourseByID(String courseID) throws Exception
     {
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
         for(int i = 0; i < courseAndCourseIndex.size(); i++ ){
@@ -367,7 +369,6 @@ public class CourseManager {
         }
         return false;
     }
-
 
 
 }
