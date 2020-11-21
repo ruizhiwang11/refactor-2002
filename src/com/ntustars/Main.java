@@ -8,6 +8,7 @@ import com.ntustars.entity.CourseIndex;
 import com.ntustars.entity.Student;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -32,10 +33,14 @@ public class Main {
 //
 //
 //       course.addCourseIndex(index2);
-       CourseIndex courseIndex = courseManager.readCourseIndexbyID("12222");
-       CourseIndex courseIndex1 = courseManager.readCourseIndexbyID("12223");
+       // CourseIndex courseIndex = courseManager.readCourseIndexbyID("12222");
+       // CourseIndex courseIndex1 = courseManager.readCourseIndexbyID("12223");
 
-       System.out.print(courseManager.isCourseIndexCollision(courseIndex,courseIndex1));
+        ArrayList<String> studentArrayList = mgr.getStudentByCourse("12345");
+        for(String str : studentArrayList){
+            System.out.println(str);
+        }
+
 
 	// write your code here
     }

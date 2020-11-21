@@ -18,7 +18,7 @@ public class DateTimeManager {
         return  stringArray;
     }
 
-    private static ArrayList readAccessperiodFromDB() throws IOException{
+    private static ArrayList readAccessPeriodFromDB() throws IOException{
         ArrayList adminInformation = loadAdminInformationDB();
         ArrayList <String> accessDateTimeStrList = new ArrayList<>();
         for(int i = 0; i< adminInformation.size(); i++){
@@ -56,7 +56,7 @@ public class DateTimeManager {
         return cal;
     }
     public static boolean isAccessible() throws IOException{
-        ArrayList <String> accessDateTimeStrList = readAccessperiodFromDB();
+        ArrayList <String> accessDateTimeStrList = readAccessPeriodFromDB();
         Calendar starting = convertAccessStringToCalendar(accessDateTimeStrList.get(0));
         Calendar ending = convertAccessStringToCalendar(accessDateTimeStrList.get(1));
         Date now = new Date();
