@@ -1,10 +1,26 @@
 package com.ntustars.Boundary;
 
+import com.ntustars.controller.CourseManager;
+import com.ntustars.controller.StudentManager;
+import com.ntustars.entity.Course;
+import com.ntustars.entity.CourseIndex;
+import com.ntustars.entity.Student;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class StudentBoundary {
+    private Student student;
+    private int select;
+    private String userName;
+    private String courseID;
+    private String courseIndex;
+    StudentManager studentManager = new StudentManager();
+    CourseManager courseManager = new CourseManager();
+    Scanner sc = new Scanner(System.in);
 
-    public StudentBoundary() {
+    public StudentBoundary() throws IOException {
 
     }
 
@@ -27,17 +43,17 @@ public class StudentBoundary {
         System.out.println("Please enter your choice:");
     }
 
-    public int getSelection() {
-        Scanner sc = new Scanner(System.in);
+    private void getSelection() {
+
         String i = "";
-        int select = -1;
+        int s = -1;
 
         do {
             printStudentFunction();
             i = sc.next();
             try {
                 if (Integer.parseInt(i) >= 0 && Integer.parseInt(i) <= 6)
-                    select = Integer.parseInt(i);
+                    s = Integer.parseInt(i);
                 else {
                     System.out.println("Invalid selection! \nPlease key in a number from 0 to 6");
                 }
@@ -45,30 +61,97 @@ public class StudentBoundary {
                 System.out.println("Invalid selection! \nPlease key in a number from 0 to 6");
             }
         }
-        while (select == -1) ;
-        sc.close();
-        return select;
+        while (s == -1) ;
+        this.select = s;
     }
 
-    public static void main(String[] args) {
-        StudentBoundary sb = new StudentBoundary();
-        int select = sb.getSelection();
-//        System.out.println("Your selection is: " + select);
-        switch (select) {
+    private String getCourseID() throws IOException {
+        String courseIDStr;
+        ArrayList courseArrayList = courseManager.readAllCourseIDFromDB();
+
+
+        do {
+            System.out.println("Please key in course ID:");
+            courseIDStr = sc.next();
+        } while (!courseArrayList.contains(courseIDStr)); //not_in_the_list
+//        this.courseID = courseID;
+        return courseIDStr;
+    }
+
+    private String getCourseIndex (String courseID) throws IOException {
+        String courseIndex;
+        Course tmpCourse = courseManager.readCourseByID(courseID);
+        ArrayList<String> tempCourseIndexArray = new ArrayList<>();
+        for(CourseIndex tmpIndex : tmpCourse.getCourseIndices()){
+            tempCourseIndexArray.add(tmpIndex.getIndex());
+        }
+        Scanner sc = new Scanner(System.in);
+        do {
+            System.out.println("Please key in course index: ");
+            courseIndex = sc.next();
+        } while (!tempCourseIndexArray.contains(courseIndex)); //not_in_the_list);
+//        this.courseIndex = courseIndex;
+        return courseIndex;
+    }
+
+    private void getSwapInfo() {
+        //aaaaa
+    }
+
+    public void selectFunction(String userName) throws IOException {
+
+        this.userName = userName;
+        getSelection();
+        switch (this.select) {
             case 0:
-                System.out.println("select 0");
+                System.out.println("EXIT");
+                System.exit(0);
+                break;
             case 1:
-                System.out.println("select 1");
+                System.out.println("Select 1. Add Course");
+                String courseID =getCourseID();
+                String courseIndex1 = getCourseIndex(courseID);
+                Student student = studentManager.updateSingleStudent(userName,courseIndex1);
+                studentManager.updateStudentInfoDB(student);
+                studentManager.addCourse(this.userName);
+                break;
             case 2:
-                System.out.println("select 2");
+                System.out.println("Select 2. Drop Course");
+                getCourseID();
+                studentManager.dropCourse(this.userName);
+                break;
             case 3:
-                System.out.println("select 3");
+                System.out.println("Select 3. Check Courses Registered");
+                ArrayList<CourseIndex> courseIndex = studentManager.readSingleStudent(this.userName).getCourseIndexList();
+                for (CourseIndex index : courseIndex) {
+//                    String courseID = courseManager.getCourseIDbyCourseIndex(index.getIndex());
+                    System.out.print(courseManager.getCourseIDbyCourseIndex(index.getIndex()));
+                    System.out.println("\t"+index.getIndex());
+                }
+                break;
             case 4:
-                System.out.println("select 4");
+                System.out.println("Select 4. Check Vacancies Available");
+                getCourseID();
+                courseManager.readCourseIndexbyID(this.courseID);
+                break;
             case 5:
-                System.out.println("select 5");
+                System.out.println("Select 5. Change Index Number of Course");
+//                getCourseIndex();
+                studentManager.changeIndex(this.userName, this.courseIndex);
+                break;
             case 6:
-                System.out.println("select 6");
+                System.out.println("Select 6. Swap Index Number with Another Student");
+//                getCourseIndex();
+                studentManager.swapIndex("tom", "jerry");
+                break;
+
+
         }
     }
+
+    public static void main(String[] args) throws IOException {
+            StudentBoundary sb = new StudentBoundary();
+            StudentManager studentManager = new StudentManager();
+            sb.selectFunction("HAHA123");
+        }
 }

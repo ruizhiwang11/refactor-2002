@@ -44,7 +44,7 @@ public class CourseManager {
             StringTokenizer star = new StringTokenizer(st, SEPARATOR);
             courseIdArrayList.add(star.nextToken().trim());
         }
-        return courseAndCourseIndex;
+        return courseIdArrayList;
     }
     public int addCourseIndexInCourseAndCourseIndexDB(CourseIndex courseIndex) throws IOException{
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();

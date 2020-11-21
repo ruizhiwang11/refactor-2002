@@ -76,6 +76,11 @@ public class Student extends Person
         courseIndexList.remove(courseIndex);
         int au = courseIndex.getAu();
     }
+
+    public ArrayList<CourseIndex> getCourseIndexList() {
+        return courseIndexList;
+    }
+
     /**
      * get student name
      */
@@ -138,6 +143,7 @@ public class Student extends Person
      * Set student auTaken
      * @param auTaken This Student's auTaken.
      */
+
     public void setAuTaken(int auTaken) {
         this.auTaken = auTaken;
     }
