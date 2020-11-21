@@ -12,11 +12,12 @@ import java.util.StringTokenizer;
 
 public class AdminManager {
 
-    private static ArrayList loadAdminInformationDB() throws IOException {
+    private ArrayList loadAdminInformationDB() throws IOException {
         ArrayList stringArray = (ArrayList)TextReaderWriter.readtxt("adminInformation.txt");
         return  stringArray;
     }
     private CourseManager courseManager = new CourseManager();
+
 
     public int addCourseIndex(CourseIndex courseIndex) throws IOException{
         int code = 0;
