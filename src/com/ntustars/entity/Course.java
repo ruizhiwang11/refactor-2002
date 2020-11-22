@@ -9,7 +9,7 @@ public class Course {
     private String school;
 
     public Course(){
-
+        courseIndices = new ArrayList<CourseIndex>();
     }
     public Course(String courseID,String school, int courseType)
     {
