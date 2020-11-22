@@ -134,10 +134,7 @@ public class CourseManager {
                 builder.append(SEPARATOR);
                 builder.append(courseIndex.getAu());
                 builder.append(SEPARATOR);
-                if(courseIndex.getStudentList().isEmpty()){
-                    continue;
-                }
-                else{
+                if(!courseIndex.getStudentList().isEmpty()){
                     for(String student:courseIndex.getStudentList()){
                         builder.append(student);
                         builder.append(SEPARATOR);
