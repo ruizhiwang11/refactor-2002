@@ -1,12 +1,12 @@
 package com.ntustars.Boundary;
+import javax.security.sasl.SaslClient;
 import java.io.Console;
-
-
+import java.util.Scanner;
 
 
 public class LoginBoundary  {
 
-    public static void main (String []args){
+    public static void login (){
         System.out.println("");
         System.out.println("");
         System.out.println("    ============================ - Console mode - ======================    ");
@@ -26,9 +26,11 @@ public class LoginBoundary  {
         System.out.println("    ====================================================================    ");
         System.out.println("");
         System.out.println("");
-        String userName = null;
-        Console console = System.console();
-        String userGroup = console.readLine("You User Group : ");
+        String userName = "";
+        Scanner sc = new Scanner(System.in);
+        //Console console = System.console();
+        System.out.println("You User Group : ");
+        String userGroup = sc.next();
         switch (userGroup){
             case "1":
                 System.out.println("");
@@ -66,18 +68,20 @@ public class LoginBoundary  {
     //System.out.println(user);
 
     private static String loginfunction  (){
-        Console consoleLogin = System.console();
-        String user = consoleLogin.readLine("Enter You User Name : ");
-        String password = new String (consoleLogin.readPassword("Enter Your Passoword : "));
-            /*
-            passwordManager crypt = new passwordManager(password);
+//        Console consoleLogin = System.console();
+//        String user = consoleLogin.readLine("Enter You User Name : ");
+//        String password = new String (consoleLogin.readPassword("Enter Your Passoword : "));
+//        return user;
+        Scanner sc1 = new Scanner(System.in);
+        System.out.println("Enter You User Name : ");
+        String user = sc1.next();
+        System.out.println("Enter You Passwprd : ");
+        String password = sc1.next();
+        return user;
+    }
 
-            byte[] msg = crypt.encrypt();
-            System.out.println("origina user name : " + user);
-            System.out.println("origina password : " + password);
-            System.out.println("Encrypted password : " + new String(msg));
-            System.out.println("After decrypted password : " + crypt.decrypt(msg));
-*/       return user;
+    public static void main(String[] args) {
+        login();
     }
 
 }
