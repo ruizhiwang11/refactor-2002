@@ -25,7 +25,7 @@ public class StudentManager {
         errorCodeBoundary = new ErrorCodeBoundary();
     }
 
-    private ArrayList loadDBStudentInfo() throws IOException {
+    private ArrayList loadDBStudentInfo(){
         ArrayList stringArray = (ArrayList) textReaderWriter.readtxt("studentInformation.txt");
         return stringArray;
     }
@@ -52,7 +52,7 @@ public class StudentManager {
 //        return allStudents;
 //    }
 
-    public Student readSingleStudent(String userName) throws IOException {
+    public Student readSingleStudent(String userName){
         ArrayList studentInfo = loadDBStudentInfo();
         CourseManager cm = new CourseManager();
         Student student = new Student();
@@ -77,7 +77,7 @@ public class StudentManager {
         return student;
     }
 
-    public Student updateSingleStudent(String userName, String courseIndex) throws IOException {
+    public Student updateSingleStudent(String userName, String courseIndex) {
         ArrayList studentInfo = loadDBStudentInfo();
         CourseManager cm = new CourseManager();
         Student student = new Student();
@@ -104,7 +104,7 @@ public class StudentManager {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public int updateStudentInfoDB(Student stu) throws IOException {
+    public int updateStudentInfoDB(Student stu) {
         ArrayList studentInfo = loadDBStudentInfo();
         for (int i = 0; i < studentInfo.size(); i++) {
             String st = (String) studentInfo.get(i);
@@ -142,7 +142,7 @@ public class StudentManager {
         return addStudentInfoDB(stu);
     }
 
-    public int addStudentInfoDB(Student stu) throws IOException {
+    public int addStudentInfoDB(Student stu){
         ArrayList studentInfo = loadDBStudentInfo();
         for (int i = 0; i < studentInfo.size(); i++) {
             String st = (String) studentInfo.get(i);
