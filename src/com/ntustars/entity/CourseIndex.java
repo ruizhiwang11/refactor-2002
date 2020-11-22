@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class CourseIndex {
     /**
-     * The CourseID.
+     * The courseID.
      */
     private String courseID;
     /**
@@ -30,10 +30,12 @@ public class CourseIndex {
     private ArrayList<String> studentUserNameList = new ArrayList();
 
     /**
-     * The default constructor.
+     * The courseCompos.
      */
     private ArrayList<CourseCompo> courseCompos;
-
+    /**
+     * The default constructor CourseIndex.
+     */
     public CourseIndex() {
         courseCompos = new ArrayList<CourseCompo>();
     }
@@ -54,6 +56,7 @@ public class CourseIndex {
     }
     /**
      * Get the course index
+     * @return the course index
      */
     public String getIndex() {
         return index;
@@ -67,6 +70,7 @@ public class CourseIndex {
     }
     /**
      * Get slot left
+     * @return slot left
      */
     public int getSlot() {
         return slot;
@@ -80,6 +84,7 @@ public class CourseIndex {
     }
     /**
      * Get au
+     * @return au of course
      */
     public int getAu() {
         return au;
@@ -91,19 +96,31 @@ public class CourseIndex {
     public void setAu(int au) {
         this.au = au;
     }
-
+    /**
+     * Get courseID
+     * @return courseID of course
+     */
     public String getCourseID() {
         return courseID;
     }
-
+    /**
+     * Get studentUserNameList
+     * @return studentUserNameList
+     */
     public ArrayList<String> getStudentList() {
         return studentUserNameList;
     }
-
+    /**
+     * Get courseCompos
+     * @return courseCompos
+     */
     public ArrayList<CourseCompo> getCourseCompos() {
         return courseCompos;
     }
-
+    /**
+     * set courseID
+     * @param courseID to course
+     */
     public void setCourseID(String courseID) {
         this.courseID = courseID;
     }
@@ -122,10 +139,18 @@ public class CourseIndex {
     public void dropStudent(String student){
         studentUserNameList.add(student);
     }
+    /**
+     * add course from the course index
+     * @param courseCompo student
+     */
     public void addCourseCompo(CourseCompo courseCompo)
     {
         courseCompos.add(courseCompo);
     }
+    /**
+     * remove courseCompo from the course index
+     * @param courseCompo student
+     */
     public void removeCourseCompo(CourseCompo courseCompo)
     {
         courseCompos.remove(courseCompo);

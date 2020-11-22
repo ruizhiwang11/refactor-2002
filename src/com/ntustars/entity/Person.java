@@ -30,19 +30,31 @@ public abstract class Person {
         this.username = username;
         this.password = password;
     }
-
+    /**
+     * gets username of this person.
+     * @return this person's username.
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * set username of this person.
+     */
     public void setUsername(String username) {
         this.username = username;
     }
-
+    /**
+     * gets password of this person.
+     * @return this person's password.
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * set password of this person.
+     */
     public void setPassword(String password) {
         this.password = password;
     }

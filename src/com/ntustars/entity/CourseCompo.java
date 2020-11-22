@@ -32,6 +32,7 @@ public class CourseCompo {
     }
     /**
      * get compoType
+     * @return compoType
      */
     public String getCompoType() {
         return compoType;
@@ -45,6 +46,7 @@ public class CourseCompo {
     }
     /**
      * get day
+     * @return the day
      */
     public String getDay() {
         return day;
@@ -58,6 +60,7 @@ public class CourseCompo {
     }
     /**
      * get timeSlot
+     * @return timeSlot of course
      */
     public String getTimeSlot() {
         return timeSlot;
