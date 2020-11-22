@@ -133,12 +133,13 @@ public class CourseManager {
                 builder.append(courseIndex.getSlot());
                 builder.append(SEPARATOR);
                 builder.append(courseIndex.getAu());
+                builder.append(SEPARATOR);
                 if(courseIndex.getStudentList().isEmpty()){
-                    builder.append(SEPARATOR);
+                continue;
                 }
                 else{
                     for(String student:courseIndex.getStudentList()){
-                        builder.append(SEPARATOR);
+
                         builder.append(student);
                         builder.append(SEPARATOR);
                     }
@@ -231,6 +232,10 @@ public class CourseManager {
         return code;
     }
     public int getCourseTypebyCourseID(String courseID){
+        if(courseID == null)
+        {
+            return  -1;
+        }
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
         for(int i =0; i <courseAndCourseIndex.size(); i++){
             String st = (String) courseAndCourseIndex.get(i);
