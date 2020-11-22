@@ -62,8 +62,8 @@ public class AdminManager {
     public ArrayList getStudentByIndex(String index){
         CourseIndex courseIndex = courseManager.readCourseIndexbyID(index);
         ArrayList<String> studentUserNameList = new ArrayList<>();
-        for(Student student : courseIndex.getStudentList()){
-            studentUserNameList.add(student.getUsername());
+        for(String student : courseIndex.getStudentList()){
+            studentUserNameList.add(student);
         }
         return studentUserNameList;
     }
