@@ -83,28 +83,50 @@ public class StudentBoundary {
         String courseIndex;
         Course tmpCourse = courseManager.readCourseByID(courseID);
         ArrayList<String> tempCourseIndexArray = new ArrayList<>();
+        CourseIndex cI;
         String tmpType = null;
         String tmpDay = null;
         String tmpTimeSlot = null;
+        boolean f = false;
         for(CourseIndex tmpIndex : tmpCourse.getCourseIndices()){
             tempCourseIndexArray.add(tmpIndex.getIndex());
         }
-        System.out.println("Here are the index for "+ courseID);
+        System.out.println("Here are the index for "+ courseID+":");
 
         for(CourseIndex tmpIndex : tmpCourse.getCourseIndices()){
+            System.out.println(tmpIndex.getIndex());
             for(CourseCompo compo : tmpIndex.getCourseCompos()){
-                tmpType = compo.getCompoCype();
+                tmpType = compo.getCompoType();
                 tmpDay = compo.getDay();
                 tmpTimeSlot = compo.getTimeSlot();
-                System.out.println(tmpIndex.getIndex() +"\t"+ tmpTimeSlot + "\t"+ tmpDay);
+                System.out.println("\t"+tmpType+ "\t"+ tmpDay +"\t"+ tmpTimeSlot);
             }
-
         }
-        Scanner sc = new Scanner(System.in);
+//        Scanner sc = new Scanner(System.in);
         do {
             System.out.println("Please key in course index: ");
             courseIndex = sc.next();
-        } while (!tempCourseIndexArray.contains(courseIndex)); //not_in_the_list);
+            cI = courseManager.readCourseIndexbyID(courseIndex);
+            if (cI.getSlot() < 1) {
+                System.out.println("There is no slot for this course index. \nPlease choose another index.");
+                courseIndex = "00000";
+            }
+            f = false;
+            for (String index : studentManager.readStudentbyID(this.userName).getCourseIndexList()) {
+//                System.out.println(courseIndex2.getIndex());
+                CourseIndex courseIndex2 = courseManager.readCourseIndexbyID(index);
+//                boolean t = courseManager.isCourseIndexCollision(courseIndex2, cI);
+                if (courseManager.isCourseIndexCollision(courseIndex2, cI)){
+                    f = true;
+                    System.out.println("This index has collision with your registered course. " +
+                            "\nPlease choose another index.");
+                    break;
+                }
+            }
+
+        } while (!tempCourseIndexArray.contains(courseIndex) || f); //not_in_the_list);
+
+        cI.getSlot();
 //        this.courseIndex = courseIndex;
         return courseIndex;
     }
@@ -117,6 +139,7 @@ public class StudentBoundary {
 
         this.userName = userName;
         getSelection();
+//        while ()
         switch (this.select) {
             case 0:
                 System.out.println("EXIT");
@@ -129,6 +152,10 @@ public class StudentBoundary {
 
                 Student student = studentManager.updateSingleStudent(userName,courseIndex1);
                 studentManager.updateStudentInfoDB(student);
+                CourseIndex courseIndex3 = courseManager.readCourseIndexbyID(courseIndex1);
+                courseIndex3.addStudent(student.getUsername());
+                courseIndex3.setSlot(courseIndex3.getSlot()-1);
+                courseManager.updateCourseIndexInfoCompoDB(courseIndex3);
                 studentManager.addCourse(this.userName);
                 break;
             case 2:
@@ -138,11 +165,12 @@ public class StudentBoundary {
                 break;
             case 3:
                 System.out.println("Select 3. Check Courses Registered");
-                ArrayList<CourseIndex> courseIndex = studentManager.readSingleStudent(this.userName).getCourseIndexList();
-                for (CourseIndex index : courseIndex) {
+                ArrayList<String> courseIndex = studentManager.readStudentbyID(this.userName).getCourseIndexList();
+                for (String index : courseIndex) {
+                    CourseIndex courseIndex2 = courseManager.readCourseIndexbyID(index);
 //                    String courseID = courseManager.getCourseIDbyCourseIndex(index.getIndex());
-                    System.out.print(courseManager.getCourseIDbyCourseIndex(index.getIndex()));
-                    System.out.println("\t"+index.getIndex());
+                    System.out.print(courseManager.getCourseIDbyCourseIndex(courseIndex2.getIndex()));
+                    System.out.println("\t"+courseIndex2.getIndex());
                 }
                 break;
             case 4:
@@ -168,6 +196,6 @@ public class StudentBoundary {
     public static void main(String[] args) throws IOException {
             StudentBoundary sb = new StudentBoundary();
             StudentManager studentManager = new StudentManager();
-            sb.selectFunction("HAHA123");
+            sb.selectFunction("RARA123");
         }
 }

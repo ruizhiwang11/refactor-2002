@@ -1,14 +1,11 @@
 package com.ntustars.controller;
 
 import com.ntustars.Boundary.ErrorCodeBoundary;
-import com.ntustars.entity.Course;
-import com.ntustars.entity.CourseIndex;
 import com.ntustars.entity.Student;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 
 
@@ -52,7 +49,7 @@ public class StudentManager {
 //        return allStudents;
 //    }
 
-    public Student readSingleStudent(String userName){
+    public Student readStudentbyID(String userName){
         ArrayList studentInfo = loadDBStudentInfo();
         CourseManager cm = new CourseManager();
         Student student = new Student();
@@ -69,7 +66,7 @@ public class StudentManager {
                 student.setNationality(star.nextToken().trim());
                 student.setAuTaken(Integer.parseInt(star.nextToken().trim()));
                 while (star.hasMoreTokens()) {
-                    student.addCourseIndex(cm.readCourseIndexbyID(star.nextToken().trim()));
+                    student.addCourseIndex(star.nextToken().trim());
                 }
                 break;
             }
@@ -94,9 +91,9 @@ public class StudentManager {
                 student.setNationality(star.nextToken().trim());
                 student.setAuTaken(Integer.parseInt(star.nextToken().trim()));
                 while (star.hasMoreTokens()) {
-                    student.addCourseIndex(cm.readCourseIndexbyID(star.nextToken().trim()));
+                    student.addCourseIndex(star.nextToken().trim());
                 }
-                student.addCourseIndex(cm.readCourseIndexbyID(courseIndex));
+                student.addCourseIndex(courseIndex);
                 break;
             }
         }
@@ -105,6 +102,10 @@ public class StudentManager {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public int updateStudentInfoDB(Student stu) {
+//        CourseManager courseManager = new CourseManager();
+//        for(CourseIndex coureadSingleStudentrseIndex : stu.getCourseIndexList()){
+//            courseManager.updateCourseIndexInfoCompoDB(courseIndex);
+//        }
         ArrayList studentInfo = loadDBStudentInfo();
         for (int i = 0; i < studentInfo.size(); i++) {
             String st = (String) studentInfo.get(i);
@@ -128,14 +129,15 @@ public class StudentManager {
 //                    builder.append(SEPARATOR);
                 } else {
 
-                    for (CourseIndex index : stu.getCourseIndexList()) {
+                    for (String index : stu.getCourseIndexList()) {
 //                        builder.append(SEPARATOR);
-                        builder.append(index.getIndex());
+                        builder.append(index);
                         builder.append(SEPARATOR);
                     }
                 }
                     studentInfo.set(i, builder.toString());
                     Collections.sort(studentInfo);
+
                     textReaderWriter.writetxt("studentInformation.txt", studentInfo);
                     return 0;
             }
@@ -169,9 +171,9 @@ public class StudentManager {
         if (stu.getCourseIndexList().isEmpty()) {
             builder.append(SEPARATOR);
         } else {
-            for (CourseIndex index : stu.getCourseIndexList()) {
+            for (String index : stu.getCourseIndexList()) {
                 builder.append(SEPARATOR);
-                builder.append(index.getIndex());
+                builder.append(index);
                 builder.append(SEPARATOR);
             }
         }
@@ -222,8 +224,8 @@ public class StudentManager {
 
     public boolean courseRegistered(String userName) {
 
-        for (CourseIndex index : student.getCourseIndexList()) {
-            System.out.println(index.getCourseID());
+        for (String index : student.getCourseIndexList()) {
+            System.out.println(index);
         }
         //key in username
         //locateStudent()
@@ -293,11 +295,11 @@ public class StudentManager {
         StudentManager mgr = new StudentManager();
         //mgr.readAllIndex();
         //mgr.addCourse("YCYC","CZ2004");
-        Student stu = mgr.readSingleStudent("HAHA123");
+        Student stu = mgr.readStudentbyID("HAHA123");
         System.out.println("hahah");
         //System.out.println(stu.getCourseIndexList().toString());
-        for (CourseIndex courseIndex : stu.getCourseIndexList()) {
-            System.out.println(courseIndex.getIndex());
+        for (String courseIndex : stu.getCourseIndexList()) {
+            System.out.println(courseIndex);
         }
 
     }

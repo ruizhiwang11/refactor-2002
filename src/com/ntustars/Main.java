@@ -15,15 +15,15 @@ public class Main {
     public static void main(String[] args) throws Exception {
         CourseManager courseManager = new CourseManager();
         AdminManager mgr = new AdminManager();
-//       CourseIndex index = new CourseIndex("CZ2005","12345",9,3);
-//       Student student = new Student("LOLO123","123456","WANG LOLO","U1920000G","male","China");
-//       index.addStudent(student);
-//       index.addCourseCompo(new CourseCompo("LEC","THU","15:00-16:00"));
-//       index.addCourseCompo(new CourseCompo("TUT","THU","15:00-16:00"));
-//       index.addCourseCompo(new CourseCompo("LAB","THU","15:00-16:00"));
-//        Course course = new Course("CZ2005","SCSE",2);
-//        course.addCourseIndex(index);
-//        // mgr.addCourse(course);
+        CourseIndex index = new CourseIndex("CZ2005","12345",9,3);
+       // Student student = new Student("LOLO123","123456","WANG LOLO","U1920000G","male","China");
+       index.addStudent("LOLO123");
+       index.addCourseCompo(new CourseCompo("LEC","THU","15:00-16:00"));
+       index.addCourseCompo(new CourseCompo("TUT","THU","15:00-16:00"));
+       index.addCourseCompo(new CourseCompo("LAB","THU","15:00-16:00"));
+        Course course = new Course("CZ2005","SCSE",2);
+        course.addCourseIndex(index);
+        mgr.addCourse(course);
 //        CourseIndex index2 = new CourseIndex("CZ2005","12346",9,3);
 //        Student student2 = new Student("PUPU123","123456","LEE PUPU","U1920000K","female","Singapore");
 //        index2.addStudent(student2);
@@ -35,11 +35,11 @@ public class Main {
 //       course.addCourseIndex(index2);
        // CourseIndex courseIndex = courseManager.readCourseIndexbyID("12222");
        // CourseIndex courseIndex1 = courseManager.readCourseIndexbyID("12223");
-
-        ArrayList<String> studentArrayList = mgr.getStudentByCourse("12345");
-        for(String str : studentArrayList){
-            System.out.println(str);
-        }
+//
+//        ArrayList<String> studentArrayList = mgr.getStudentByCourse("12345");
+//        for(String str : studentArrayList){
+//            System.out.println(str);
+//        }
 
 
 	// write your code here

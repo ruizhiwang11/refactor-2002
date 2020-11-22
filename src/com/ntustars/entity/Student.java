@@ -33,7 +33,7 @@ public class Student extends Person
     /**
      * The course index student registered of AUs taken of the Student.
      */
-    private ArrayList<CourseIndex> courseIndexList = new ArrayList<CourseIndex>();
+    private ArrayList<String> courseIndexList = new ArrayList<String>();
     /**
      * The default constructor.
      */
@@ -62,22 +62,20 @@ public class Student extends Person
      * Add student to a course index
      * @param courseIndex the courseindex student registed
      */
-    public void addCourseIndex(CourseIndex courseIndex)
+    public void addCourseIndex(String courseIndex)
     {
         courseIndexList.add(courseIndex);
-        int au = courseIndex.getAu();
     }
     /**
      * drop student from course index
      * @param courseIndex the courseindex student registed
      */
-    public void dropCourseIndex(CourseIndex courseIndex)
+    public void dropCourseIndex(String courseIndex)
     {
         courseIndexList.remove(courseIndex);
-        int au = courseIndex.getAu();
     }
 
-    public ArrayList<CourseIndex> getCourseIndexList() {
+    public ArrayList<String> getCourseIndexList() {
         return courseIndexList;
     }
 

@@ -80,9 +80,6 @@ public class LoginBoundary  {
         return user;
     }
 
-    public static void main(String[] args) {
-        login();
-    }
 
     public static void main(String[] args) {
         login();
