@@ -120,7 +120,11 @@ public class CourseIndex {
      * @param student student
      */
     public void dropStudent(String student){
-        studentUserNameList.add(student);
+        for(int i =0;i< studentUserNameList.size();i++){
+            if(student.equals(studentUserNameList.get(i))){
+                studentUserNameList.remove(i);
+            }
+        }
     }
     public void addCourseCompo(CourseCompo courseCompo)
     {

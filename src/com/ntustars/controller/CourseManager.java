@@ -134,12 +134,8 @@ public class CourseManager {
                 builder.append(SEPARATOR);
                 builder.append(courseIndex.getAu());
                 builder.append(SEPARATOR);
-                if(courseIndex.getStudentList().isEmpty()){
-                continue;
-                }
-                else{
+                if(!courseIndex.getStudentList().isEmpty()){
                     for(String student:courseIndex.getStudentList()){
-
                         builder.append(student);
                         builder.append(SEPARATOR);
                     }
@@ -232,10 +228,6 @@ public class CourseManager {
         return code;
     }
     public int getCourseTypebyCourseID(String courseID){
-        if(courseID == null)
-        {
-            return  -1;
-        }
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
         for(int i =0; i <courseAndCourseIndex.size(); i++){
             String st = (String) courseAndCourseIndex.get(i);
@@ -304,6 +296,10 @@ public class CourseManager {
             }
         }
         String CourseID = getCourseIDbyCourseIndex(index);
+        if(CourseID == null)
+        {
+            return  null;
+        }
         courseIndex.setCourseID(CourseID);
         int courseType = getCourseTypebyCourseID(CourseID);
         if(courseType == -1){
@@ -325,6 +321,27 @@ public class CourseManager {
             }
         }
         return null;
+    }
+    public int removeStudentFromIndexInfoDB(String studentUserName){
+        ArrayList courseIndexInfo = loadDBCourseIndexInfo();
+        for(int i=0; i< courseIndexInfo.size();i++){
+            String st = (String) courseIndexInfo.get(i);
+            if(st.contains(studentUserName)){
+                StringBuilder builder = new StringBuilder();
+                StringTokenizer star = new StringTokenizer(st,SEPARATOR);
+                while (star.hasMoreTokens()){
+                    String tmpStr = star.nextToken().trim();
+                    if(!tmpStr.equals(studentUserName)){
+                        builder.append(tmpStr);
+                        builder.append(SEPARATOR);
+                    }
+                }
+                courseIndexInfo.set(i,builder.toString());
+                TextReaderWriter.writetxt("courseIndexInfo.txt",courseIndexInfo);
+                return 0;
+            }
+        }
+        return 1;
     }
     public Course readCourseByID(String courseID)
     {

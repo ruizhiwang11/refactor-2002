@@ -1,11 +1,14 @@
 package com.ntustars.controller;
 
 import com.ntustars.Boundary.ErrorCodeBoundary;
+import com.ntustars.entity.Course;
+import com.ntustars.entity.CourseIndex;
 import com.ntustars.entity.Student;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 
@@ -27,7 +30,7 @@ public class StudentManager {
         return stringArray;
     }
 
-//    public ArrayList<Student> readAllIndex() throws IOException {
+//    public ArrayList<Student> readAllStudent() throws IOException {
 //        CourseManager cm = new CourseManager();
 //        ArrayList stringArray = (ArrayList)textReaderWriter.readtxt("studentInformation.txt");
 //        for (int i = 0 ; i < stringArray.size() ; i++){
@@ -49,7 +52,21 @@ public class StudentManager {
 //        return allStudents;
 //    }
 
-    public Student readStudentbyID(String userName){
+    public ArrayList<String> readAllUserName() throws IOException {
+        CourseManager cm = new CourseManager();
+        ArrayList<String> userNameList= new ArrayList<>();
+        ArrayList stringArray = (ArrayList)textReaderWriter.readtxt("studentInformation.txt");
+        for (int i = 0 ; i < stringArray.size() ; i++){
+            this.student = new Student();
+            ArrayList<String> indexArray = new ArrayList<>();
+            String st = (String)stringArray.get(i);
+            StringTokenizer star = new StringTokenizer(st , SEPARATOR);
+            userNameList.add(star.nextToken().trim());
+        }
+        return userNameList;
+    }
+
+    public Student readSingleStudent(String userName){
         ArrayList studentInfo = loadDBStudentInfo();
         CourseManager cm = new CourseManager();
         Student student = new Student();
@@ -74,7 +91,33 @@ public class StudentManager {
         return student;
     }
 
-    public Student updateSingleStudent(String userName, String courseIndex) {
+    public boolean isCourseIDCollision (String userName, String id) {
+        Student student1 = readSingleStudent(userName);
+        CourseManager cm = new CourseManager();
+//        String id = cm.getCourseIDbyCourseIndex(index);
+        if(id != null){
+            for (String tmpIndex : student1.getCourseIndexList()) {
+                String tmpIndex2 = cm.getCourseIDbyCourseIndex(tmpIndex);
+                if(tmpIndex2.equals(null)){
+                    System.out.print("Fail to get course id from current course index");
+                    System.exit(1);
+                }
+                else{
+                    if (id.equals(tmpIndex2))
+                        return true;
+                }
+
+            }
+            return false;
+        }
+        else{
+            System.out.print("Fail to get course id from current course index");
+            System.exit(1);
+        }
+        return false;
+    }
+
+    public Student updateSingleStudent(String userName, String courseIndex, String set) {
         ArrayList studentInfo = loadDBStudentInfo();
         CourseManager cm = new CourseManager();
         Student student = new Student();
@@ -90,20 +133,59 @@ public class StudentManager {
                 student.setGender(star.nextToken().trim());
                 student.setNationality(star.nextToken().trim());
                 student.setAuTaken(Integer.parseInt(star.nextToken().trim()));
-                while (star.hasMoreTokens()) {
-                    student.addCourseIndex(star.nextToken().trim());
+                int au = 0;
+                if (set == "ADD") {
+//                    au = Integer.parseInt(star.nextToken().trim()) + cm.readCourseIndexbyID(courseIndex).getAu();
+//                    student.setAuTaken(au);
+
+                    while (star.hasMoreTokens()) {
+                        student.addCourseIndex(star.nextToken().trim());
+                    }
+                    student.addCourseIndex(courseIndex);
+                } else if (set =="REMOVE") {
+//                    au = Integer.parseInt(star.nextToken().trim()) - cm.readCourseIndexbyID(courseIndex).getAu();
+//                    student.setAuTaken(au);
+                    ArrayList<String> tmpCourseIndexList = new ArrayList<>();
+                    while (star.hasMoreTokens()) {
+                        String tmpCourseIndex = null;
+                        tmpCourseIndex = star.nextToken().trim();
+                        tmpCourseIndexList.add(tmpCourseIndex);
+                        }
+                    for (String index : tmpCourseIndexList){
+                        if (!index.equals(courseIndex)) {
+                            student.addCourseIndex(index);
+                        }
+                    }
                 }
-                student.addCourseIndex(courseIndex);
+
+                au = calculateTotalAu(student);
+                student.setAuTaken(au);
+//                student.setAuTaken(Integer.parseInt(star.nextToken().trim()));
+//                while (star.hasMoreTokens()) {
+//                    student.addCourseIndex(star.nextToken().trim());
+//                }
+//                student.addCourseIndex(courseIndex);
                 break;
             }
         }
         return student;
+    }
+
+    public int calculateTotalAu (Student stu) {
+        CourseManager courseManager = new CourseManager();
+        int sum=0, au;
+        for (String index : stu.getCourseIndexList()) {
+            au=courseManager.readCourseIndexbyID(index).getAu();
+            sum+=au;
+        }
+
+        return sum;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public int updateStudentInfoDB(Student stu) {
 //        CourseManager courseManager = new CourseManager();
-//        for(CourseIndex coureadSingleStudentrseIndex : stu.getCourseIndexList()){
+//        for(CourseIndex courseIndex : stu.getCourseIndexList()){
 //            courseManager.updateCourseIndexInfoCompoDB(courseIndex);
 //        }
         ArrayList studentInfo = loadDBStudentInfo();
@@ -125,10 +207,7 @@ public class StudentManager {
                 builder.append(SEPARATOR);
                 builder.append(stu.getAuTaken());
                 builder.append(SEPARATOR);
-                if (stu.getCourseIndexList().isEmpty()) {
-//                    builder.append(SEPARATOR);
-                } else {
-
+                if (!stu.getCourseIndexList().isEmpty()) {
                     for (String index : stu.getCourseIndexList()) {
 //                        builder.append(SEPARATOR);
                         builder.append(index);
@@ -183,6 +262,8 @@ public class StudentManager {
         textReaderWriter.writetxt("studentInformation.txt", studentInfo);
         return 0;
     }
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -295,7 +376,7 @@ public class StudentManager {
         StudentManager mgr = new StudentManager();
         //mgr.readAllIndex();
         //mgr.addCourse("YCYC","CZ2004");
-        Student stu = mgr.readStudentbyID("HAHA123");
+        Student stu = mgr.readSingleStudent("HAHA123");
         System.out.println("hahah");
         //System.out.println(stu.getCourseIndexList().toString());
         for (String courseIndex : stu.getCourseIndexList()) {
