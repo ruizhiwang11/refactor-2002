@@ -256,7 +256,7 @@ public class CourseManager {
         }
         return null;
     }
-    public Student readStudentbyID(String studentID) throws Exception {
+    public Student readStudentbyID(String studentID) throws IOException{
         ArrayList studentInformation = loadDBStudentInformation();
         for(int i =0; i <studentInformation.size(); i++){
             String st = (String) studentInformation.get(i);
@@ -265,7 +265,7 @@ public class CourseManager {
                 studentID = star.nextToken().trim();
                 //String password = star.nextToken().trim();
                 // decryp password to string
-                String decryStPassword = PasswordManager.decrypt(star.nextToken().trim());
+                String decryStPassword = star.nextToken().trim();
                 String name = star.nextToken().trim();;
                 String matricNumber = star.nextToken().trim();
                 String gender = star.nextToken().trim();
@@ -278,7 +278,7 @@ public class CourseManager {
         }
         return null;
     }
-    public CourseIndex readCourseIndexbyID(String index) throws Exception
+    public CourseIndex readCourseIndexbyID(String index) throws IOException
     {
         ArrayList courseIndexAndCourseCompo = loadDBCourseIndexAndCourseCompo();
         ArrayList courseIndexInfo = loadDBCourseIndexInfo();
@@ -325,7 +325,7 @@ public class CourseManager {
         }
         return null;
     }
-    public Course readCourseByID(String courseID) throws Exception
+    public Course readCourseByID(String courseID) throws IOException
     {
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
         for(int i = 0; i < courseAndCourseIndex.size(); i++ ){
