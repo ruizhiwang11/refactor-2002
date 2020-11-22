@@ -3,6 +3,7 @@ package com.ntustars.Boundary;
 import com.ntustars.controller.CourseManager;
 import com.ntustars.controller.StudentManager;
 import com.ntustars.entity.Course;
+import com.ntustars.entity.CourseCompo;
 import com.ntustars.entity.CourseIndex;
 import com.ntustars.entity.Student;
 
@@ -82,8 +83,22 @@ public class StudentBoundary {
         String courseIndex;
         Course tmpCourse = courseManager.readCourseByID(courseID);
         ArrayList<String> tempCourseIndexArray = new ArrayList<>();
+        String tmpType = null;
+        String tmpDay = null;
+        String tmpTimeSlot = null;
         for(CourseIndex tmpIndex : tmpCourse.getCourseIndices()){
             tempCourseIndexArray.add(tmpIndex.getIndex());
+        }
+        System.out.println("Here are the index for "+ courseID);
+
+        for(CourseIndex tmpIndex : tmpCourse.getCourseIndices()){
+            for(CourseCompo compo : tmpIndex.getCourseCompos()){
+                tmpType = compo.getCompoCype();
+                tmpDay = compo.getDay();
+                tmpTimeSlot = compo.getTimeSlot();
+                System.out.println(tmpIndex.getIndex() +"\t"+ tmpTimeSlot + "\t"+ tmpDay);
+            }
+
         }
         Scanner sc = new Scanner(System.in);
         do {
@@ -111,6 +126,7 @@ public class StudentBoundary {
                 System.out.println("Select 1. Add Course");
                 String courseID =getCourseID();
                 String courseIndex1 = getCourseIndex(courseID);
+
                 Student student = studentManager.updateSingleStudent(userName,courseIndex1);
                 studentManager.updateStudentInfoDB(student);
                 studentManager.addCourse(this.userName);

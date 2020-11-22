@@ -123,12 +123,13 @@ public class StudentManager {
                 builder.append(stu.getNationality());
                 builder.append(SEPARATOR);
                 builder.append(stu.getAuTaken());
+                builder.append(SEPARATOR);
                 if (stu.getCourseIndexList().isEmpty()) {
-                    builder.append(SEPARATOR);
+//                    builder.append(SEPARATOR);
                 } else {
 
                     for (CourseIndex index : stu.getCourseIndexList()) {
-                        builder.append(SEPARATOR);
+//                        builder.append(SEPARATOR);
                         builder.append(index.getIndex());
                         builder.append(SEPARATOR);
                     }
@@ -298,5 +299,6 @@ public class StudentManager {
         for (CourseIndex courseIndex : stu.getCourseIndexList()) {
             System.out.println(courseIndex.getIndex());
         }
+
     }
 }
