@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args){
         CourseManager courseManager = new CourseManager();
         AdminManager mgr = new AdminManager();
 //       CourseIndex index = new CourseIndex("CZ2005","12345",9,3);
@@ -40,8 +40,8 @@ public class Main {
         for(String str : studentArrayList){
             System.out.println(str);
         }
-
-
+        Student student2 = new Student("GAGA123","123456","CHONG GAGA","U1920000Z","male","Singapore");
+        mgr.addStudent(student2);
 	// write your code here
     }
 }

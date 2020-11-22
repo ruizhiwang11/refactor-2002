@@ -1,4 +1,7 @@
 package com.ntustars.Boundary;
+import com.ntustars.controller.LoginManager;
+import com.ntustars.controller.PasswordManager;
+
 import javax.security.sasl.SaslClient;
 import java.io.Console;
 import java.util.Scanner;
@@ -27,6 +30,8 @@ public class LoginBoundary  {
         System.out.println("");
         System.out.println("");
         String userName = "";
+        String password = "";
+        String[] userStr;
         Scanner sc = new Scanner(System.in);
         //Console console = System.console();
         System.out.println("You User Group : ");
@@ -36,7 +41,14 @@ public class LoginBoundary  {
                 System.out.println("");
                 System.out.println("            *  Please login as STUDENT   *");
                 System.out.println("");
-                userName = loginfunction();
+                userStr = loginfunction();
+                userName = userStr[0];
+                password = userStr[1];
+                while (!LoginManager.isValidStudent(userName,password)) {
+                    userStr = loginfunction();
+                    userName = userStr[0];
+                    password = userStr[1];
+                }
                 System.out.println("");
                 System.out.println("            *  You have login as STUDENT  *");
                 break;
@@ -44,7 +56,14 @@ public class LoginBoundary  {
                 System.out.println("");
                 System.out.println("            *  Please login as administrator   *");
                 System.out.println("");
-                userName = loginfunction();
+                userStr = loginfunction();
+                userName = userStr[0];
+                password = userStr[1];
+                while (!LoginManager.isValidAdmin(userName,password)) {
+                    userStr = loginfunction();
+                    userName = userStr[0];
+                    password = userStr[1];
+                }
                 System.out.println("");
                 System.out.println("            *  You have login as ADMINISTATOR  *");
                 break;
@@ -67,17 +86,20 @@ public class LoginBoundary  {
     }
     //System.out.println(user);
 
-    private static String loginfunction  (){
+    private static String[] loginfunction  (){
 //        Console consoleLogin = System.console();
 //        String user = consoleLogin.readLine("Enter You User Name : ");
 //        String password = new String (consoleLogin.readPassword("Enter Your Passoword : "));
 //        return user;
+        String[] str = new String[2];
         Scanner sc1 = new Scanner(System.in);
         System.out.println("Enter You User Name : ");
         String user = sc1.next();
-        System.out.println("Enter You Passwprd : ");
+        System.out.println("Enter You Password : ");
         String password = sc1.next();
-        return user;
+        str[0] = user;
+        str[1] = password;
+        return str;
     }
 
     public static void main(String[] args) {

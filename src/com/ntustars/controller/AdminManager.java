@@ -1,30 +1,27 @@
 package com.ntustars.controller;
 
-import com.ntustars.entity.Course;
-import com.ntustars.entity.CourseCompo;
-import com.ntustars.entity.CourseIndex;
-import com.ntustars.entity.Student;
+import com.ntustars.entity.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.StringTokenizer;
 
 public class AdminManager {
-    private static TextReaderWriter textReaderWriter;
-    private ArrayList loadAdminInformationDB() throws IOException {
+    private ArrayList loadAdminInformationDB(){
         ArrayList stringArray = (ArrayList)TextReaderWriter.readtxt("adminInformation.txt");
         return  stringArray;
     }
 
-    public static ArrayList loadDBStudentInformation() throws IOException {
-        ArrayList stringArray = (ArrayList)textReaderWriter.readtxt("studentInformation.txt");
+    public static ArrayList loadDBStudentInformation(){
+        ArrayList stringArray = (ArrayList)TextReaderWriter.readtxt("studentInformation.txt");
         return  stringArray;
     }
     private CourseManager courseManager = new CourseManager();
 
 
-    public int addCourseIndex(CourseIndex courseIndex) throws IOException{
+    public int addCourseIndex(CourseIndex courseIndex){
         int code = 0;
         code += courseManager.addCourseIndexInCourseAndCourseIndexDB(courseIndex);
         code += courseManager.addCourseIndexInfoCompoDB(courseIndex);
@@ -32,19 +29,19 @@ public class AdminManager {
         return code;
     }
 
-    public int addCourse(Course course) throws IOException {
+    public int addCourse(Course course){
         return courseManager.addCourseToDB(course);
     }
-    public int updateCourseIndex(CourseIndex courseIndex) throws IOException{
+    public int updateCourseIndex(CourseIndex courseIndex){
         int code = 0;
         code += courseManager.updateCourseIndexInfoCompoDB(courseIndex);
         code += courseManager.updateCourseIndexInCourseIndexAndCourseCompoDB(courseIndex);
         return code;
     }
-    public int updateCourse(Course course) throws IOException{
+    public int updateCourse(Course course){
         return courseManager.updateCoursetoDB(course);
     }
-    public int addAccessPeriod(String startingDay, String endingDay) throws IOException{
+    public int addAccessPeriod(String startingDay, String endingDay){
         ArrayList adminInformation = loadAdminInformationDB();
         String st = (String) adminInformation.get(0);
         StringTokenizer star = new StringTokenizer(st, ",");
@@ -62,7 +59,7 @@ public class AdminManager {
         TextReaderWriter.writetxt("adminInformation",adminInformation);
         return 0;
     }
-    public ArrayList getStudentByIndex(String index) throws Exception {
+    public ArrayList getStudentByIndex(String index){
         CourseIndex courseIndex = courseManager.readCourseIndexbyID(index);
         ArrayList<String> studentUserNameList = new ArrayList<>();
         for(Student student : courseIndex.getStudentList()){
@@ -70,7 +67,7 @@ public class AdminManager {
         }
         return studentUserNameList;
     }
-    public ArrayList getStudentByCourse(String courseID) throws Exception {
+    public ArrayList getStudentByCourse(String courseID){
         Course course = courseManager.readCourseByID(courseID);
         ArrayList<String> studentUserNameList = new ArrayList<>();
         for(CourseIndex courseIndex : course.getCourseIndices()){
@@ -79,9 +76,7 @@ public class AdminManager {
         return studentUserNameList;
     }
 
-
-
-    public int addStudent(Student student) throws Exception {
+    public int addStudent(Student student){
         ArrayList studentInformation = loadDBStudentInformation();
         String stUserName = student.getUsername();
         // encrypt password
@@ -98,19 +93,17 @@ public class AdminManager {
         builder.append(",");
         builder.append(stName);
         builder.append(",");
-        builder.append(stGender);
-        builder.append(",");
         builder.append(stMatricNumber);
         builder.append(",");
+        builder.append(stGender);
+        builder.append(",");
         builder.append(stNationality);
-        studentInformation.set(0,builder.toString());
-        // add student data to student db
-        //FileManager.writeDBStudentInformation1111(studentInformation);
-        textReaderWriter.writetxt("studentInformation.txt", studentInformation);
-
+        studentInformation.add(builder.toString());
+        Collections.sort(studentInformation);
+        TextReaderWriter.writetxt("studentInformation.txt", studentInformation);
         return 0;
-
     }
+
 
 
 }
