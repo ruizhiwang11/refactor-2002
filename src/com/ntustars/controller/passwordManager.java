@@ -86,7 +86,7 @@ public class passwordManager {
     public static void main(String[] args) throws IOException {
         String thePassword = "I am the password";
 
-        com.ntustars.Boundary.passwordManager cm = new com.ntustars.Boundary.passwordManager();
+        passwordManager cm = new passwordManager();
 
         byte[] msg = cm.encrypt(thePassword);
         System.out.println("after encry" + new String(msg));

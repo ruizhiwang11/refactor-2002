@@ -1,7 +1,6 @@
 package com.ntustars.controller;
 
 import com.ntustars.Boundary.ErrorCodeBoundary;
-import com.ntustars.Boundary.passwordManager;
 import com.ntustars.entity.Course;
 import com.ntustars.entity.CourseCompo;
 import com.ntustars.entity.CourseIndex;
