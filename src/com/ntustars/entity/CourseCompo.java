@@ -33,7 +33,7 @@ public class CourseCompo {
     /**
      * get compoType
      */
-    public String getCompoCype() {
+    public String getCompoType() {
         return compoType;
     }
     /**

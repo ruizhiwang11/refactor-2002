@@ -6,7 +6,6 @@ import com.ntustars.entity.CourseCompo;
 import com.ntustars.entity.CourseIndex;
 import com.ntustars.entity.Student;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -86,9 +85,9 @@ public class CourseManager {
             courseIndexInfo.add(builder.toString());
         }
         else{
-            for(Student student:courseIndex.getStudentList()){
+            for(String student:courseIndex.getStudentList()){
                 builder.append(SEPARATOR);
-                builder.append(student.getUsername());
+                builder.append(student);
                 builder.append(SEPARATOR);
             }
         }
@@ -111,7 +110,7 @@ public class CourseManager {
         builder.append(courseIndex.getIndex());
         builder.append(SEPARATOR);
         for(CourseCompo compo : courseIndex.getCourseCompos()){
-            builder.append(compo.getCompoCype());
+            builder.append(compo.getCompoType());
             builder.append(SEPARATOR);
             builder.append(compo.getDay());
             builder.append(SEPARATOR);
@@ -138,9 +137,9 @@ public class CourseManager {
                     builder.append(SEPARATOR);
                 }
                 else{
-                    for(Student student:courseIndex.getStudentList()){
+                    for(String student:courseIndex.getStudentList()){
                         builder.append(SEPARATOR);
-                        builder.append(student.getUsername());
+                        builder.append(student);
                         builder.append(SEPARATOR);
                     }
                 }
@@ -161,7 +160,7 @@ public class CourseManager {
                 builder.append(courseIndex.getIndex());
                 builder.append(SEPARATOR);
                 for(CourseCompo compo : courseIndex.getCourseCompos()){
-                    builder.append(compo.getCompoCype());
+                    builder.append(compo.getCompoType());
                     builder.append(SEPARATOR);
                     builder.append(compo.getDay());
                     builder.append(SEPARATOR);
@@ -294,10 +293,7 @@ public class CourseManager {
                 int au = Integer.parseInt(star.nextToken().trim());
                 courseIndex.setAu(au);
                 while(star.hasMoreTokens()){
-                    Student student = readStudentbyID(star.nextToken());
-                    if(student != null){
-                        courseIndex.addStudent(student);
-                    }
+                    courseIndex.addStudent(star.nextToken().trim());
                 }
                 break;
             }
@@ -369,4 +365,6 @@ public class CourseManager {
         }
         return false;
     }
+
+
 }
