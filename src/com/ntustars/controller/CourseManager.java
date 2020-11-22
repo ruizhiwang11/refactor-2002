@@ -7,7 +7,6 @@ import com.ntustars.entity.CourseCompo;
 import com.ntustars.entity.CourseIndex;
 import com.ntustars.entity.Student;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -21,24 +20,32 @@ public class CourseManager {
         textReaderWriter = new TextReaderWriter();
         errorCodeBoundary = new ErrorCodeBoundary();
     }
-    private ArrayList loadDBCourseAndCourseIndex() throws IOException{
+    private ArrayList loadDBCourseAndCourseIndex(){
         ArrayList stringArray = (ArrayList)textReaderWriter.readtxt("courseAndCourseIndex.txt");
         return  stringArray;
     }
-    private ArrayList loadDBCourseIndexInfo() throws IOException{
+    private ArrayList loadDBCourseIndexInfo(){
         ArrayList stringArray = (ArrayList)textReaderWriter.readtxt("courseIndexInfo.txt");
         return  stringArray;
     }
-    private ArrayList loadDBStudentInformation() throws IOException{
+    private ArrayList loadDBStudentInformation(){
         ArrayList stringArray = (ArrayList)textReaderWriter.readtxt("studentInformation.txt");
         return  stringArray;
     }
+<<<<<<< HEAD
 
     private ArrayList loadDBCourseIndexAndCourseCompo() throws IOException{
         ArrayList stringArray = (ArrayList)textReaderWriter.readtxt("courseIndexAndCourseCompo.txt");
         return  stringArray;
     }
     public ArrayList readAllCourseIDFromDB() throws IOException{
+=======
+    private ArrayList loadDBCourseIndexAndCourseCompo(){
+        ArrayList stringArray = (ArrayList)textReaderWriter.readtxt("courseIndexAndCourseCompo.txt");
+        return  stringArray;
+    }
+    public ArrayList readAllCourseIDFromDB(){
+>>>>>>> master
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
         ArrayList<String> courseIdArrayList = new ArrayList<>();
         for(int i =0; i<courseAndCourseIndex.size();i++){
@@ -46,9 +53,15 @@ public class CourseManager {
             StringTokenizer star = new StringTokenizer(st, SEPARATOR);
             courseIdArrayList.add(star.nextToken().trim());
         }
+<<<<<<< HEAD
         return courseAndCourseIndex;
     }
     public int addCourseIndexInCourseAndCourseIndexDB(CourseIndex courseIndex) throws IOException{
+=======
+        return courseIdArrayList;
+    }
+    public int addCourseIndexInCourseAndCourseIndexDB(CourseIndex courseIndex){
+>>>>>>> master
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
         for(int i = 0; i< courseAndCourseIndex.size(); i++){
             String st = (String) courseAndCourseIndex.get(i);
@@ -69,7 +82,7 @@ public class CourseManager {
         textReaderWriter.writetxt("courseAndCourseIndex.txt",courseAndCourseIndex);
         return 0;
     }
-    public int addCourseIndexInfoCompoDB(CourseIndex courseIndex) throws IOException{
+    public int addCourseIndexInfoCompoDB(CourseIndex courseIndex){
         ArrayList courseIndexInfo = loadDBCourseIndexInfo();
         for(int i = 0; i< courseIndexInfo.size(); i++) {
             String st = (String) courseIndexInfo.get(i);
@@ -88,9 +101,9 @@ public class CourseManager {
             courseIndexInfo.add(builder.toString());
         }
         else{
-            for(Student student:courseIndex.getStudentList()){
+            for(String student:courseIndex.getStudentList()){
                 builder.append(SEPARATOR);
-                builder.append(student.getUsername());
+                builder.append(student);
                 builder.append(SEPARATOR);
             }
         }
@@ -100,7 +113,7 @@ public class CourseManager {
         textReaderWriter.writetxt("courseIndexInfo.txt",courseIndexInfo);
         return 0;
     }
-    public int addCourseIndexInCourseIndexAndCourseCompoDB(CourseIndex courseIndex) throws IOException{
+    public int addCourseIndexInCourseIndexAndCourseCompoDB(CourseIndex courseIndex){
         ArrayList courseIndexAndCourseCompo = loadDBCourseIndexAndCourseCompo();
         for(int i = 0; i< courseIndexAndCourseCompo.size(); i++) {
             String st = (String) courseIndexAndCourseCompo.get(i);
@@ -113,7 +126,7 @@ public class CourseManager {
         builder.append(courseIndex.getIndex());
         builder.append(SEPARATOR);
         for(CourseCompo compo : courseIndex.getCourseCompos()){
-            builder.append(compo.getCompoCype());
+            builder.append(compo.getCompoType());
             builder.append(SEPARATOR);
             builder.append(compo.getDay());
             builder.append(SEPARATOR);
@@ -125,7 +138,7 @@ public class CourseManager {
         textReaderWriter.writetxt("courseIndexAndCourseCompo.txt",courseIndexAndCourseCompo);
         return 0;
     }
-    public int updateCourseIndexInfoCompoDB(CourseIndex courseIndex) throws IOException{
+    public int updateCourseIndexInfoCompoDB(CourseIndex courseIndex){
         ArrayList courseIndexInfo = loadDBCourseIndexInfo();
         for(int i = 0; i< courseIndexInfo.size(); i++) {
             String st = (String) courseIndexInfo.get(i);
@@ -140,9 +153,9 @@ public class CourseManager {
                     builder.append(SEPARATOR);
                 }
                 else{
-                    for(Student student:courseIndex.getStudentList()){
+                    for(String student:courseIndex.getStudentList()){
                         builder.append(SEPARATOR);
-                        builder.append(student.getUsername());
+                        builder.append(student);
                         builder.append(SEPARATOR);
                     }
                 }
@@ -154,7 +167,7 @@ public class CourseManager {
         }
         return addCourseIndexInfoCompoDB(courseIndex);
     }
-    public int updateCourseIndexInCourseIndexAndCourseCompoDB(CourseIndex courseIndex) throws IOException{
+    public int updateCourseIndexInCourseIndexAndCourseCompoDB(CourseIndex courseIndex){
         ArrayList courseIndexAndCourseCompo = loadDBCourseIndexAndCourseCompo();
         for(int i = 0; i< courseIndexAndCourseCompo.size(); i++) {
             String st = (String) courseIndexAndCourseCompo.get(i);
@@ -163,7 +176,7 @@ public class CourseManager {
                 builder.append(courseIndex.getIndex());
                 builder.append(SEPARATOR);
                 for(CourseCompo compo : courseIndex.getCourseCompos()){
-                    builder.append(compo.getCompoCype());
+                    builder.append(compo.getCompoType());
                     builder.append(SEPARATOR);
                     builder.append(compo.getDay());
                     builder.append(SEPARATOR);
@@ -178,7 +191,7 @@ public class CourseManager {
         }
         return addCourseIndexInCourseIndexAndCourseCompoDB(courseIndex);
     }
-    public int updateCoursetoDB(Course course) throws IOException{
+    public int updateCoursetoDB(Course course){
         ArrayList  courseAndCourseIndex= loadDBCourseAndCourseIndex();
         int returnCode = 0;
         for(int i = 0; i< courseAndCourseIndex.size(); i++){
@@ -206,7 +219,7 @@ public class CourseManager {
         return 1;
     }
 
-    public int addCourseToDB(Course course) throws IOException{
+    public int addCourseToDB(Course course){
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
         int code = 0;
         for(int i = 0; i< courseAndCourseIndex.size(); i++) {
@@ -233,7 +246,7 @@ public class CourseManager {
         }
         return code;
     }
-    public int getCourseTypebyCourseID(String courseID) throws IOException {
+    public int getCourseTypebyCourseID(String courseID){
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
         for(int i =0; i <courseAndCourseIndex.size(); i++){
             String st = (String) courseAndCourseIndex.get(i);
@@ -247,7 +260,7 @@ public class CourseManager {
         }
         return -1;
     }
-    public String getCourseIDbyCourseIndex (String courseIndex) throws IOException{
+    public String getCourseIDbyCourseIndex (String courseIndex){
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
         for(int i =0; i <courseAndCourseIndex.size(); i++){
             String st = (String) courseAndCourseIndex.get(i);
@@ -258,22 +271,32 @@ public class CourseManager {
         }
         return null;
     }
+<<<<<<< HEAD
 
     public Student readStudentbyID(String studentID) throws IOException{
+=======
+    public Student readStudentbyID(String studentID){
+>>>>>>> master
         ArrayList studentInformation = loadDBStudentInformation();
         for(int i =0; i <studentInformation.size(); i++){
             String st = (String) studentInformation.get(i);
             if(st.contains(studentID)){
                 StringTokenizer star = new StringTokenizer(st, SEPARATOR);
                 studentID = star.nextToken().trim();
+<<<<<<< HEAD
                 String encryPassword =  star.nextToken().trim();
                 passwordManager crypt = new passwordManager();
                 String password = crypt.decrypt(encryPassword.getBytes());
+=======
+                //String password = star.nextToken().trim();
+                // decryp password to string
+                String decryStPassword = star.nextToken().trim();
+>>>>>>> master
                 String name = star.nextToken().trim();;
                 String matricNumber = star.nextToken().trim();
                 String gender = star.nextToken().trim();
                 String nationality = star.nextToken().trim();
-                Student student = new Student(studentID, password, name , matricNumber, gender , nationality);
+                Student student = new Student(studentID, decryStPassword, name , matricNumber, gender , nationality);
                 int auTaken = Integer.parseInt(star.nextToken().trim());
                 student.setAuTaken(auTaken);
                 return student;
@@ -281,6 +304,7 @@ public class CourseManager {
         }
         return null;
     }
+<<<<<<< HEAD
 
     private ArrayList writeDBStudentInformation(ArrayList stringArray) throws IOException{
 
@@ -321,6 +345,9 @@ public class CourseManager {
 
 
     public CourseIndex readCourseIndexbyID(String index) throws IOException
+=======
+    public CourseIndex readCourseIndexbyID(String index)
+>>>>>>> master
     {
         ArrayList courseIndexAndCourseCompo = loadDBCourseIndexAndCourseCompo();
         ArrayList courseIndexInfo = loadDBCourseIndexInfo();
@@ -336,10 +363,7 @@ public class CourseManager {
                 int au = Integer.parseInt(star.nextToken().trim());
                 courseIndex.setAu(au);
                 while(star.hasMoreTokens()){
-                    Student student = readStudentbyID(star.nextToken());
-                    if(student != null){
-                        courseIndex.addStudent(student);
-                    }
+                    courseIndex.addStudent(star.nextToken().trim());
                 }
                 break;
             }
@@ -367,7 +391,7 @@ public class CourseManager {
         }
         return null;
     }
-    public Course readCourseByID(String courseID) throws IOException
+    public Course readCourseByID(String courseID)
     {
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
         for(int i = 0; i < courseAndCourseIndex.size(); i++ ){
@@ -411,7 +435,10 @@ public class CourseManager {
         }
         return false;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 
 
 }

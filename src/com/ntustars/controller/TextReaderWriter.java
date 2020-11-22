@@ -11,31 +11,40 @@ import java.util.Scanner;
 public class TextReaderWriter{
     // an example of reading
     /** Write fixed content to the given file. */
-    public static void writetxt(String fileName, List data) throws IOException {
-        PrintWriter out = new PrintWriter(new FileWriter(fileName));
+    public static void writetxt(String fileName, List data){
+        try{
+            PrintWriter out = new PrintWriter(new FileWriter(fileName));
 
-        try {
-            for (int i =0; i < data.size() ; i++) {
-                out.println((String)data.get(i));
+            try {
+                for (int i =0; i < data.size() ; i++) {
+                    out.println((String)data.get(i));
+                }
             }
-        }
-        finally {
-            out.close();
+            finally {
+                out.close();
+            }
+        }catch (IOException e){
+            e.printStackTrace();
         }
     }
 
     /** Read the contents of the given file. */
-    public static List readtxt(String fileName) throws IOException {
+    public static List readtxt(String fileName){
         List data = new ArrayList() ;
-        Scanner scanner = new Scanner(new FileInputStream(fileName));
         try {
-            while (scanner.hasNextLine()){
-                data.add(scanner.nextLine());
+            Scanner scanner = new Scanner(new FileInputStream(fileName));
+            try {
+                while (scanner.hasNextLine()){
+                    data.add(scanner.nextLine());
+                }
             }
+            finally{
+                scanner.close();
+            }
+            return data;
+        }catch (IOException e){
+            e.printStackTrace();
         }
-        finally{
-            scanner.close();
-        }
-        return data;
+        return null;
     }
 }

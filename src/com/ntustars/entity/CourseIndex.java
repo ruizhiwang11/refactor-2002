@@ -27,7 +27,7 @@ public class CourseIndex {
     /**
      * The student registered in this courseIndex
      */
-    private ArrayList<Student> studentList = new ArrayList();
+    private ArrayList<String> studentUserNameList = new ArrayList();
 
     /**
      * The default constructor.
@@ -96,8 +96,8 @@ public class CourseIndex {
         return courseID;
     }
 
-    public ArrayList<Student> getStudentList() {
-        return studentList;
+    public ArrayList<String> getStudentList() {
+        return studentUserNameList;
     }
 
     public ArrayList<CourseCompo> getCourseCompos() {
@@ -112,17 +112,15 @@ public class CourseIndex {
      * add student into the course index
      * @param student student
      */
-    public void addStudent(Student student) {
-        studentList.add(student);
-        student.addCourseIndex(this);
+    public void addStudent(String student) {
+        studentUserNameList.add(student);
     }
     /**
      * drop a student from the course index
      * @param student student
      */
-    public void dropStudent(Student student){
-        studentList.remove(student);
-        student.dropCourseIndex(this);
+    public void dropStudent(String student){
+        studentUserNameList.add(student);
     }
     public void addCourseCompo(CourseCompo courseCompo)
     {

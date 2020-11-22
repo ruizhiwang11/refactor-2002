@@ -8,10 +8,11 @@ import com.ntustars.entity.CourseIndex;
 import com.ntustars.entity.Student;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         CourseManager courseManager = new CourseManager();
         AdminManager mgr = new AdminManager();
 //       CourseIndex index = new CourseIndex("CZ2005","12345",9,3);
@@ -32,11 +33,15 @@ public class Main {
 //
 //
 //       course.addCourseIndex(index2);
-       CourseIndex courseIndex = courseManager.readCourseIndexbyID("12345");
-       courseIndex.setSlot(3);
+       // CourseIndex courseIndex = courseManager.readCourseIndexbyID("12222");
+       // CourseIndex courseIndex1 = courseManager.readCourseIndexbyID("12223");
 
-       mgr.updateCourseIndex(courseIndex);
-
+        ArrayList<String> studentArrayList = mgr.getStudentByCourse("12345");
+        for(String str : studentArrayList){
+            System.out.println(str);
+        }
+        Student student2 = new Student("GAGA123","123456","CHONG GAGA","U1920000Z","male","Singapore");
+        mgr.addStudent(student2);
 	// write your code here
     }
 }
