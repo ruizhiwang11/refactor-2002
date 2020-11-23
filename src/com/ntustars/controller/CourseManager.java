@@ -82,6 +82,7 @@ public class CourseManager {
         builder.append(SEPARATOR);
         builder.append(courseIndex.getAu());
         if(courseIndex.getStudentList().isEmpty()){
+            builder.append(SEPARATOR);
             courseIndexInfo.add(builder.toString());
         }
         else{

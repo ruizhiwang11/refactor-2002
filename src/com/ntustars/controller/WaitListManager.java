@@ -81,12 +81,4 @@ public class WaitListManager {
         return null;
 
     }
-    public static void main(String[] args) {
-        HashMap<String,ArrayList<String>> waitListMap = WaitListManager.readWaitList();
-        WaitListManager.updateWaitList("13333","PUPU123");
-        WaitListManager.updateWaitList("14444","ZUZU123");
-        String str = WaitListManager.popWaitList("13333");
-        String str1 = WaitListManager.popWaitList("13333");
-        waitListMap = WaitListManager.readWaitList();
-    }
 }
