@@ -2,6 +2,8 @@ package com.ntustars.Boundary;
 
 import com.ntustars.controller.CourseManager;
 import com.ntustars.controller.StudentManager;
+import com.ntustars.controller.TextReaderWriter;
+import com.ntustars.controller.WaitListManager;
 import com.ntustars.entity.Course;
 import com.ntustars.entity.CourseCompo;
 import com.ntustars.entity.CourseIndex;
@@ -9,6 +11,7 @@ import com.ntustars.entity.Student;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class StudentBoundary {
@@ -76,7 +79,7 @@ public class StudentBoundary {
         return courseIDStr;
     }
 
-    private String getCourseIndexAdd(String courseID){
+    private String getCourseIndexAdd(String courseID, String userName){
         Course tmpCourse = courseManager.readCourseByID(courseID);
         ArrayList<String> tempCourseIndexArray = new ArrayList<>();
         CourseIndex cI;
@@ -107,7 +110,8 @@ public class StudentBoundary {
             cI = courseManager.readCourseIndexbyID(courseIndex);
             if (cI.getSlot() < 1) {
                 System.out.println("There is no slot for this course index. \nPlease choose another index.");
-                courseIndex = "00000";
+                System.out.println("You will be placed into the waiting list");
+                WaitListManager.updateWaitList(courseIndex,userName);
                 System.exit(0);
             }
             f = false;
@@ -160,7 +164,6 @@ public class StudentBoundary {
         courseIndex11.addStudent(student.getUsername());
         courseIndex11.setSlot(courseIndex11.getSlot() - 1);
         courseManager.updateCourseIndexInfoCompoDB(courseIndex11);
-        studentManager.addCourse(this.userName);
     }
 
     private void updateCourseIndexInfoRemove (String userName, String courseIndex) {
@@ -190,27 +193,46 @@ public class StudentBoundary {
                             f = true;
                         }
                     } while (f);
-                    String courseIndexToAddStr = getCourseIndexAdd(courseID);
+                    String courseIndexToAddStr = getCourseIndexAdd(courseID,userName);
                     Student student = studentManager.updateSingleStudent(userName, courseIndexToAddStr, "ADD");
                     studentManager.updateStudentInfoDB(student);
                     CourseIndex courseIndexToAdd = courseManager.readCourseIndexbyID(courseIndexToAddStr);
                     courseIndexToAdd.addStudent(student.getUsername());
                     courseIndexToAdd.setSlot(courseIndexToAdd.getSlot() - 1);
                     courseManager.updateCourseIndexInfoCompoDB(courseIndexToAdd);
-                    studentManager.addCourse(this.userName);
                     break;
                 case 2:
                     System.out.println("Select 2. Drop Course");
-                    String courseIndex41;
-                    courseIndex41 = getCourseIndexRemove(userName);
+                    String courseIndexStr;
+                    courseIndexStr = getCourseIndexRemove(userName);
 
-                    Student student2 = studentManager.updateSingleStudent(userName, courseIndex41, "REMOVE");
+                    Student student2 = studentManager.updateSingleStudent(userName, courseIndexStr, "REMOVE");
                     studentManager.updateStudentInfoDB(student2);
-                    CourseIndex courseIndex21 = courseManager.readCourseIndexbyID(courseIndex41);
+                    CourseIndex courseIndex21 = courseManager.readCourseIndexbyID(courseIndexStr);
                     courseIndex21.dropStudent(student2.getUsername());
                     courseIndex21.setSlot(courseIndex21.getSlot() + 1);
                     courseManager.updateCourseIndexInfoCompoDB(courseIndex21);
-
+                    if(courseIndex21.getSlot() == 1){
+                        HashMap<String,ArrayList<String>> waitListMap = WaitListManager.readWaitList();
+                        if(waitListMap != null){
+                            if(waitListMap.get(courseIndexStr)!=null){
+                                System.out.println("Adding the student from Waitting list");
+                                String tmpStudentStr = WaitListManager.popWaitList(courseIndexStr);
+                                courseID = courseIndex21.getCourseID();
+                                if (studentManager.isCourseIDCollision(userName, courseID)) {
+                                    System.out.println("The student in the waitting list has registered this course!");
+                                    System.exit(1);
+                                }
+                                String waitListCourseIndexToAddStr = courseIndex21.getIndex();
+                                Student waitListstudent = studentManager.updateSingleStudent(tmpStudentStr, waitListCourseIndexToAddStr, "ADD");
+                                studentManager.updateStudentInfoDB(waitListstudent);
+                                CourseIndex waitListCourseIndexToAdd = courseManager.readCourseIndexbyID(waitListCourseIndexToAddStr);
+                                waitListCourseIndexToAdd.addStudent(waitListstudent.getUsername());
+                                waitListCourseIndexToAdd.setSlot(waitListCourseIndexToAdd.getSlot() - 1);
+                                courseManager.updateCourseIndexInfoCompoDB(waitListCourseIndexToAdd);
+                            }
+                        }
+                    }
                     break;
                 case 3:
                     System.out.println("Select 3. Check Courses Registered");
@@ -253,8 +275,10 @@ public class StudentBoundary {
 
                     } else if (s == 1) {
                         System.out.println("Course collision with user1");
+                        System.exit(0);
                     } else if (s == 2) {
                         System.out.println("Course collision with user2");
+                        System.exit(0);
                     }
                     break;
             }
@@ -265,6 +289,6 @@ public class StudentBoundary {
     public static void main(String[] args){
         StudentBoundary sb = new StudentBoundary();
         StudentManager studentManager = new StudentManager();
-        sb.selectFunction("MAMA123");
+        sb.selectFunction("RARA123");
     }
 }

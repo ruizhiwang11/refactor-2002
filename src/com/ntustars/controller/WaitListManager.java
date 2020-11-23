@@ -32,6 +32,10 @@ public class WaitListManager {
         for(int i = 0; i< waitList.size(); i++){
             String st = (String) waitList.get(i);
             if(st.contains(courseIndexStr)){
+                if(st.contains(studentID)){
+                    System.out.println("This student is already in the list");
+                    return;
+                }
                 st+=(studentID+",");
                 waitList.set(i,st);
                 TextReaderWriter.writetxt("waitList.txt",waitList);
@@ -77,8 +81,12 @@ public class WaitListManager {
         return null;
 
     }
-
     public static void main(String[] args) {
-        WaitListManager.readWaitList();
+        HashMap<String,ArrayList<String>> waitListMap = WaitListManager.readWaitList();
+        WaitListManager.updateWaitList("13333","PUPU123");
+        WaitListManager.updateWaitList("14444","ZUZU123");
+        String str = WaitListManager.popWaitList("13333");
+        String str1 = WaitListManager.popWaitList("13333");
+        waitListMap = WaitListManager.readWaitList();
     }
 }
