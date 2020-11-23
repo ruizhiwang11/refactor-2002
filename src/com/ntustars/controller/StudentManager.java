@@ -103,7 +103,7 @@ public class StudentManager {
             if (st.contains(userName)) {
                 StringTokenizer star = new StringTokenizer(st, SEPARATOR);
                 student.setUsername(star.nextToken().trim());
-                student.setPassword(PasswordManager.decrypt(star.nextToken().trim()));
+                student.setPassword(star.nextToken().trim());
                 student.setName(star.nextToken().trim());
                 student.setMatricNumber(star.nextToken().trim());
                 student.setGender(star.nextToken().trim());
