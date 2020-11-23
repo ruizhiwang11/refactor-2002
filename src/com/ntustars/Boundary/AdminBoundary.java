@@ -737,7 +737,7 @@ public class AdminBoundary {
                 System.out.println("Input number out of range! Please enter the course type:");
         } while ((courseType < 1) || (courseType > 3));
 
-        course.setCourseType(courseType);
+        course.setCourseType(courseType-1);
 
 
         System.out.println("\nHow many indices for this course?");

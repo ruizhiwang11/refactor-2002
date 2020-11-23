@@ -82,6 +82,7 @@ public class CourseManager {
         builder.append(SEPARATOR);
         builder.append(courseIndex.getAu());
         if(courseIndex.getStudentList().isEmpty()){
+            builder.append(SEPARATOR);
             courseIndexInfo.add(builder.toString());
         }
         else{
@@ -90,8 +91,9 @@ public class CourseManager {
                 builder.append(student);
                 builder.append(SEPARATOR);
             }
+            courseIndexInfo.add(builder.toString());
         }
-        courseIndexInfo.add(builder.toString());
+
 
         Collections.sort(courseIndexInfo);
         textReaderWriter.writetxt("courseIndexInfo.txt",courseIndexInfo);
