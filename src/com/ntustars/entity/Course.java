@@ -3,7 +3,7 @@ package com.ntustars.entity;
 import java.util.ArrayList;
 /**
  Represents the course in the school, can be different course name, index
- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ 
  @author WANG RUIZHI
  @version 1.0
  @since 2020-11-10
