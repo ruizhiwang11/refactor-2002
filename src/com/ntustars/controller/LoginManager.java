@@ -1,5 +1,10 @@
 package com.ntustars.controller;
-
+/**
+ Login manager to handle the login situation
+ @author WANG RUIZHI
+ @version 1.0
+ @since 2020-11-10
+ */
 import com.ntustars.Boundary.ErrorCodeBoundary;
 import com.ntustars.entity.Admin;
 
@@ -7,15 +12,25 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class LoginManager {
+    /**
+    Load admin DB
+     */
     private static ArrayList loadAdminInformationDB(){
         ArrayList stringArray = (ArrayList)TextReaderWriter.readtxt("adminInformation.txt");
         return  stringArray;
     }
-
+    /**
+     Load student DB
+     */
     public static ArrayList loadDBStudentInformation(){
         ArrayList stringArray = (ArrayList)TextReaderWriter.readtxt("studentInformation.txt");
         return  stringArray;
     }
+    /**
+     Check whether it's a valid admin
+     @param username username
+     @param password password
+     */
     public static boolean isValidAdmin(String username, String password){
         Admin admin = readUserAdminFromDB();
         if (!admin.getUsername().equals(username) ){
@@ -32,6 +47,11 @@ public class LoginManager {
             }
         }
     }
+    /**
+     Check whether it's a valid student
+     @param username username
+     @param password password
+     */
     public static boolean isValidStudent(String username, String password){
         ArrayList<ArrayList<String>> studentUserInfo = readUserStudentFromDB();
         for(int i =0; i<studentUserInfo.size();i++){
@@ -46,6 +66,10 @@ public class LoginManager {
         ErrorCodeBoundary.printInvalidUserName();
         return false;
     }
+    /**
+     Parse DB info to the admin object
+     @return admin object
+     */
     private static Admin readUserAdminFromDB(){
         ArrayList adminInformation = loadAdminInformationDB();
         String st = (String) adminInformation.get(0);
@@ -55,6 +79,10 @@ public class LoginManager {
         Admin admin = new Admin(adminUserName, adminPassword);
         return admin;
     }
+    /**
+     Parse DB info to the Student list with username and password
+     @return Student list with username and password
+     */
     private static ArrayList readUserStudentFromDB(){
         ArrayList studentInformation = loadDBStudentInformation();
         ArrayList<ArrayList<String>> studentUserInfo = new ArrayList<>();

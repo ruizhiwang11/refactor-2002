@@ -74,11 +74,4 @@ public class DateTimeManager {
         return tempResult1 || tempResult2;
     }
 
-    public static void main(String[] args) {
-        Calendar cal1 = convertCourseCompoStrToCalendar("Thu 12:00");
-        Calendar cal2 = convertCourseCompoStrToCalendar("Thu 13:00");
-        Calendar cal3 = convertCourseCompoStrToCalendar("Thu 12:50");
-        Calendar cal4 = convertCourseCompoStrToCalendar("Thu 13:00");
-        System.out.println(isTimeCollision(cal1,cal2,cal3,cal4));
-    }
 }

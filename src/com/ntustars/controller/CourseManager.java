@@ -387,6 +387,4 @@ public class CourseManager {
         }
         return false;
     }
-
-
 }

@@ -1,4 +1,10 @@
 package com.ntustars.controller;
+/**
+Utility to read and write the text file
+ @author WANG RUIZHI
+ @version 1.0
+ @since 2020-11-10
+ */
 
 import java.io.FileInputStream;
 import java.io.FileWriter;
