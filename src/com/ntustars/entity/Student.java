@@ -75,25 +75,31 @@ public class Student extends Person
         courseIndexList.remove(courseIndex);
     }
 
+    /**
+     * get courseIndexList
+     * @return this courseIndexList.
+     */
     public ArrayList<String> getCourseIndexList() {
         return courseIndexList;
     }
 
     /**
      * get student name
+     * @return this student's name.
      */
     public String getName() {
         return name;
     }
     /**
      * Set student name
-     * @param name This Student's name.
+     * @param name this Student's name.
      */
     public void setName(String name) {
         this.name = name;
     }
     /**
      * get student matricNumber
+     * @return this student's matricNumber.
      */
     public String getMatricNumber() {
         return matricNumber;
@@ -107,6 +113,7 @@ public class Student extends Person
     }
     /**
      * get student gender
+     * @return this student gender
      */
     public String getGender() {
         return gender;
@@ -120,6 +127,7 @@ public class Student extends Person
     }
     /**
      * get student nationality
+     * @return this student nationality.
      */
     public String getNationality() {
         return nationality;
@@ -133,15 +141,16 @@ public class Student extends Person
     }
     /**
      * get student auTaken
+     * @return this student auTaken
      */
     public int getAuTaken() {
         return auTaken;
     }
+
     /**
      * Set student auTaken
      * @param auTaken This Student's auTaken.
      */
-
     public void setAuTaken(int auTaken) {
         this.auTaken = auTaken;
     }
