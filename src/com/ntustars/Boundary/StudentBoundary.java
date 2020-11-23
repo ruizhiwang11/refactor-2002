@@ -354,14 +354,4 @@ public class StudentBoundary {
         } while (this.select != 0);
         System.exit(0);
     }
-
-    public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
-        StudentBoundary sb = new StudentBoundary();
-
-        System.out.println("Please key in your user name:");
-        String userName = sc.next();
-
-        sb.selectFunction(userName);
-    }
 }

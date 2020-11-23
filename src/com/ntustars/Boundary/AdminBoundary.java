@@ -771,7 +771,6 @@ public class AdminBoundary {
             dateAndTime = this.dateTimeSelection();
             courseIndex.addCourseCompo(new CourseCompo("LEC",dateAndTime.get(0),dateAndTime.get(1)));
             if(courseType ==2){
-
                 System.out.println("\nPlease enter the date and time for tutorial:\n");
                 dateAndTime = this.dateTimeSelection();
                 courseIndex.addCourseCompo(new CourseCompo("TUT",dateAndTime.get(0),dateAndTime.get(1)));
@@ -780,13 +779,10 @@ public class AdminBoundary {
                 System.out.println("\nPlease enter the date and time for tutorial:\n");
                 dateAndTime = this.dateTimeSelection();
                 courseIndex.addCourseCompo(new CourseCompo("TUT",dateAndTime.get(0),dateAndTime.get(1)));
-
                 System.out.println("\nPlease enter the date and time for lab:\n");
                 dateAndTime = this.dateTimeSelection();
                 courseIndex.addCourseCompo(new CourseCompo("LAB",dateAndTime.get(0),dateAndTime.get(1)));
-
             //course.addCourseIndex(courseIndex);
-
             //CourseCompo courseComponent = this.addCourseComponent(courseType);
         }*/
             course.addCourseIndex(courseIndex);
@@ -953,8 +949,6 @@ public class AdminBoundary {
             courseID = this.courseIDExist;
         course = this.courseMgr.readCourseByID(courseID);
         if (course!=null){
-            //course = new Course();
-            //updStudentName = name;
             System.out.println("\n*****Which information would you like to update ?*****");
             System.out.println("              Update Course Information             ");
             System.out.println("______________________________________________________\n");
@@ -1024,19 +1018,6 @@ public class AdminBoundary {
         ArrayList<CourseCompo> courseCompoList = new ArrayList<CourseCompo>();
         CourseIndex courseIndex = new CourseIndex();
         Scanner sc = new Scanner(System.in);
-        //if(this.courseIndexExist==null){
-        //this.addCourseIndex(courseID);
-            /*System.out.println("\nPlease enter the course index:");
-            indexID = sc.nextLine();
-            while((!indexID.matches("^[0-9]+$"))||(indexID.length()<2)){
-                if (!indexID.matches("^[0-9]+$"))
-                    System.out.println("Input must be numbers! Please enter again!");
-                else if(indexID.length()<2)
-                    System.out.println("Input can't be less than 1! Please enter again!");
-                System.out.println("\nPlease enter the index number:");
-                indexID = sc.nextLine();
-            }*/
-        //}
         if(this.courseIndexExist!=null) {
             indexID = this.courseIndexExist;
             while (this.courseMgr.readCourseIndexbyID(indexID) != null) {
@@ -1133,21 +1114,55 @@ public class AdminBoundary {
             courseIndex = this.addCourseIndex(courseID);
         course = this.courseMgr.readCourseByID(courseID);
         courseCompoList = this.addCourseComp(course.getCourseType());
-        //courseIndex.setCourseID(courseID);
         for(CourseCompo courseComp:courseCompoList)
             courseIndex.addCourseCompo(courseComp);
-        //..System.out.println(courseIndex.getCourseCompos().get[0]);
         this.adminManager.addCourseIndex(courseIndex);
 
         course.addCourseIndex(courseIndex);
         this.adminManager.updateCourse(course);
-        //CourseManager courseManager = new CourseManager();
-        //courseManager.addCourseToDB(course);
         System.out.println("\nThe course index have been updated successfully.");
 
     }
 
     private void checkVacancy(){
+        String courseIndexID = null;
+        ArrayList<CourseCompo> courseCompoList = new ArrayList<CourseCompo>();
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("\nPlease enter course index");
+        courseIndexID = sc.nextLine();
+        while(!courseIndexID.matches("^[0-9]+")){
+            System.out.println("Invalid input! Please enter a valid index number!");
+            courseIndexID = sc.nextLine();
+        }
+        System.out.println(courseIndexID);
+        CourseIndex courseIndex = this.courseMgr.readCourseIndexbyID(courseIndexID);
+        if (courseIndex==null){
+            System.out.print("The course index does not exist.");
+        }
+        else{
+            int size = courseIndex.getCourseCompos().size();
+
+            System.out.println("Hang on a moment while we load database....\n");
+            System.out.println("------------------------------------------------------");
+            System.out.println("Number of Slot: "+courseIndex.getSlot());
+            System.out.println("------------------------------------------------------");
+            if (size==0){
+                System.out.println("There's no vacancy for course index "+courseIndexID);
+            }
+            else{
+                courseCompoList = courseIndex.getCourseCompos();
+                System.out.println("   CLASS TYPE               DATE             TIME");
+                System.out.println("------------------------------------------------------");
+                for(CourseCompo courseComp : courseCompoList){
+                    System.out.println(String.format("       %s                   %s              %s",courseComp.getCompoType(),courseComp.getDay(),courseComp.getDay()));
+
+                }
+            }
+            System.out.println("------------------------------------------------------\n");
+
+        }
 
     }
 
@@ -1166,8 +1181,6 @@ public class AdminBoundary {
         System.out.println("|3. Wednesday         ||4.Thursday                   |");
         System.out.println("|5. Friday            ||                             |");
         System.out.println("______________________________________________________");
-
-
 
         do {
             while (!sc.hasNextInt()) {
@@ -1212,9 +1225,7 @@ public class AdminBoundary {
             }
             dateTimeSplit = startTime.split(" ");
             startTime = dateTimeSplit[0]+":"+dateTimeSplit[1];
-            //System.out.println("////////"+startDateTime);
             startCal = DateTimeManager.convertCourseCompoStrToCalendar(weekDay + " " + startTime);
-            // System.out.println("////////"+startCal);
             if (startCal == null) {
                 System.out.println("\nInvalid input! Please enter start time again!");
                 continue;
@@ -1232,7 +1243,6 @@ public class AdminBoundary {
             endCal = DateTimeManager.convertCourseCompoStrToCalendar(weekDay + " " + endTime);
             if (endCal==null){
                 System.out.println("Invalid input! Please enter end time again!!");
-                //continue;
             }
 
             else if((endCal.before(startCal))||(endCal.equals(startCal)))
@@ -1247,7 +1257,7 @@ public class AdminBoundary {
 
     private void printStudListByIndex() throws Exception {
         String courseIndex = null;
-        ArrayList studentUserNameList = new ArrayList();
+        ArrayList<Student> studentList = new ArrayList<Student>();
 
         Scanner sc = new Scanner(System.in);
 
@@ -1258,58 +1268,53 @@ public class AdminBoundary {
             courseIndex = sc.nextLine();
         }
 
-        studentUserNameList= adminManager.getStudentByIndex(courseIndex);
-        if (studentUserNameList.isEmpty()){
+        studentList= this.adminManager.getStudentByIndex(courseIndex);
+        if (studentList.isEmpty()){
             System.out.println("\nThere is no student registered for this course index.\n\n");
             return;
         }
         else{
             System.out.println("Hang on a moment while we load database.\n\n");
             System.out.println("------------------------------------------------------");
-            System.out.println("STUDENT NAME            GENDER             NATIONALITY");
+            System.out.println("        STUDENT NAME         GENDER        NATIONALITY");
             System.out.println("------------------------------------------------------");
-            for(Object student:studentUserNameList){
-                System.out.println(student);
+            //
+            for(Student student:studentList){
+                System.out.println(String.format("%20s         %6s        %s",student.getName(),student.getGender(),student.getNationality()));
             }
-            //
-            //System.out.println(String.format("%20s            %s             %s",name,gender,nationality ));
-            //
-            //print
-            //print
-            System.out.println("------------------------------------------------------");
+            System.out.println("------------------------------------------------------\n");
         }
     }
 
     private void printStudListByCourse() throws Exception {
         String courseID = null;
+        ArrayList<Student> studentList = new ArrayList<Student>();
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("\nPlease enter course index");
+        System.out.println("\nPlease enter course ID");
         courseID = sc.nextLine();
         while(!courseID.matches("^[a-zA-Z]{2}[0-9]{4}$")){
             System.out.println("Invalid input! Please enter a valid index number!");
             courseID = sc.nextLine();
         }
 
-        ArrayList studentUserNameList= adminManager.getStudentByCourse(courseID);
-        if (studentUserNameList.isEmpty()){
+        studentList= this.adminManager.getStudentByCourse(courseID);
+        if (studentList.isEmpty()){
             System.out.println("\nThere is no student registered for this course ID\n\n");
             return;
         }
         else{
             System.out.println("Hang on a moment while we load database.\n\n");
             System.out.println("------------------------------------------------------");
-            System.out.println("STUDENT NAME            GENDER             NATIONALITY");
+            System.out.println("        STUDENT NAME         GENDER        NATIONALITY");
             System.out.println("------------------------------------------------------");
             //
-            //System.out.println(String.format("%20s            %s             %s",name,gender,nationality ));
-            //
-            //print
-            //print
-            System.out.println("------------------------------------------------------");
+            for(Student student:studentList){
+                System.out.println(String.format("%20s         %6s        %s",student.getName(),student.getGender(),student.getNationality()));
+            }
+
+            System.out.println("------------------------------------------------------\n");
         }
     }
-
-
 }
