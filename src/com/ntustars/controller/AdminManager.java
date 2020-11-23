@@ -56,7 +56,7 @@ public class AdminManager {
         builder.append(",");
         builder.append(endingDay);
         adminInformation.set(0,builder.toString());
-        TextReaderWriter.writetxt("adminInformation",adminInformation);
+        TextReaderWriter.writetxt("adminInformation.txt",adminInformation);
         return 0;
     }
     public ArrayList getStudentByIndex(String index){
