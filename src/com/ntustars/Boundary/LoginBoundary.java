@@ -41,7 +41,6 @@ public class LoginBoundary  {
             case "1":
                 System.out.println("");
                 System.out.println("         *  Please login as STUDENT   *");
-                System.out.println("");
                 userStr = loginfunction();
                 userName = userStr[0];
                 password = userStr[1];
@@ -57,7 +56,6 @@ public class LoginBoundary  {
             case "2":
                 System.out.println("");
                 System.out.println("         *  Please login as ADMINISTRATOR   *");
-                System.out.println("");
                 userStr = loginfunction();
                 userName = userStr[0];
                 password = userStr[1];
