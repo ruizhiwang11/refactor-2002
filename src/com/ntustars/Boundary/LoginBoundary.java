@@ -14,21 +14,20 @@ public class LoginBoundary  {
         ArrayList<String> loginInfoList = new ArrayList();
         System.out.println("");
         System.out.println("");
-        System.out.println("    ============================ - Console mode - ======================    ");
-        System.out.println("");
-        System.out.println("                            Welcome to XXXXX program                          ");
-        System.out.println("");
-        System.out.println("    ====================================================================    ");
-        System.out.println("");
-        System.out.println("                                    Main Menu                           ");
-        System.out.println("");
-        System.out.println("                     *  Please Choose Your User Group:    *                      ");
-        System.out.println("");
-        System.out.println("                     '1' if you are a student");
-        System.out.println("                     '2' if you are an administrator");
-        System.out.println("                     '0' to exist the system");
-        System.out.println("");
-        System.out.println("    ====================================================================    ");
+        System.out.println(" ==================== -- Console mode -- ==================== ");
+        System.out.println("                                                              ");
+        System.out.println("               Welcome to New STARS program                   ");
+        System.out.println("                                                              ");
+        System.out.println(" ============================================================ ");
+        System.out.println("                           Main Menu                          ");
+        System.out.println(" ____________________________________________________________ ");
+        System.out.println("           *   Please Choose Your User Group:    *            ");
+        System.out.println("                                                              ");
+        System.out.println("               '1' if you are a student                       ");
+        System.out.println("               '2' if you are an administrator                ");
+        System.out.println("               '0' to exist the system                        ");
+        System.out.println("                                                              ");
+        System.out.println(" ============================================================ ");
         System.out.println("");
         System.out.println("");
         String userName = "";
@@ -41,7 +40,7 @@ public class LoginBoundary  {
         switch (userGroup){
             case "1":
                 System.out.println("");
-                System.out.println("            *  Please login as STUDENT   *");
+                System.out.println("         *  Please login as STUDENT   *");
                 System.out.println("");
                 userStr = loginfunction();
                 userName = userStr[0];
@@ -51,14 +50,13 @@ public class LoginBoundary  {
                     userName = userStr[0];
                     password = userStr[1];
                 }
-                System.out.println("");
-                System.out.println("            *  You have login as STUDENT  *");
+                System.out.println("         *  You have login as STUDENT  *");
                 loginInfoList.add("STUDENT");
                 loginInfoList.add(userName);
                 return loginInfoList;
             case "2":
                 System.out.println("");
-                System.out.println("            *  Please login as administrator   *");
+                System.out.println("         *  Please login as ADMINISTRATOR   *");
                 System.out.println("");
                 userStr = loginfunction();
                 userName = userStr[0];
@@ -68,8 +66,7 @@ public class LoginBoundary  {
                     userName = userStr[0];
                     password = userStr[1];
                 }
-                System.out.println("");
-                System.out.println("            *  You have login as ADMINISTATOR  *");
+                System.out.println("         *  You have login as ADMINISTRATOR  *");
                 loginInfoList.add("ADMIN");
                 loginInfoList.add(userName);
                 return loginInfoList;
@@ -86,7 +83,7 @@ public class LoginBoundary  {
 
         }
         System.out.println("");
-        System.out.println("    ====================================================================    ");
+        System.out.println("    ============================================================    ");
         System.out.println("");
         System.out.println("");
         return null;
