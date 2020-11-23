@@ -90,8 +90,9 @@ public class CourseManager {
                 builder.append(student);
                 builder.append(SEPARATOR);
             }
+            courseIndexInfo.add(builder.toString());
         }
-        courseIndexInfo.add(builder.toString());
+
 
         Collections.sort(courseIndexInfo);
         textReaderWriter.writetxt("courseIndexInfo.txt",courseIndexInfo);
