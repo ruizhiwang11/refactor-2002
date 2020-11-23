@@ -21,7 +21,7 @@ public class StudentBoundary {
     CourseManager courseManager = new CourseManager();
     Scanner sc = new Scanner(System.in);
 
-    public StudentBoundary() throws IOException {
+    public StudentBoundary(){
 
     }
 
@@ -32,9 +32,9 @@ public class StudentBoundary {
         System.out.println("|1. Add Course                                       |");
         System.out.println("|2. Drop Course                                      |");
         System.out.println("|3. Check Courses Registered                         |");
-        System.out.println("|4. Check Vacancies Available                        |");
-        System.out.println("|5. Change Index Number of Course                    |");
-        System.out.println("|6. Swap Index Number with Another Student           |");
+//        System.out.println("|4. Check Vacancies Available                        |");
+//        System.out.println("|5. Change Index Number of Course                    |");
+        System.out.println("|4. Swap Index Number with Another Student           |");
         System.out.println("|----------------------------------------------------|");
         System.out.println("|0. Exit                                             |");
         System.out.println("|----------------------------------------------------|");
@@ -48,7 +48,6 @@ public class StudentBoundary {
 
         String i = "";
         int s = -1;
-
         do {
             printStudentFunction();
             i = sc.next();
@@ -66,11 +65,9 @@ public class StudentBoundary {
         this.select = s;
     }
 
-    private String getCourseID() throws IOException {
+    private String getCourseIDAdd(){
         String courseIDStr;
         ArrayList courseArrayList = courseManager.readAllCourseIDFromDB();
-
-
         do {
             System.out.println("Please key in course ID:");
             courseIDStr = sc.next();
@@ -79,8 +76,7 @@ public class StudentBoundary {
         return courseIDStr;
     }
 
-    private String getCourseIndex (String courseID) throws IOException {
-        String courseIndex;
+    private String getCourseIndexAdd(String courseID){
         Course tmpCourse = courseManager.readCourseByID(courseID);
         ArrayList<String> tempCourseIndexArray = new ArrayList<>();
         CourseIndex cI;
@@ -88,13 +84,14 @@ public class StudentBoundary {
         String tmpDay = null;
         String tmpTimeSlot = null;
         boolean f = false;
+        ArrayList<String> indexList = new ArrayList<>();
         for(CourseIndex tmpIndex : tmpCourse.getCourseIndices()){
             tempCourseIndexArray.add(tmpIndex.getIndex());
         }
         System.out.println("Here are the index for "+ courseID+":");
-
         for(CourseIndex tmpIndex : tmpCourse.getCourseIndices()){
-            System.out.println(tmpIndex.getIndex());
+            indexList.add(tmpIndex.getIndex());
+            System.out.println(tmpIndex.getIndex() + "\t" + "Available Slot: " + tmpIndex.getSlot());
             for(CourseCompo compo : tmpIndex.getCourseCompos()){
                 tmpType = compo.getCompoType();
                 tmpDay = compo.getDay();
@@ -102,17 +99,19 @@ public class StudentBoundary {
                 System.out.println("\t"+tmpType+ "\t"+ tmpDay +"\t"+ tmpTimeSlot);
             }
         }
-//        Scanner sc = new Scanner(System.in);
         do {
-            System.out.println("Please key in course index: ");
-            courseIndex = sc.next();
+            do {
+                System.out.println("Please key in course index: ");
+                courseIndex = sc.next();
+            } while (!indexList.contains(courseIndex));
             cI = courseManager.readCourseIndexbyID(courseIndex);
             if (cI.getSlot() < 1) {
                 System.out.println("There is no slot for this course index. \nPlease choose another index.");
                 courseIndex = "00000";
+                System.exit(0);
             }
             f = false;
-            for (String index : studentManager.readStudentbyID(this.userName).getCourseIndexList()) {
+            for (String index : studentManager.readSingleStudent(this.userName).getCourseIndexList()) {
 //                System.out.println(courseIndex2.getIndex());
                 CourseIndex courseIndex2 = courseManager.readCourseIndexbyID(index);
 //                boolean t = courseManager.isCourseIndexCollision(courseIndex2, cI);
@@ -123,79 +122,149 @@ public class StudentBoundary {
                     break;
                 }
             }
-
         } while (!tempCourseIndexArray.contains(courseIndex) || f); //not_in_the_list);
-
-        cI.getSlot();
-//        this.courseIndex = courseIndex;
         return courseIndex;
     }
 
-    private void getSwapInfo() {
-        //aaaaa
+
+    private String getCourseIndexRemove(String userName){
+        String courseIndexStr;
+        ArrayList<String> indexArrayList = studentManager.readSingleStudent(userName).getCourseIndexList();
+        String tmpCourseID;
+        System.out.println("Your registered courses and indexes:");
+        for (String index : indexArrayList){
+            tmpCourseID = courseManager.readCourseIndexbyID(index).getCourseID();
+            System.out.println(tmpCourseID + "\t" + index);
+        }
+        do {
+            System.out.println("Please key in course INDEX:");
+            courseIndexStr = sc.next();
+        } while (!indexArrayList.contains(courseIndexStr)); //not_in_the_list
+//        this.courseID = courseID;
+        return courseIndexStr;
     }
 
-    public void selectFunction(String userName) throws IOException {
+    private String getUser2(){
+        String userName;
+        do {
+            System.out.println("Please key in user name of User2:");
+            userName = sc.next();
+        } while (!studentManager.readAllUserName().contains(userName));
+        return userName;
+    }
+
+    private void updateCourseIndexInfoAdd (String userName, String courseIndex){
+        Student student = studentManager.updateSingleStudent(userName, courseIndex, "ADD");
+        studentManager.updateStudentInfoDB(student);
+        CourseIndex courseIndex11 = courseManager.readCourseIndexbyID(courseIndex);
+        courseIndex11.addStudent(student.getUsername());
+        courseIndex11.setSlot(courseIndex11.getSlot() - 1);
+        courseManager.updateCourseIndexInfoCompoDB(courseIndex11);
+        studentManager.addCourse(this.userName);
+    }
+
+    private void updateCourseIndexInfoRemove (String userName, String courseIndex) {
+        Student student2 = studentManager.updateSingleStudent(userName, courseIndex, "REMOVE");
+        studentManager.updateStudentInfoDB(student2);
+        CourseIndex courseIndex21 = courseManager.readCourseIndexbyID(courseIndex);
+        courseIndex21.dropStudent(student2.getUsername());
+        courseIndex21.setSlot(courseIndex21.getSlot() + 1);
+        courseManager.updateCourseIndexInfoCompoDB(courseIndex21);
+    }
+
+    public void selectFunction(String userName){
 
         this.userName = userName;
-        getSelection();
-//        while ()
-        switch (this.select) {
-            case 0:
-                System.out.println("EXIT");
-                System.exit(0);
-                break;
-            case 1:
-                System.out.println("Select 1. Add Course");
-                String courseID =getCourseID();
-                String courseIndex1 = getCourseIndex(courseID);
+        do {
+            getSelection();
+            switch (this.select) {
+                case 1:
+                    System.out.println("Select 1. Add Course");
+                    boolean f;
+                    String courseID;
+                    do {
+                        f = false;
+                        courseID = getCourseIDAdd();
+                        if (studentManager.isCourseIDCollision(userName, courseID)) {
+                            System.out.println("You have already registered this course!");
+                            f = true;
+                        }
+                    } while (f);
+                    String courseIndexToAddStr = getCourseIndexAdd(courseID);
+                    Student student = studentManager.updateSingleStudent(userName, courseIndexToAddStr, "ADD");
+                    studentManager.updateStudentInfoDB(student);
+                    CourseIndex courseIndexToAdd = courseManager.readCourseIndexbyID(courseIndexToAddStr);
+                    courseIndexToAdd.addStudent(student.getUsername());
+                    courseIndexToAdd.setSlot(courseIndexToAdd.getSlot() - 1);
+                    courseManager.updateCourseIndexInfoCompoDB(courseIndexToAdd);
+                    studentManager.addCourse(this.userName);
+                    break;
+                case 2:
+                    System.out.println("Select 2. Drop Course");
+                    String courseIndex41;
+                    courseIndex41 = getCourseIndexRemove(userName);
 
-                Student student = studentManager.updateSingleStudent(userName,courseIndex1);
-                studentManager.updateStudentInfoDB(student);
-                CourseIndex courseIndex3 = courseManager.readCourseIndexbyID(courseIndex1);
-                courseIndex3.addStudent(student.getUsername());
-                courseIndex3.setSlot(courseIndex3.getSlot()-1);
-                courseManager.updateCourseIndexInfoCompoDB(courseIndex3);
-                studentManager.addCourse(this.userName);
-                break;
-            case 2:
-                System.out.println("Select 2. Drop Course");
-                getCourseID();
-                studentManager.dropCourse(this.userName);
-                break;
-            case 3:
-                System.out.println("Select 3. Check Courses Registered");
-                ArrayList<String> courseIndex = studentManager.readStudentbyID(this.userName).getCourseIndexList();
-                for (String index : courseIndex) {
-                    CourseIndex courseIndex2 = courseManager.readCourseIndexbyID(index);
+                    Student student2 = studentManager.updateSingleStudent(userName, courseIndex41, "REMOVE");
+                    studentManager.updateStudentInfoDB(student2);
+                    CourseIndex courseIndex21 = courseManager.readCourseIndexbyID(courseIndex41);
+                    courseIndex21.dropStudent(student2.getUsername());
+                    courseIndex21.setSlot(courseIndex21.getSlot() + 1);
+                    courseManager.updateCourseIndexInfoCompoDB(courseIndex21);
+
+                    break;
+                case 3:
+                    System.out.println("Select 3. Check Courses Registered");
+                    ArrayList<String> courseIndex = studentManager.readSingleStudent(this.userName).getCourseIndexList();
+                    for (String index : courseIndex) {
+                        CourseIndex courseIndex3 = courseManager.readCourseIndexbyID(index);
 //                    String courseID = courseManager.getCourseIDbyCourseIndex(index.getIndex());
-                    System.out.print(courseManager.getCourseIDbyCourseIndex(courseIndex2.getIndex()));
-                    System.out.println("\t"+courseIndex2.getIndex());
-                }
-                break;
-            case 4:
-                System.out.println("Select 4. Check Vacancies Available");
-                getCourseID();
-                courseManager.readCourseIndexbyID(this.courseID);
-                break;
-            case 5:
-                System.out.println("Select 5. Change Index Number of Course");
-//                getCourseIndex();
-                studentManager.changeIndex(this.userName, this.courseIndex);
-                break;
-            case 6:
-                System.out.println("Select 6. Swap Index Number with Another Student");
-//                getCourseIndex();
-                studentManager.swapIndex("tom", "jerry");
-                break;
+                        System.out.print(courseManager.getCourseIDbyCourseIndex(courseIndex3.getIndex()));
+                        System.out.println("\t" + courseIndex3.getIndex());
+                    }
+                    break;
 
+                case 4:
+                    System.out.println("Select 4. Swap Index Number with Another Student");
 
-        }
+                    String courseIndex411, courseIndex421;
+                    courseIndex411 = getCourseIndexRemove(userName);
+                    String userName42 = getUser2();
+                    courseIndex421 = getCourseIndexRemove(userName42);
+                    int s = 0;
+                    for ( String index : studentManager.readSingleStudent(userName).getCourseIndexList()) {
+                        if (courseManager.isCourseIndexCollision(courseManager.readCourseIndexbyID(index),
+                                courseManager.readCourseIndexbyID(courseIndex421))){
+                            s = 1;
+                        }
+                    }
+                    for ( String index : studentManager.readSingleStudent(userName42).getCourseIndexList()) {
+                        if (courseManager.isCourseIndexCollision(courseManager.readCourseIndexbyID(index),
+                                courseManager.readCourseIndexbyID(courseIndex411))){
+                            s = 2;
+                        }
+                    }
+
+                    if (s == 0){
+                        updateCourseIndexInfoRemove(userName,courseIndex411);
+                        updateCourseIndexInfoRemove(userName42,courseIndex421);
+
+                        updateCourseIndexInfoAdd(userName,courseIndex421);
+                        updateCourseIndexInfoAdd(userName42,courseIndex411);
+
+                    } else if (s == 1) {
+                        System.out.println("Course collision with user1");
+                    } else if (s == 2) {
+                        System.out.println("Course collision with user2");
+                    }
+                    break;
+            }
+        } while (this.select != 0);
+        System.exit(0);
     }
 
-    public static void main(String[] args) throws IOException {
-            StudentBoundary sb = new StudentBoundary();
-            StudentManager studentManager = new StudentManager();
-            sb.selectFunction("RARA123");
-        }
+    public static void main(String[] args){
+        StudentBoundary sb = new StudentBoundary();
+        StudentManager studentManager = new StudentManager();
+        sb.selectFunction("MAMA123");
+    }
 }

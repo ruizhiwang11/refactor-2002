@@ -4,12 +4,14 @@ import com.ntustars.controller.PasswordManager;
 
 import javax.security.sasl.SaslClient;
 import java.io.Console;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class LoginBoundary  {
 
-    public static void login (){
+    public static ArrayList login (){
+        ArrayList<String> loginInfoList = new ArrayList();
         System.out.println("");
         System.out.println("");
         System.out.println("    ============================ - Console mode - ======================    ");
@@ -51,7 +53,9 @@ public class LoginBoundary  {
                 }
                 System.out.println("");
                 System.out.println("            *  You have login as STUDENT  *");
-                break;
+                loginInfoList.add("STUDENT");
+                loginInfoList.add(userName);
+                return loginInfoList;
             case "2":
                 System.out.println("");
                 System.out.println("            *  Please login as administrator   *");
@@ -66,7 +70,9 @@ public class LoginBoundary  {
                 }
                 System.out.println("");
                 System.out.println("            *  You have login as ADMINISTATOR  *");
-                break;
+                loginInfoList.add("ADMIN");
+                loginInfoList.add(userName);
+                return loginInfoList;
             case "0":
                 System.out.println("");
                 System.out.println("*  '0' entered  *");
@@ -83,14 +89,11 @@ public class LoginBoundary  {
         System.out.println("    ====================================================================    ");
         System.out.println("");
         System.out.println("");
+        return null;
     }
     //System.out.println(user);
 
     private static String[] loginfunction  (){
-//        Console consoleLogin = System.console();
-//        String user = consoleLogin.readLine("Enter You User Name : ");
-//        String password = new String (consoleLogin.readPassword("Enter Your Passoword : "));
-//        return user;
         String[] str = new String[2];
         Scanner sc1 = new Scanner(System.in);
         System.out.println("Enter You User Name : ");
@@ -101,10 +104,5 @@ public class LoginBoundary  {
         str[1] = password;
         return str;
     }
-
-    public static void main(String[] args) {
-        login();
-    }
-
 }
 
