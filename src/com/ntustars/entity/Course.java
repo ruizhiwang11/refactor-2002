@@ -36,7 +36,7 @@ public class Course {
      * Creates a new Course with all the infomation
      * @param courseID The course ID of one course.
      * @param courseType The course Type of the course, can be LEC only,TUT and LEC only or lab,TUT and LEC .
-     * @param school The time slot, can be 1600-1700.
+     * @param school school which the course belongs to..
      */
     public Course(String courseID,String school, int courseType)
     {
