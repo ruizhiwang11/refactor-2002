@@ -1,4 +1,5 @@
 package com.ntustars.Boundary;
+import com.ntustars.controller.DateTimeManager;
 import com.ntustars.controller.LoginManager;
 import com.ntustars.controller.PasswordManager;
 
@@ -40,7 +41,12 @@ public class LoginBoundary  {
         switch (userGroup){
             case "1":
                 System.out.println("");
-                System.out.println("         *  Please login as STUDENT   *");
+                System.out.println("            *  Please login as STUDENT   *");
+                System.out.println("");
+                if(!DateTimeManager.isAccessible()){
+                    System.out.println("Not in the access period");
+                    System.exit(0);
+                }
                 userStr = loginfunction();
                 userName = userStr[0];
                 password = userStr[1];

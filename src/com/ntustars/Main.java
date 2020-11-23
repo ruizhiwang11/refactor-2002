@@ -1,25 +1,22 @@
 package com.ntustars;
 
+import com.ntustars.Boundary.AdminBoundary;
 import com.ntustars.Boundary.LoginBoundary;
 import com.ntustars.Boundary.StudentBoundary;
-import com.ntustars.controller.AdminManager;
-import com.ntustars.controller.CourseManager;
-import com.ntustars.entity.Course;
-import com.ntustars.entity.CourseCompo;
-import com.ntustars.entity.CourseIndex;
-import com.ntustars.entity.Student;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception {
         ArrayList <String> loginInfo = LoginBoundary.login();
         if(loginInfo != null){
             if(loginInfo.get(0).equals("STUDENT")){
                 StudentBoundary studentBoundary = new StudentBoundary();
                 studentBoundary.selectFunction(loginInfo.get(1));
+            }
+            if(loginInfo.get(0).equals("ADMIN")){
+                AdminBoundary adminBoundary = new AdminBoundary();
+                adminBoundary.adminMenu();
             }
         }
 

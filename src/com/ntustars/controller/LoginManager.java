@@ -22,7 +22,7 @@ public class LoginManager {
     /**
      Load student DB
      */
-    public static ArrayList loadDBStudentInformation(){
+    private static ArrayList loadDBStudentInformation(){
         ArrayList stringArray = (ArrayList)TextReaderWriter.readtxt("studentInformation.txt");
         return  stringArray;
     }

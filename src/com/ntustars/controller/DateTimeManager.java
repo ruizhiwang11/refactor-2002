@@ -19,14 +19,14 @@ public class DateTimeManager {
     /**
     load DB
      */
-    private static ArrayList loadAdminInformationDB() throws IOException {
+    private static ArrayList loadAdminInformationDB(){
         ArrayList stringArray = (ArrayList)TextReaderWriter.readtxt("adminInformation.txt");
         return  stringArray;
     }
     /**
      load DB
      */
-    private static ArrayList readAccessPeriodFromDB() throws IOException{
+    public static ArrayList readAccessPeriodFromDB(){
         ArrayList adminInformation = loadAdminInformationDB();
         ArrayList <String> accessDateTimeStrList = new ArrayList<>();
         for(int i = 0; i< adminInformation.size(); i++){
@@ -76,7 +76,7 @@ public class DateTimeManager {
     /**
     read the datebase to check whether the current time is accessible
      */
-    public static boolean isAccessible() throws IOException{
+    public static boolean isAccessible(){
         ArrayList <String> accessDateTimeStrList = readAccessPeriodFromDB();
         Calendar starting = convertAccessStringToCalendar(accessDateTimeStrList.get(0));
         Calendar ending = convertAccessStringToCalendar(accessDateTimeStrList.get(1));

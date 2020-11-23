@@ -61,22 +61,28 @@ public class AdminManager {
     }
     public ArrayList getStudentByIndex(String index){
         CourseIndex courseIndex = courseManager.readCourseIndexbyID(index);
-        ArrayList<String> studentUserNameList = new ArrayList<>();
-        for(String student : courseIndex.getStudentList()){
-            studentUserNameList.add(student);
+        ArrayList<Student> studentList = new ArrayList<>();
+        for(String studentStr : courseIndex.getStudentList()){
+            StudentManager studentManager = new StudentManager();
+            Student student = studentManager.readSingleStudent(studentStr);
+            studentList.add(student);
         }
-        return studentUserNameList;
+        return studentList;
     }
     public ArrayList getStudentByCourse(String courseID){
         Course course = courseManager.readCourseByID(courseID);
-        ArrayList<String> studentUserNameList = new ArrayList<>();
+        ArrayList<Student> studentList = new ArrayList<>();
         for(CourseIndex courseIndex : course.getCourseIndices()){
-            studentUserNameList.addAll(getStudentByIndex(courseIndex.getIndex()));
+            studentList.addAll(getStudentByIndex(courseIndex.getIndex()));
         }
-        return studentUserNameList;
+        return studentList;
     }
 
     public int addStudent(Student student){
+        if(student == null){
+            System.out.println("Student is null");
+            return 1;
+        }
         ArrayList studentInformation = loadDBStudentInformation();
         String stUserName = student.getUsername();
         // encrypt password
@@ -98,13 +104,61 @@ public class AdminManager {
         builder.append(stGender);
         builder.append(",");
         builder.append(stNationality);
+        builder.append(",");
+        builder.append(student.getAuTaken());
+        builder.append(",");
         studentInformation.add(builder.toString());
         Collections.sort(studentInformation);
         TextReaderWriter.writetxt("studentInformation.txt", studentInformation);
         return 0;
     }
 
-
+    public int updateStudent(Student student){
+        ArrayList studentInformation = loadDBStudentInformation();
+        for(int i=0; i<studentInformation.size();i++){
+            String st = (String)studentInformation.get(i);
+            if(st.contains(student.getUsername())){
+                String encryStPassword = PasswordManager.encrypt(student.getPassword());
+                StringTokenizer star = new StringTokenizer(st, ",");
+                String stName = student.getName();
+                String stGender = student.getGender();
+                String stMatricNumber = student.getMatricNumber();
+                String stNationality = student.getNationality();
+                //student.getAuTaken();
+                StringBuilder builder = new StringBuilder();
+                builder.append(student.getUsername());
+                builder.append(",");
+                star.nextToken().trim();
+                builder.append(encryStPassword);
+                builder.append(",");
+                star.nextToken().trim();
+                builder.append(stName);
+                builder.append(",");
+                star.nextToken().trim();
+                builder.append(stMatricNumber);
+                builder.append(",");
+                star.nextToken().trim();
+                builder.append(stGender);
+                builder.append(",");
+                star.nextToken().trim();
+                builder.append(stNationality);
+                builder.append(",");
+                star.nextToken().trim();
+                builder.append(student.getAuTaken());
+                builder.append(",");
+                while (star.hasMoreTokens()){
+                    builder.append(star.nextToken().trim());
+                    builder.append(",");
+                }
+                studentInformation.set(i,builder.toString());
+                Collections.sort(studentInformation);
+                TextReaderWriter.writetxt("studentInformation.txt", studentInformation);
+                return 0;
+            }
+        }
+        System.out.println("No such a student in DB");
+        return 1;
+    }
 
 }
 
