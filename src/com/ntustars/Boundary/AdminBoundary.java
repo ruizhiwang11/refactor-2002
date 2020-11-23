@@ -613,7 +613,7 @@ public class AdminBoundary {
                 }
 
 
-                this.adminManager.addStudent(newStudent);
+                this.adminManager.updateStudent(newStudent);
 
                 System.out.println("\n*****Which information would you like to update ?*****");
                 System.out.println("              Update Student Information             ");

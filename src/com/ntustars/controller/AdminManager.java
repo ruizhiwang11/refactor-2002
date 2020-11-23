@@ -124,7 +124,6 @@ public class AdminManager {
                 String stGender = student.getGender();
                 String stMatricNumber = student.getMatricNumber();
                 String stNationality = student.getNationality();
-                //student.getAuTaken();
                 StringBuilder builder = new StringBuilder();
                 builder.append(student.getUsername());
                 builder.append(",");
@@ -146,6 +145,7 @@ public class AdminManager {
                 star.nextToken().trim();
                 builder.append(student.getAuTaken());
                 builder.append(",");
+                star.nextToken().trim();
                 while (star.hasMoreTokens()){
                     builder.append(star.nextToken().trim());
                     builder.append(",");
