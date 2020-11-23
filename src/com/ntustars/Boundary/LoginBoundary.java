@@ -1,16 +1,22 @@
 package com.ntustars.Boundary;
 import com.ntustars.controller.DateTimeManager;
 import com.ntustars.controller.LoginManager;
-import com.ntustars.controller.PasswordManager;
 
-import javax.security.sasl.SaslClient;
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
+/**
+ To provide a login UI interface for user
+ and pass the parameter to the other functions
+ @author Ma Yiheng
+ @version 1.0
+ @since 2020-11-10
+ */
 public class LoginBoundary  {
-
+    /**
+     login UI interface
+     @return loginInfoList the list contain username and password
+     */
     public static ArrayList login (){
         ArrayList<String> loginInfoList = new ArrayList();
         System.out.println("");
@@ -35,7 +41,6 @@ public class LoginBoundary  {
         String password = "";
         String[] userStr;
         Scanner sc = new Scanner(System.in);
-        //Console console = System.console();
         System.out.println("You User Group : ");
         String userGroup = sc.next();
         switch (userGroup){
@@ -92,8 +97,10 @@ public class LoginBoundary  {
         System.out.println("");
         return null;
     }
-    //System.out.println(user);
-
+    /**
+     login function to scan user's inputs as username and password
+     @return str the string list contain username and password
+     */
     private static String[] loginfunction  (){
         String[] str = new String[2];
         Scanner sc1 = new Scanner(System.in);

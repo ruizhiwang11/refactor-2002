@@ -3,12 +3,26 @@ package com.ntustars.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
+/**
+ To handle the string and date time conversion
+ @author WANG RUIZHI
+ @version 1.0
+ @since 2020-11-10
+ */
 
 public class WaitListManager {
+    /**
+     load WaitList database text file
+     @return stringArray
+     */
     private static ArrayList loadDBWaitList(){
         ArrayList stringArray = (ArrayList)TextReaderWriter.readtxt("waitList.txt");
         return  stringArray;
     }
+    /**
+     read WaitList from data base return as HashMap<String,ArrayList<String>>
+     @return waitListMap
+     */
     public static HashMap<String,ArrayList<String>> readWaitList(){
         ArrayList waitList = loadDBWaitList();
         HashMap<String,ArrayList<String>> waitListMap = new HashMap<>();
@@ -27,6 +41,12 @@ public class WaitListManager {
         }
         return waitListMap;
     }
+
+    /**
+     update courseIndex studentID to WaitList
+     @param courseIndexStr
+     @param studentID
+     */
     public static void updateWaitList(String courseIndexStr, String studentID){
         ArrayList waitList = loadDBWaitList();
         for(int i = 0; i< waitList.size(); i++){
@@ -51,6 +71,12 @@ public class WaitListManager {
         TextReaderWriter.writetxt("waitList.txt",waitList);
         return;
     }
+
+    /**
+     pop student information from WaitList with given courseIndex
+     @param courseIndexStr
+     @return studentStr
+     */
     public static String popWaitList(String courseIndexStr){
         ArrayList waitList = loadDBWaitList();
         for(int i = 0; i< waitList.size(); i++){
@@ -81,6 +107,7 @@ public class WaitListManager {
         return null;
 
     }
+
     public static void main(String[] args) {
         HashMap<String,ArrayList<String>> waitListMap = WaitListManager.readWaitList();
         WaitListManager.updateWaitList("13333","PUPU123");
