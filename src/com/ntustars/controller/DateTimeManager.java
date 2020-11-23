@@ -1,6 +1,10 @@
 package com.ntustars.controller;
-
-
+/**
+ To handle the string and date time conversion
+ @author WANG RUIZHI
+ @version 1.0
+ @since 2020-11-10
+ */
 import com.ntustars.entity.Student;
 
 import java.io.IOException;
@@ -12,12 +16,16 @@ import java.util.Date;
 import java.util.StringTokenizer;
 
 public class DateTimeManager {
-
+    /**
+    load DB
+     */
     private static ArrayList loadAdminInformationDB() throws IOException {
         ArrayList stringArray = (ArrayList)TextReaderWriter.readtxt("adminInformation.txt");
         return  stringArray;
     }
-
+    /**
+     load DB
+     */
     private static ArrayList readAccessPeriodFromDB() throws IOException{
         ArrayList adminInformation = loadAdminInformationDB();
         ArrayList <String> accessDateTimeStrList = new ArrayList<>();
@@ -31,6 +39,11 @@ public class DateTimeManager {
             }
         return  accessDateTimeStrList;
     }
+    /**
+     To convert string to calendar object
+     @param dateTimeString
+     @return calendar
+     */
     public static Calendar convertAccessStringToCalendar(String dateTimeString){
         Calendar cal = Calendar.getInstance();
         Date tempDate = null;
@@ -43,6 +56,11 @@ public class DateTimeManager {
         cal.setTime(tempDate);
         return cal;
     }
+    /**
+     To convert string to calendar object
+     @param courseCompoTime
+     @return calendar
+     */
     public static Calendar convertCourseCompoStrToCalendar(String courseCompoTime) {
         Calendar cal = Calendar.getInstance();
         Date tempDate = null;
@@ -55,6 +73,9 @@ public class DateTimeManager {
         cal.setTime(tempDate);
         return cal;
     }
+    /**
+    read the datebase to check whether the current time is accessible
+     */
     public static boolean isAccessible() throws IOException{
         ArrayList <String> accessDateTimeStrList = readAccessPeriodFromDB();
         Calendar starting = convertAccessStringToCalendar(accessDateTimeStrList.get(0));
@@ -64,6 +85,9 @@ public class DateTimeManager {
         currentCal.setTime(now);
         return  (starting.getTimeInMillis()<=currentCal.getTimeInMillis()) && (currentCal.getTimeInMillis()<= ending.getTimeInMillis());
     }
+    /**
+     check whether the time is collision
+     */
     public static boolean isTimeCollision(Calendar firstStartingTime,Calendar firstEndingTime,Calendar secondStartingTime,Calendar secondEndingTime ){
         int firstCompareResult =  firstEndingTime.compareTo(secondEndingTime);
         int secondCompareResult =  firstEndingTime.compareTo(secondStartingTime);
