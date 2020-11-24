@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.ntustars"},{"l":"com.ntustars.Boundary"},{"l":"com.ntustars.controller"},{"l":"com.ntustars.entity"}];updateSearchResults();
