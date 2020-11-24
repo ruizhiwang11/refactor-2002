@@ -1,5 +1,12 @@
 package com.ntustars.Boundary;
-
+/**
+ To provide a login UI interface for user
+ and pass the parameter to the other functions
+ @author FENG HAOLIN
+ @author WANG RUIZHI
+ @version 1.0
+ @since 2020-11-10
+ */
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -16,22 +23,36 @@ import java.io.IOException;
 import java.lang.*;
 
 public class AdminBoundary {
+    /**
+     admin Manager
+     */
     private AdminManager adminManager;
+    /**
+     name, courseID courseIndex
+     */
     private String nameExist,courseIDExist,courseIndexExist;
+    /**
+     course Manager
+     */
     private CourseManager courseMgr;
-    //private ErrorCodeBoundary errorCodeBoundary;
+    /**
+     student Manager
+     */
     private StudentManager studentMgr;
-
-    public AdminBoundary() throws IOException {
+    /**
+     constructor of AdminBoundary
+     */
+    public AdminBoundary(){
         this.adminManager = new AdminManager();
         this.courseMgr = new CourseManager();
-        //this.errorCodeBoundary = new ErrorCodeBoundary();
         this.studentMgr = new StudentManager();
         this.nameExist = null;
         this.courseIDExist = null;
         this.courseIndexExist = null;
     }
-
+    /**
+     get the admin menu
+     */
     public void adminMenu() throws Exception {
         System.out.println("===============- CONSOLE - ADMIN MODE -===============");
         System.out.println("                       Main Menu             ");
@@ -60,7 +81,10 @@ public class AdminBoundary {
             e.printStackTrace();
         }
     }
-
+    /**
+     enter the choice
+     @return choice
+     */
     private int enterChoice() {
         int choice;
         Scanner sc = new Scanner(System.in);
@@ -77,7 +101,10 @@ public class AdminBoundary {
 
         return choice;
     }
-
+    /**
+     from choice to get the selection
+     @param choice the choice to get selection
+     */
     private void adminMenuSelection(int choice) throws Exception {
         switch (choice) {
             case 1:
@@ -134,7 +161,9 @@ public class AdminBoundary {
                 // System.exit(0);????????????????????????
         }
     }
-
+    /**
+     set student access period
+     */
     private void setStudAccPeriod() throws IOException {
 
         Scanner sc = new Scanner(System.in);
@@ -188,7 +217,9 @@ public class AdminBoundary {
         System.out.println("\nSet student access period successfully!\n");
 
     }
-
+    /**
+     update student access period
+     */
     private void updStudAccPeriod() throws IOException {
 
         int choice = 0;
@@ -331,7 +362,9 @@ public class AdminBoundary {
         System.out.println("\nUpdate successfully!\n");
 
     }
-
+    /**
+     add student student particulars
+     */
     private void addStudentParticulars() throws Exception {
         String gender = "MALE";
         Student student = new Student();
@@ -352,7 +385,7 @@ public class AdminBoundary {
         username = username.toUpperCase();
 
 
-        while((this.courseMgr.readStudentbyID(username))!=null){
+        while((this.studentMgr.readSingleStudent(username))!=null){
             //while(adminManager.addStudent(student)==1){
             //while(adminManager.addStudent(student)==0){
             System.out.println("Username already exist");
@@ -466,7 +499,9 @@ public class AdminBoundary {
         printAllStudentInDB();
         //add student information
     }
-
+    /**
+     update student particulars
+     */
     private void updStudentParticulars() throws InterruptedException {
 
         Student newStudent;
@@ -494,7 +529,7 @@ public class AdminBoundary {
         //???????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
         else
             username = this.nameExist;
-        newStudent = this.courseMgr.readStudentbyID(username);
+        newStudent = this.studentMgr.readSingleStudent(username);
         if(newStudent!=null) {
 
 
@@ -641,7 +676,9 @@ public class AdminBoundary {
             return;
         }
     }
-
+    /**
+     add course to db
+     */
     private void addCourse() throws IOException, InterruptedException {
         Scanner sc = new Scanner(System.in);
         Course course = new Course();
@@ -796,7 +833,11 @@ public class AdminBoundary {
 
         }
     }
-
+    /**
+     get a course compo array list from the course type
+     @param courseType the course type 0 lec 1 withtut 2 withtutandlab
+     @return course compo array
+     */
     private ArrayList<CourseCompo> addCourseComp(int courseType){
         ArrayList<String> dateAndTime = new ArrayList<String>();
         ArrayList<CourseCompo> courseCompoList = new ArrayList<CourseCompo>();
@@ -826,7 +867,11 @@ public class AdminBoundary {
         }
         return courseCompoList;
     }
-
+    /**
+     add course index
+     @param courseID the course id
+     @return Course index object
+     */
     private CourseIndex addCourseIndex(String courseID) throws IOException {
         Scanner sc = new Scanner(System.in);
         CourseIndex courseIndexObj = new CourseIndex();
@@ -836,9 +881,6 @@ public class AdminBoundary {
         if (courseID==null)
             return null;
         courseIndexObj.setCourseID(courseID);
-        //ArrayList<CourseIndex> courseIndices = new ArrayList<CourseIndex>();
-        //sc.nextLine();
-
         System.out.println("\nPlease enter the index number:");
         String indexID = sc.nextLine();
         while((!indexID.matches("^[0-9]+$"))||(indexID.length()<2))
@@ -930,7 +972,9 @@ public class AdminBoundary {
         return courseIndexObj;
     }
 
-
+    /**
+     update a course
+     */
     private void updCourse() throws InterruptedException, IOException {
         Scanner sc = new Scanner(System.in);
         String courseID = null;
@@ -1012,7 +1056,10 @@ public class AdminBoundary {
         }
 
     }
-
+    /**
+     update course index
+     @param courseID the course id to be updated
+     */
     private void updCourseIndex(String courseID) throws IOException {
         CourseIndex newCourseIndex = new CourseIndex();
         String indexID = null;
@@ -1126,7 +1173,9 @@ public class AdminBoundary {
         System.out.println("\nThe course index have been updated successfully.");
 
     }
-
+    /**
+     to check whether has a vacancy
+     */
     private void checkVacancy(){
         String courseIndexID = null;
         ArrayList<CourseCompo> courseCompoList = new ArrayList<CourseCompo>();
@@ -1168,7 +1217,10 @@ public class AdminBoundary {
         }
 
     }
-
+    /**
+     to do the date time selection
+     @return arraylist stored the selected datetime
+     */
     private ArrayList<String> dateTimeSelection(){
         int choice;
         String weekDay=null,startTime=null,endTime=null;
@@ -1257,7 +1309,9 @@ public class AdminBoundary {
         return dateAndTime;
 
     }
-
+    /**
+     to print student list by the indexß
+     */
     private void printStudListByIndex() throws Exception {
         String courseIndex = null;
         ArrayList<Student> studentList = new ArrayList<Student>();
@@ -1272,6 +1326,10 @@ public class AdminBoundary {
         }
 
         studentList= this.adminManager.getStudentByIndex(courseIndex);
+        if(studentList == null){
+            System.out.println("\nNo such a index in the DB.\n\n");
+            return;
+        }
         if (studentList.isEmpty()){
             System.out.println("\nThere is no student registered for this course index.\n\n");
             return;
@@ -1288,7 +1346,9 @@ public class AdminBoundary {
             System.out.println("------------------------------------------------------\n");
         }
     }
-
+    /**
+     to print student by course
+     */
     private void printStudListByCourse() throws Exception {
         String courseID = null;
         ArrayList<Student> studentList = new ArrayList<Student>();
@@ -1303,6 +1363,10 @@ public class AdminBoundary {
         }
 
         studentList= this.adminManager.getStudentByCourse(courseID);
+        if(studentList == null){
+            System.out.println("\nThere is no such a course index\n\n");
+            System.exit(1);
+        }
         if (studentList.isEmpty()){
             System.out.println("\nThere is no student registered for this course ID\n\n");
             return;
@@ -1320,6 +1384,9 @@ public class AdminBoundary {
             System.out.println("------------------------------------------------------\n");
         }
     }
+    /**
+     to print all student in the db
+     */
     private void printAllStudentInDB(){
         ArrayList studentInformation = AdminManager.loadDBStudentInformation();
         System.out.println("--------------------------------------------------------------------------------------");
@@ -1335,6 +1402,9 @@ public class AdminBoundary {
         }
         System.out.println("--------------------------------------------------------------------------------------\n");
     }
+    /**
+     to print all course in the db
+     */
     private void printAllCourseInDB(){
 
         System.out.println("--------------------------------------------------------------------------------------");

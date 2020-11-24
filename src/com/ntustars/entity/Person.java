@@ -1,7 +1,7 @@
 package com.ntustars.entity;
 /**
  Represents a person in the school, it may be student or admin
- @author WANG RUIZHI
+ @author MA YIHENG
  @version 1.0
  @since 2020-11-10
  */

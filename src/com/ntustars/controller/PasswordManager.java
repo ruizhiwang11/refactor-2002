@@ -2,6 +2,7 @@ package com.ntustars.controller;
 /**
 Password manager to encrypt and decrypt the user password
  @author WANG RUIZHI
+ @author MA YIHENG
  @version 1.0
  @since 2020-11-10
  */

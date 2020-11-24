@@ -1,33 +1,56 @@
 package com.ntustars.Boundary;
-
+/**
+ Controller to control all the student related operation
+ @author LI YONGCHAO
+ @version 1.0
+ @since 2020-11-10
+ */
 import com.ntustars.controller.CourseManager;
 import com.ntustars.controller.StudentManager;
-import com.ntustars.controller.TextReaderWriter;
 import com.ntustars.controller.WaitListManager;
 import com.ntustars.entity.Course;
 import com.ntustars.entity.CourseCompo;
 import com.ntustars.entity.CourseIndex;
 import com.ntustars.entity.Student;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class StudentBoundary {
-    private Student student;
+    /**
+     selection
+     */
     private int select;
+    /**
+     username
+     */
     private String userName;
-    private String courseID;
+    /**
+     course Index string
+     */
     private String courseIndex;
+    /**
+     student Manager
+     */
     StudentManager studentManager = new StudentManager();
+    /**
+     course Manager
+     */
     CourseManager courseManager = new CourseManager();
+    /**
+     scanner
+     */
     Scanner sc = new Scanner(System.in);
-
+    /**
+     constructor
+     */
     public StudentBoundary(){
 
     }
-
+    /**
+     print Student function
+     */
     private void printStudentFunction() {
         System.out.println();
         System.out.println("==============- CONSOLE - STUDENT MODE -==============");
@@ -47,7 +70,9 @@ public class StudentBoundary {
         System.out.println("\n\nWhat would you like to do?");
         System.out.println("Please enter your choice:");
     }
-
+    /**
+     get user's selection
+     */
     private void getSelection() {
 
         String i = "";
@@ -68,7 +93,10 @@ public class StudentBoundary {
         while (s == -1) ;
         this.select = s;
     }
-
+    /**
+     get the course add
+     @return String course add
+     */
     private String getCourseIDAdd(){
         String courseIDStr;
         ArrayList courseArrayList = courseManager.readAllCourseIDFromDB();
@@ -86,7 +114,13 @@ public class StudentBoundary {
 //        this.courseID = courseID;
         return courseIDStr;
     }
-
+    /**
+     get the course add
+     @param courseID course ID string
+     @param userName student user name
+     @param exceptionIndex exception Index
+     @return String index add
+     */
     private String getCourseIndexAdd(String courseID, String userName, String exceptionIndex){
         Course tmpCourse = courseManager.readCourseByID(courseID);
         ArrayList<String> tempCourseIndexArray = new ArrayList<>();
@@ -131,12 +165,9 @@ public class StudentBoundary {
             }
             f = false;
             for (String index : studentManager.readSingleStudent(this.userName).getCourseIndexList()) {
-//                System.out.println(courseIndex2.getIndex());
                 if (!index.equals(exceptionIndex)) {
                     CourseIndex courseIndex2 = courseManager.readCourseIndexbyID(index);
-//                boolean t = courseManager.isCourseIndexCollision(courseIndex2, cI);
-                    ////////////////////////////////////////////////////////////////////////////////////////////////////////////below exception index
-                    if (courseManager.isCourseIndexCollision(courseIndex2, cI)) {
+                if (courseManager.isCourseIndexCollision(courseIndex2, cI)) {
                         f = true;
                         System.out.println("This index has collision with your registered course. " +
                                 "\nPlease choose another index.");
@@ -148,7 +179,11 @@ public class StudentBoundary {
         return courseIndex;
     }
 
-
+    /**
+     get the course add
+     @param userName student username
+     @return String index to be removed
+     */
     private String getCourseIndexRemove(String userName){
         String courseIndexStr;
         ArrayList<String> indexArrayList = studentManager.readSingleStudent(userName).getCourseIndexList();
@@ -165,7 +200,10 @@ public class StudentBoundary {
 //        this.courseID = courseID;
         return courseIndexStr;
     }
-
+    /**
+     get the course add
+     @return user id
+     */
     private String getUser2(){
         String userName;
         do {
@@ -174,7 +212,11 @@ public class StudentBoundary {
         } while (!studentManager.readAllUserName().contains(userName));
         return userName;
     }
-
+    /**
+     get the course add
+     @param userName student user name
+     @param courseIndex course Index
+     */
     private void updateCourseIndexInfoAdd (String userName, String courseIndex){
         Student student = studentManager.updateSingleStudent(userName, courseIndex, "ADD");
         studentManager.updateStudentInfoDB(student);
@@ -183,7 +225,11 @@ public class StudentBoundary {
         courseIndex11.setSlot(courseIndex11.getSlot() - 1);
         courseManager.updateCourseIndexInfoCompoDB(courseIndex11);
     }
-
+    /**
+     get the course add
+     @param userName student user name
+     @param courseIndex course index string
+     */
     private void updateCourseIndexInfoRemove (String userName, String courseIndex) {
         Student student2 = studentManager.updateSingleStudent(userName, courseIndex, "REMOVE");
         studentManager.updateStudentInfoDB(student2);
@@ -192,7 +238,10 @@ public class StudentBoundary {
         courseIndex21.setSlot(courseIndex21.getSlot() + 1);
         courseManager.updateCourseIndexInfoCompoDB(courseIndex21);
     }
-
+    /**
+     get the course add
+     @param userName student user name
+     */
     public void selectFunction(String userName){
 
         this.userName = userName;
@@ -263,7 +312,6 @@ public class StudentBoundary {
                     ArrayList<String> courseIndex = studentManager.readSingleStudent(this.userName).getCourseIndexList();
                     for (String index : courseIndex) {
                         CourseIndex courseIndex3 = courseManager.readCourseIndexbyID(index);
-//                    String courseID = courseManager.getCourseIDbyCourseIndex(index.getIndex());
                         System.out.print(courseManager.getCourseIDbyCourseIndex(courseIndex3.getIndex()));
                         System.out.println("\t" + courseIndex3.getIndex());
                     }
@@ -272,8 +320,6 @@ public class StudentBoundary {
                 case 4:
                     System.out.println("4. Check Vacancies Available");
                     String tmpID = getCourseIDAdd();
-//                    ArrayList<String> tmpIndexList = ;
-//                    courseManager.readCourseByID(tmpIndex).getCourseIndices();
                     for (CourseIndex courseIndex1 : courseManager.readCourseByID(tmpID).getCourseIndices()) {
                         System.out.print(courseIndex1.getIndex() + "\t" + "Slots Available: ");
                         System.out.println(courseIndex1.getSlot());

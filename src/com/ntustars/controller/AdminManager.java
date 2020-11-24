@@ -1,5 +1,11 @@
 package com.ntustars.controller;
-
+/**
+ Controller to control all the student related operation
+ @author WANG RUIZHI
+ @author FENG HAOLIN
+ @version 1.0
+ @since 2020-11-10
+ */
 import com.ntustars.entity.*;
 
 import java.io.IOException;
@@ -9,18 +15,29 @@ import java.util.Collections;
 import java.util.StringTokenizer;
 
 public class AdminManager {
+    /**
+    load db
+     */
     private ArrayList loadAdminInformationDB(){
         ArrayList stringArray = (ArrayList)TextReaderWriter.readtxt("adminInformation.txt");
         return  stringArray;
     }
-
+    /**
+     load db
+     */
     public static ArrayList loadDBStudentInformation(){
         ArrayList stringArray = (ArrayList)TextReaderWriter.readtxt("studentInformation.txt");
         return  stringArray;
     }
+    /**
+     Course manager
+     */
     private CourseManager courseManager = new CourseManager();
-
-
+    /**
+     add Course Index to DB
+     @param courseIndex course index object
+     @return  to tell whether the operation is successful
+     */
     public int addCourseIndex(CourseIndex courseIndex){
         int code = 0;
         code += courseManager.addCourseIndexInCourseAndCourseIndexDB(courseIndex);
@@ -28,19 +45,39 @@ public class AdminManager {
         code += courseManager.addCourseIndexInCourseIndexAndCourseCompoDB(courseIndex);
         return code;
     }
-
+    /**
+     add Course to DB
+     @param course course object
+     @return  to tell whether the operation is successful
+     */
     public int addCourse(Course course){
         return courseManager.addCourseToDB(course);
     }
+    /**
+     update Course to DB
+     @param courseIndex course index object
+     @return int tell whether the operation is successful
+     */
     public int updateCourseIndex(CourseIndex courseIndex){
         int code = 0;
         code += courseManager.updateCourseIndexInfoCompoDB(courseIndex);
         code += courseManager.updateCourseIndexInCourseIndexAndCourseCompoDB(courseIndex);
         return code;
     }
+    /**
+     update Course to DB
+     @param course course object
+     @return int tell whether the operation is successful
+     */
     public int updateCourse(Course course){
         return courseManager.updateCoursetoDB(course);
     }
+    /**
+     add access period to DB
+     @param startingDay starting day
+     @param endingDay ending
+     @return int tell whether the operation is successful
+     */
     public int addAccessPeriod(String startingDay, String endingDay){
         ArrayList adminInformation = loadAdminInformationDB();
         String st = (String) adminInformation.get(0);
@@ -59,8 +96,17 @@ public class AdminManager {
         TextReaderWriter.writetxt("adminInformation.txt",adminInformation);
         return 0;
     }
+    /**
+     get student by course index
+     @param index
+     @return int tell whether the operation is successful
+     */
     public ArrayList getStudentByIndex(String index){
         CourseIndex courseIndex = courseManager.readCourseIndexbyID(index);
+        if(courseIndex == null)
+        {
+            return null;
+        }
         ArrayList<Student> studentList = new ArrayList<>();
         for(String studentStr : courseIndex.getStudentList()){
             StudentManager studentManager = new StudentManager();
@@ -69,6 +115,11 @@ public class AdminManager {
         }
         return studentList;
     }
+    /**
+     get student by course
+     @param courseID
+     @return int tell whether the operation is successful
+     */
     public ArrayList getStudentByCourse(String courseID){
         Course course = courseManager.readCourseByID(courseID);
         ArrayList<Student> studentList = new ArrayList<>();
@@ -77,7 +128,11 @@ public class AdminManager {
         }
         return studentList;
     }
-
+    /**
+     add student to DB
+     @param student student object
+     @return int tell whether the operation is successful
+     */
     public int addStudent(Student student){
         if(student == null){
             System.out.println("Student is null");
@@ -112,7 +167,11 @@ public class AdminManager {
         TextReaderWriter.writetxt("studentInformation.txt", studentInformation);
         return 0;
     }
-
+    /**
+     update student to DB
+     @param student student object
+     @return int tell whether the operation is successful
+     */
     public int updateStudent(Student student){
         ArrayList studentInformation = loadDBStudentInformation();
         for(int i=0; i<studentInformation.size();i++){

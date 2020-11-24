@@ -1,5 +1,10 @@
 package com.ntustars.controller;
-
+/**
+ Controller to control all the student related operation
+ @author LI YONGCHAO
+ @version 1.0
+ @since 2020-11-10
+ */
 import com.ntustars.Boundary.ErrorCodeBoundary;
 import com.ntustars.entity.Course;
 import com.ntustars.entity.CourseIndex;
@@ -13,27 +18,44 @@ import java.util.StringTokenizer;
 
 
 public class StudentManager {
-    public static final String SEPARATOR = ",";
-    private TextReaderWriter textReaderWriter;
+    /**
+    Separator
+     */
+    private static final String SEPARATOR = ",";
+    /**
+     array list to store student
+     */
     private ArrayList<Student> allStudents;
+    /**
+     student orbect
+     */
     private Student student;
+    /**
+     For printing the error code
+     */
     private ErrorCodeBoundary errorCodeBoundary;
-
+    /**
+     default constructor of the student manager
+     */
     public StudentManager(){
-        textReaderWriter = new TextReaderWriter();
         allStudents = new ArrayList<>();
         errorCodeBoundary = new ErrorCodeBoundary();
     }
-
+    /**
+     load db studentInformation
+     */
     private ArrayList loadDBStudentInfo(){
-        ArrayList stringArray = (ArrayList) textReaderWriter.readtxt("studentInformation.txt");
+        ArrayList stringArray = (ArrayList) TextReaderWriter.readtxt("studentInformation.txt");
         return stringArray;
     }
-
+    /**
+     read all student name from db
+     @return student name array list
+     */
     public ArrayList<String> readAllUserName(){
         CourseManager cm = new CourseManager();
         ArrayList<String> userNameList= new ArrayList<>();
-        ArrayList stringArray = (ArrayList)textReaderWriter.readtxt("studentInformation.txt");
+        ArrayList stringArray = (ArrayList)TextReaderWriter.readtxt("studentInformation.txt");
         for (int i = 0 ; i < stringArray.size() ; i++){
             this.student = new Student();
             ArrayList<String> indexArray = new ArrayList<>();
@@ -43,7 +65,11 @@ public class StudentManager {
         }
         return userNameList;
     }
-
+    /**
+     read a student object by student username
+     @param userName student user name
+     @return student object
+     */
     public Student readSingleStudent(String userName){
         ArrayList studentInfo = loadDBStudentInfo();
         CourseManager cm = new CourseManager();
@@ -68,6 +94,12 @@ public class StudentManager {
         }
         return student;
     }
+    /**
+     check whether the course is collision for the student already registed
+     @param userName student user name
+     @param id course ID
+     @return whether it's collision
+     */
     public boolean isCourseIDCollision (String userName, String id) {
         Student student1 = readSingleStudent(userName);
         CourseManager cm = new CourseManager();
@@ -93,7 +125,13 @@ public class StudentManager {
         }
         return false;
     }
-
+    /**
+     To add or remove the course index under student
+     @param userName student user name
+     @param courseIndex course ID
+     @param set whether it's add or remove
+     @return student object
+     */
     public Student updateSingleStudent(String userName, String courseIndex, String set) {
         ArrayList studentInfo = loadDBStudentInfo();
         CourseManager cm = new CourseManager();
@@ -135,7 +173,11 @@ public class StudentManager {
         }
         return student;
     }
-
+    /**
+     calculate total student au
+     @param stu student object
+     @return total au have
+     */
     public int calculateTotalAu (Student stu) {
         CourseManager courseManager = new CourseManager();
         int sum=0, au;
@@ -146,13 +188,12 @@ public class StudentManager {
 
         return sum;
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     calculate total student au
+     @param stu student object
+     @return int flag to check whether the opration is successful
+     */
     public int updateStudentInfoDB(Student stu) {
-//        CourseManager courseManager = new CourseManager();
-//        for(CourseIndex courseIndex : stu.getCourseIndexList()){
-//            courseManager.updateCourseIndexInfoCompoDB(courseIndex);
-//        }
         ArrayList studentInfo = loadDBStudentInfo();
         for (int i = 0; i < studentInfo.size(); i++) {
             String st = (String) studentInfo.get(i);
@@ -182,13 +223,17 @@ public class StudentManager {
                 studentInfo.set(i, builder.toString());
                 Collections.sort(studentInfo);
 
-                textReaderWriter.writetxt("studentInformation.txt", studentInfo);
+                TextReaderWriter.writetxt("studentInformation.txt", studentInfo);
                 return 0;
             }
         }
         return addStudentInfoDB(stu);
     }
-
+    /**
+     add student object into the db
+     @param stu student object
+     @return int flag to check whether the opration is successful
+     */
     public int addStudentInfoDB(Student stu){
         ArrayList studentInfo = loadDBStudentInfo();
         for (int i = 0; i < studentInfo.size(); i++) {
@@ -224,7 +269,7 @@ public class StudentManager {
         studentInfo.add(builder.toString());
 
         Collections.sort(studentInfo);
-        textReaderWriter.writetxt("studentInformation.txt", studentInfo);
+        TextReaderWriter.writetxt("studentInformation.txt", studentInfo);
         return 0;
     }
 

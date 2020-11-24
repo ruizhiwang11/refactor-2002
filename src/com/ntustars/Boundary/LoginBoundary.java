@@ -1,17 +1,19 @@
 package com.ntustars.Boundary;
+/**
+ To provide a login UI interface for user
+ and pass the parameter to the other functions
+ @author Ma Yiheng
+ @author WANG RUIZHI
+ @version 1.0
+ @since 2020-11-10
+ */
 import com.ntustars.controller.DateTimeManager;
 import com.ntustars.controller.LoginManager;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- To provide a login UI interface for user
- and pass the parameter to the other functions
- @author Ma Yiheng
- @version 1.0
- @since 2020-11-10
- */
+
 public class LoginBoundary  {
     /**
      login UI interface

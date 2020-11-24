@@ -1,5 +1,11 @@
 package com.ntustars.controller;
-
+/**
+ Controller to control all the student related operation
+ @author WANG RUIZHI
+ @author MA YIHENG
+ @version 1.0
+ @since 2020-11-10
+ */
 import com.ntustars.Boundary.ErrorCodeBoundary;
 import com.ntustars.entity.Course;
 import com.ntustars.entity.CourseCompo;
@@ -12,29 +18,52 @@ import java.util.Collections;
 import java.util.StringTokenizer;
 
 public class CourseManager {
+    /**
+     * seperator
+     */
     private static final String SEPARATOR = ",";
-    private TextReaderWriter textReaderWriter;
+    /**
+     * to handle the error message
+     */
     private ErrorCodeBoundary errorCodeBoundary;
+    /**
+     * default constructor
+     */
     public CourseManager(){
-        textReaderWriter = new TextReaderWriter();
         errorCodeBoundary = new ErrorCodeBoundary();
     }
+    /**
+     * load DB
+     */
     private ArrayList loadDBCourseAndCourseIndex(){
-        ArrayList stringArray = (ArrayList)textReaderWriter.readtxt("courseAndCourseIndex.txt");
+        ArrayList stringArray = (ArrayList) TextReaderWriter.readtxt("courseAndCourseIndex.txt");
         return  stringArray;
     }
+    /**
+     * load DB
+     */
     private ArrayList loadDBCourseIndexInfo(){
-        ArrayList stringArray = (ArrayList)textReaderWriter.readtxt("courseIndexInfo.txt");
+        ArrayList stringArray = (ArrayList) TextReaderWriter.readtxt("courseIndexInfo.txt");
         return  stringArray;
     }
+    /**
+     * load DB
+     */
     private ArrayList loadDBStudentInformation(){
-        ArrayList stringArray = (ArrayList)textReaderWriter.readtxt("studentInformation.txt");
+        ArrayList stringArray = (ArrayList) TextReaderWriter.readtxt("studentInformation.txt");
         return  stringArray;
     }
+    /**
+     * load DB
+     */
     private ArrayList loadDBCourseIndexAndCourseCompo(){
-        ArrayList stringArray = (ArrayList)textReaderWriter.readtxt("courseIndexAndCourseCompo.txt");
+        ArrayList stringArray = (ArrayList) TextReaderWriter.readtxt("courseIndexAndCourseCompo.txt");
         return  stringArray;
     }
+    /**
+     * read all course ID from db
+     * @return course id array list
+     */
     public ArrayList readAllCourseIDFromDB(){
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
         ArrayList<String> courseIdArrayList = new ArrayList<>();
@@ -45,6 +74,11 @@ public class CourseManager {
         }
         return courseIdArrayList;
     }
+    /**
+     * add course index into the CourseAndCourseIndexDB
+     * @param courseIndex CourseIndex
+     * @return int to tell whether the operation is successful
+     */
     public int addCourseIndexInCourseAndCourseIndexDB(CourseIndex courseIndex){
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
         for(int i = 0; i< courseAndCourseIndex.size(); i++){
@@ -63,9 +97,14 @@ public class CourseManager {
 
         }
         Collections.sort(courseAndCourseIndex);
-        textReaderWriter.writetxt("courseAndCourseIndex.txt",courseAndCourseIndex);
+        TextReaderWriter.writetxt("courseAndCourseIndex.txt",courseAndCourseIndex);
         return 0;
     }
+    /**
+     * add course index into the CourseIndexInfoCompoDB
+     * @param courseIndex CourseIndex
+     * @return int to tell whether the operation is successful
+     */
     public int addCourseIndexInfoCompoDB(CourseIndex courseIndex){
         ArrayList courseIndexInfo = loadDBCourseIndexInfo();
         for(int i = 0; i< courseIndexInfo.size(); i++) {
@@ -96,9 +135,14 @@ public class CourseManager {
 
 
         Collections.sort(courseIndexInfo);
-        textReaderWriter.writetxt("courseIndexInfo.txt",courseIndexInfo);
+        TextReaderWriter.writetxt("courseIndexInfo.txt",courseIndexInfo);
         return 0;
     }
+    /**
+     * add course index into the CourseIndexAndCourseCompoDB
+     * @param courseIndex CourseIndex
+     * @return int to tell whether the operation is successful
+     */
     public int addCourseIndexInCourseIndexAndCourseCompoDB(CourseIndex courseIndex){
         ArrayList courseIndexAndCourseCompo = loadDBCourseIndexAndCourseCompo();
         for(int i = 0; i< courseIndexAndCourseCompo.size(); i++) {
@@ -121,9 +165,14 @@ public class CourseManager {
         }
         courseIndexAndCourseCompo.add(builder.toString());
         Collections.sort(courseIndexAndCourseCompo);
-        textReaderWriter.writetxt("courseIndexAndCourseCompo.txt",courseIndexAndCourseCompo);
+        TextReaderWriter.writetxt("courseIndexAndCourseCompo.txt",courseIndexAndCourseCompo);
         return 0;
     }
+    /**
+     * update course index into the CourseIndexInfoCompoDB
+     * @param courseIndex CourseIndex
+     * @return int to tell whether the operation is successful
+     */
     public int updateCourseIndexInfoCompoDB(CourseIndex courseIndex){
         ArrayList courseIndexInfo = loadDBCourseIndexInfo();
         for(int i = 0; i< courseIndexInfo.size(); i++) {
@@ -144,12 +193,17 @@ public class CourseManager {
                 }
                 courseIndexInfo.set(i,builder.toString());
                 Collections.sort(courseIndexInfo);
-                textReaderWriter.writetxt("courseIndexInfo.txt",courseIndexInfo);
+                TextReaderWriter.writetxt("courseIndexInfo.txt",courseIndexInfo);
                 return 0;
             }
         }
         return addCourseIndexInfoCompoDB(courseIndex);
     }
+    /**
+     * update course index into the CourseIndexAndCourseCompoDB
+     * @param courseIndex CourseIndex
+     * @return int to tell whether the operation is successful
+     */
     public int updateCourseIndexInCourseIndexAndCourseCompoDB(CourseIndex courseIndex){
         ArrayList courseIndexAndCourseCompo = loadDBCourseIndexAndCourseCompo();
         for(int i = 0; i< courseIndexAndCourseCompo.size(); i++) {
@@ -168,12 +222,17 @@ public class CourseManager {
                 }
                 courseIndexAndCourseCompo.set(i, builder.toString());
                 Collections.sort(courseIndexAndCourseCompo);
-                textReaderWriter.writetxt("courseIndexAndCourseCompo.txt",courseIndexAndCourseCompo);
+                TextReaderWriter.writetxt("courseIndexAndCourseCompo.txt",courseIndexAndCourseCompo);
                 return 0;
             }
         }
         return addCourseIndexInCourseIndexAndCourseCompoDB(courseIndex);
     }
+    /**
+     * update course object into db
+     * @param course course object
+     * @return int to tell whether the operation is successful
+     */
     public int updateCoursetoDB(Course course){
         ArrayList  courseAndCourseIndex= loadDBCourseAndCourseIndex();
         int returnCode = 0;
@@ -189,7 +248,7 @@ public class CourseManager {
                 builder.append(SEPARATOR);
                 courseAndCourseIndex.set(i,builder.toString());
                 Collections.sort(courseAndCourseIndex);
-                textReaderWriter.writetxt("courseAndCourseIndex.txt",courseAndCourseIndex);
+                TextReaderWriter.writetxt("courseAndCourseIndex.txt",courseAndCourseIndex);
                 for(CourseIndex courseIndex : course.getCourseIndices()){
                     returnCode += addCourseIndexInCourseAndCourseIndexDB(courseIndex);
                     returnCode += updateCourseIndexInfoCompoDB(courseIndex);
@@ -201,7 +260,11 @@ public class CourseManager {
         errorCodeBoundary.printErrorMissingCourse();
         return 1;
     }
-
+    /**
+     * add course object into db
+     * @param course course object
+     * @return int to tell whether the operation is successful
+     */
     public int addCourseToDB(Course course){
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
         int code = 0;
@@ -221,7 +284,7 @@ public class CourseManager {
         builder.append(SEPARATOR);
         courseAndCourseIndex.add(builder.toString());
         Collections.sort(courseAndCourseIndex);
-        textReaderWriter.writetxt("courseAndCourseIndex.txt",courseAndCourseIndex);
+        TextReaderWriter.writetxt("courseAndCourseIndex.txt",courseAndCourseIndex);
         for(CourseIndex courseIndex : course.getCourseIndices()){
             code += addCourseIndexInCourseAndCourseIndexDB(courseIndex);
             code += addCourseIndexInfoCompoDB(courseIndex);
@@ -229,6 +292,11 @@ public class CourseManager {
         }
         return code;
     }
+    /**
+     * get the course Type from course ID
+     * @param courseID course ID
+     * @return int the courseType 0 ONLYLEC 1 WITHTUT 2 WITHTUTANDLAB
+     */
     public int getCourseTypebyCourseID(String courseID){
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
         for(int i =0; i <courseAndCourseIndex.size(); i++){
@@ -243,6 +311,11 @@ public class CourseManager {
         }
         return -1;
     }
+    /**
+     * get the course Type from course ID
+     * @param courseIndex course ID
+     * @return int to tell whether the operation is successful
+     */
     public String getCourseIDbyCourseIndex (String courseIndex){
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
         for(int i =0; i <courseAndCourseIndex.size(); i++){
@@ -254,28 +327,11 @@ public class CourseManager {
         }
         return null;
     }
-    public Student readStudentbyID(String studentID){
-        ArrayList studentInformation = loadDBStudentInformation();
-        for(int i =0; i <studentInformation.size(); i++){
-            String st = (String) studentInformation.get(i);
-            if(st.contains(studentID)){
-                StringTokenizer star = new StringTokenizer(st, SEPARATOR);
-                studentID = star.nextToken().trim();
-                //String password = star.nextToken().trim();
-                // decryp password to string
-                String decryStPassword = star.nextToken().trim();
-                String name = star.nextToken().trim();;
-                String matricNumber = star.nextToken().trim();
-                String gender = star.nextToken().trim();
-                String nationality = star.nextToken().trim();
-                Student student = new Student(studentID, decryStPassword, name , matricNumber, gender , nationality);
-                int auTaken = Integer.parseInt(star.nextToken().trim());
-                student.setAuTaken(auTaken);
-                return student;
-            }
-        }
-        return null;
-    }
+    /**
+     * read courseindex object from db
+     * @param index course index
+     * @return courseindex object
+     */
     public CourseIndex readCourseIndexbyID(String index)
     {
         ArrayList courseIndexAndCourseCompo = loadDBCourseIndexAndCourseCompo();
@@ -324,27 +380,11 @@ public class CourseManager {
         }
         return null;
     }
-    public int removeStudentFromIndexInfoDB(String studentUserName){
-        ArrayList courseIndexInfo = loadDBCourseIndexInfo();
-        for(int i=0; i< courseIndexInfo.size();i++){
-            String st = (String) courseIndexInfo.get(i);
-            if(st.contains(studentUserName)){
-                StringBuilder builder = new StringBuilder();
-                StringTokenizer star = new StringTokenizer(st,SEPARATOR);
-                while (star.hasMoreTokens()){
-                    String tmpStr = star.nextToken().trim();
-                    if(!tmpStr.equals(studentUserName)){
-                        builder.append(tmpStr);
-                        builder.append(SEPARATOR);
-                    }
-                }
-                courseIndexInfo.set(i,builder.toString());
-                TextReaderWriter.writetxt("courseIndexInfo.txt",courseIndexInfo);
-                return 0;
-            }
-        }
-        return 1;
-    }
+    /**
+     * read course object
+     * @param courseID course ID
+     * @return course ID
+     */
     public Course readCourseByID(String courseID)
     {
         ArrayList courseAndCourseIndex = loadDBCourseAndCourseIndex();
@@ -365,6 +405,12 @@ public class CourseManager {
         }
         return null;
     }
+    /**
+     * check whether two course index are colission in the time slot
+     * @param courseIndex1
+     * @param courseIndex2
+     * @return true(collision) false(not collision)
+     */
     public boolean isCourseIndexCollision(CourseIndex courseIndex1, CourseIndex courseIndex2){
         for(CourseCompo courseCompo : courseIndex1.getCourseCompos()){
             String day = courseCompo.getDay();
