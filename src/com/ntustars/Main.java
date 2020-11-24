@@ -4,7 +4,12 @@ import com.ntustars.Boundary.AdminBoundary;
 import com.ntustars.Boundary.LoginBoundary;
 import com.ntustars.Boundary.StudentBoundary;
 import java.util.ArrayList;
-
+/**
+ The main function to start this project
+ @author WANG RUIZHI
+ @version 1.0
+ @since 2020-11-10
+ */
 public class Main {
 
     public static void main(String[] args) throws Exception {

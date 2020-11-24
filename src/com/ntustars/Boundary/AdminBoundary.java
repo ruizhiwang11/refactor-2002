@@ -1,12 +1,5 @@
 package com.ntustars.Boundary;
-/**
- To provide a login UI interface for user
- and pass the parameter to the other functions
- @author FENG HAOLIN
- @author WANG RUIZHI
- @version 1.0
- @since 2020-11-10
- */
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -21,7 +14,14 @@ import com.ntustars.entity.Student;
 
 import java.io.IOException;
 import java.lang.*;
-
+/**
+ To provide a login UI interface for user
+ and pass the parameter to the other functions
+ @author FENG HAOLIN
+ @author WANG RUIZHI
+ @version 1.0
+ @since 2020-11-10
+ */
 public class AdminBoundary {
     /**
      admin Manager

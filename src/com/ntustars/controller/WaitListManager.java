@@ -20,8 +20,8 @@ public class WaitListManager {
         return  stringArray;
     }
     /**
-     read WaitList from data base return as HashMap<String,ArrayList<String>>
-     @return waitListMap
+     read WaitList from data base return as HashMap
+     @return Wait List
      */
     public static HashMap<String,ArrayList<String>> readWaitList(){
         ArrayList waitList = loadDBWaitList();

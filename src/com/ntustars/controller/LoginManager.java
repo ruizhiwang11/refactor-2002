@@ -1,16 +1,16 @@
 package com.ntustars.controller;
+
+import com.ntustars.Boundary.ErrorCodeBoundary;
+import com.ntustars.entity.Admin;
+
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 /**
  Login manager to handle the login situation
  @author WANG RUIZHI
  @version 1.0
  @since 2020-11-10
  */
-import com.ntustars.Boundary.ErrorCodeBoundary;
-import com.ntustars.entity.Admin;
-
-import java.util.ArrayList;
-import java.util.StringTokenizer;
-
 public class LoginManager {
     /**
     Load admin DB

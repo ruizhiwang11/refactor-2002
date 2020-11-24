@@ -55,7 +55,7 @@ public class Course {
     }
     /**
      * get CourseID
-     * @return courseID
+     * @return the courseID in the class
      */
     public void setCourseID(String courseID) {
         this.courseID = courseID;

@@ -1,10 +1,5 @@
 package com.ntustars.Boundary;
-/**
- Controller to control all the student related operation
- @author LI YONGCHAO
- @version 1.0
- @since 2020-11-10
- */
+
 import com.ntustars.controller.CourseManager;
 import com.ntustars.controller.StudentManager;
 import com.ntustars.controller.WaitListManager;
@@ -16,22 +11,27 @@ import com.ntustars.entity.Student;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-
+/**
+ Controller to control all the student related operation
+ @author LI YONGCHAO
+ @version 1.0
+ @since 2020-11-10
+ */
 public class StudentBoundary {
     /**
-     selection
+     *selection
      */
     private int select;
     /**
-     username
+     *username
      */
     private String userName;
     /**
-     course Index string
+     *course Index string
      */
     private String courseIndex;
     /**
-     student Manager
+     *student Manager
      */
     StudentManager studentManager = new StudentManager();
     /**

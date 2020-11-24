@@ -1,10 +1,5 @@
 package com.ntustars.controller;
-/**
- Controller to control all the student related operation
- @author LI YONGCHAO
- @version 1.0
- @since 2020-11-10
- */
+
 import com.ntustars.Boundary.ErrorCodeBoundary;
 import com.ntustars.entity.Course;
 import com.ntustars.entity.CourseIndex;
@@ -15,8 +10,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 import java.util.StringTokenizer;
-
-
+/**
+ Controller to control all the student related operation
+ @author LI YONGCHAO
+ @version 1.0
+ @since 2020-11-10
+ */
 public class StudentManager {
     /**
     Separator

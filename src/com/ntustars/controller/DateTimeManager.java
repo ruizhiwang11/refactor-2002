@@ -1,10 +1,5 @@
 package com.ntustars.controller;
-/**
- To handle the string and date time conversion
- @author WANG RUIZHI
- @version 1.0
- @since 2020-11-10
- */
+
 import com.ntustars.entity.Student;
 
 import java.io.IOException;
@@ -14,7 +9,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.StringTokenizer;
-
+/**
+ To handle the string and date time conversion
+ @author WANG RUIZHI
+ @version 1.0
+ @since 2020-11-10
+ */
 public class DateTimeManager {
     /**
     load DB

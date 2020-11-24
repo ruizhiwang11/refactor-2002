@@ -1,11 +1,5 @@
 package com.ntustars.controller;
-/**
-Password manager to encrypt and decrypt the user password
- @author WANG RUIZHI
- @author MA YIHENG
- @version 1.0
- @since 2020-11-10
- */
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -13,7 +7,13 @@ import java.util.Arrays;
 import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-
+/**
+ Password manager to encrypt and decrypt the user password
+ @author WANG RUIZHI
+ @author MA YIHENG
+ @version 1.0
+ @since 2020-11-10
+ */
 public class PasswordManager
 {
     /**

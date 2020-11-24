@@ -1,4 +1,10 @@
 package com.ntustars.Boundary;
+
+import com.ntustars.controller.DateTimeManager;
+import com.ntustars.controller.LoginManager;
+
+import java.util.ArrayList;
+import java.util.Scanner;
 /**
  To provide a login UI interface for user
  and pass the parameter to the other functions
@@ -7,12 +13,6 @@ package com.ntustars.Boundary;
  @version 1.0
  @since 2020-11-10
  */
-import com.ntustars.controller.DateTimeManager;
-import com.ntustars.controller.LoginManager;
-
-import java.util.ArrayList;
-import java.util.Scanner;
-
 
 public class LoginBoundary  {
     /**

@@ -1,11 +1,4 @@
 package com.ntustars.controller;
-/**
- Controller to control all the student related operation
- @author WANG RUIZHI
- @author FENG HAOLIN
- @version 1.0
- @since 2020-11-10
- */
 import com.ntustars.entity.*;
 
 import java.io.IOException;
@@ -13,7 +6,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.StringTokenizer;
-
+/**
+ Controller to control all the student related operation.
+ @author WANG RUIZHI
+ @author FENG HAOLIN
+ @version 1.0
+ @since 2020-11-10
+ */
 public class AdminManager {
     /**
     load db
