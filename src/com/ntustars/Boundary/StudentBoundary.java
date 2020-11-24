@@ -250,6 +250,7 @@ public class StudentBoundary {
                                 waitListCourseIndexToAdd.addStudent(waitListstudent.getUsername());
                                 waitListCourseIndexToAdd.setSlot(waitListCourseIndexToAdd.getSlot() - 1);
                                 courseManager.updateCourseIndexInfoCompoDB(waitListCourseIndexToAdd);
+                                System.out.println("An notification has been sent to "+tmpStudentStr+"@e.ntu.edu.sg");
                             }
                         }
                     }
