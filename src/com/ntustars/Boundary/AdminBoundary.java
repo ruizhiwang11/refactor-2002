@@ -3,6 +3,7 @@ package com.ntustars.Boundary;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 import java.util.concurrent.TimeUnit;
 
 import com.ntustars.controller.*;
@@ -462,6 +463,7 @@ public class AdminBoundary {
         //System.out.println(student.getMatricNumber());
         adminManager.addStudent(student);
         System.out.println("\nAdd student successfully!\n");
+        printAllStudentInDB();
         //add student information
     }
 
@@ -789,6 +791,7 @@ public class AdminBoundary {
             CourseManager courseManager = new CourseManager();
             courseManager.addCourseToDB(course);
             System.out.println("\nThe course have been added successfully.");
+            printAllCourseInDB();
 
 
         }
@@ -1316,5 +1319,59 @@ public class AdminBoundary {
 
             System.out.println("------------------------------------------------------\n");
         }
+    }
+    private void printAllStudentInDB(){
+        ArrayList studentInformation = AdminManager.loadDBStudentInformation();
+        System.out.println("--------------------------------------------------------------------------------------");
+        System.out.println("USERNAME               STUDENT NAME       MATRIC NUMBER       GENDER       NATIONALITY");
+        System.out.println("--------------------------------------------------------------------------------------");
+
+        for(int i=0; i<studentInformation.size();i++){
+            String st = (String)studentInformation.get(i);
+            StringTokenizer star = new StringTokenizer(st, ",");
+            System.out.print(String.format("%7s        ",star.nextToken().trim()));
+            String printPassword = star.nextToken().trim();
+            System.out.println(String.format("%20s          %9s        %6s         %s",star.nextToken().trim(),star.nextToken().trim(),star.nextToken().trim(),star.nextToken().trim()));
+        }
+        System.out.println("--------------------------------------------------------------------------------------\n");
+    }
+    private void printAllCourseInDB(){
+
+        System.out.println("--------------------------------------------------------------------------------------");
+        System.out.println("COURSE      SCHOOL      AU       INDEX     SLOT     TYPE      DAY      TIME");
+        System.out.println("--------------------------------------------------------------------------------------");
+        ArrayList<String> courseIDList = courseMgr.readAllCourseIDFromDB();
+        for(String courseID: courseIDList){
+            System.out.print(String.format("%6s      ", courseID));
+            Course course = courseMgr.readCourseByID(courseID);
+            System.out.print(String.format("%5s      ", course.getSchool()));
+            int j = 0;
+            for(CourseIndex courseIndex:course.getCourseIndices()){
+                if (j==0)
+                    System.out.print(String.format("  %d      ", courseIndex.getAu()));
+                else
+                    System.out.print(String.format("                                ", courseIndex.getAu()));
+                System.out.print(String.format("%6s      ", courseIndex.getIndex()));
+                System.out.print(String.format("%3d      ", courseIndex.getSlot()));
+                int i = 0;
+                for (CourseCompo courseCompo : courseIndex.getCourseCompos()){
+                    if(i==0){
+                        System.out.print(String.format("%3s      ", courseCompo.getCompoType()));
+                        System.out.print(String.format("%3s      ", courseCompo.getDay()));
+                        System.out.println(String.format("%3s      ", courseCompo.getTimeSlot()));
+                    }
+                    else{
+                        System.out.print(String.format("                                                     %3s      ", courseCompo.getCompoType()));
+                        System.out.print(String.format("%3s      ", courseCompo.getDay()));
+                        System.out.println(String.format("%3s      ", courseCompo.getTimeSlot()));
+                    }
+                    i++;
+                }
+                j++;
+                System.out.println("");
+            }
+        }
+
+        System.out.println("--------------------------------------------------------------------------------------\n");
     }
 }
