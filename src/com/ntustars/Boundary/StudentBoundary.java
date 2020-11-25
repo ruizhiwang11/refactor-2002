@@ -53,7 +53,7 @@ public class StudentBoundary {
      print Student function
      */
     private void printStudentFunction() {
-        System.out.println();
+        
         System.out.println("==============- CONSOLE - STUDENT MODE -==============");
         System.out.println("                       Main Menu             ");
         System.out.println("______________________________________________________");
