@@ -51,7 +51,8 @@ public class LoginBoundary  {
                 System.out.println("            *  Please login as STUDENT   *");
                 System.out.println("");
                 if(!DateTimeManager.isAccessible()){
-                    System.out.println("Not in the access period");
+                    System.out.println("Not in the access period. The system access period is:");
+                    System.out.println(DateTimeManager.readAccessPeriodFromDB());
                     System.exit(0);
                 }
                 userStr = loginfunction();
