@@ -1,6 +1,7 @@
 package com.ntustars.Boundary;
 
 import com.ntustars.controller.CourseManager;
+import com.ntustars.controller.EmailManager;
 import com.ntustars.controller.StudentManager;
 import com.ntustars.controller.WaitListManager;
 import com.ntustars.entity.Course;
@@ -300,6 +301,8 @@ public class StudentBoundary {
                                 waitListCourseIndexToAdd.setSlot(waitListCourseIndexToAdd.getSlot() - 1);
                                 courseManager.updateCourseIndexInfoCompoDB(waitListCourseIndexToAdd);
                                 System.out.println("An notification has been sent to "+tmpStudentStr+"@e.ntu.edu.sg");
+                                // EmailManager emailManager = new EmailManager(tmpStudentStr);
+                                // emailManager.sendNotificationsToStudent();
                             }
                         }
                     }
