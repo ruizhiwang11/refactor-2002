@@ -157,8 +157,7 @@ public class AdminBoundary {
                 System.out.println("......");
                 TimeUnit.SECONDS.sleep(1);
                 System.out.println("See you next time! Bye bye ;)\n");
-                // Exit ??????????
-                // System.exit(0);????????????????????????
+                System.exit(0);
         }
     }
     /**
@@ -183,20 +182,20 @@ public class AdminBoundary {
             }
             dateTimeSplit = startDateTime.split(" ");
             startDateTime = dateTimeSplit[0]+"-"+dateTimeSplit[1]+"-"+dateTimeSplit[2]+" "+dateTimeSplit[3]+":"+dateTimeSplit[4];
-            //System.out.println("////////"+startDateTime);
+
             startCal = DateTimeManager.convertAccessStringToCalendar(startDateTime);
-            //System.out.println("////////"+startCal);
+
             if(startCal  == null){
                 System.out.println("Invalid input! Please enter again!");
                 continue;
             }
 
-            System.out.println("\nPlease enter end date and time (yyyy MM dd HH mm):");
+            System.out.println("Please enter end date and time (yyyy MM dd HH mm):");
             endDateTime = sc.nextLine();
             while(!endDateTime.matches("^\\d{4} \\d{2} \\d{2} \\d{2} \\d{2}$"))
             {
                 System.out.println("Invalid input! Please enter again!");
-                System.out.println("\nPlease enter end date and time (yyyy MM dd HH mm):");
+                System.out.println("Please enter end date and time (yyyy MM dd HH mm):");
                 endDateTime = sc.nextLine();
             }
             dateTimeSplit = endDateTime.split(" ");
@@ -307,12 +306,12 @@ public class AdminBoundary {
         switch(choice){
             case 1:
                 do{
-                    System.out.println("\nPlease enter start date and time (yyyy MM dd hh mm):");
+                    System.out.println("Please enter start date and time (yyyy MM dd hh mm):");
                     startDateTime = sc.nextLine();
                     while(!startDateTime.matches("^\\d{4} \\d{2} \\d{2} \\d{2} \\d{2}$"))
                     {
                         System.out.println("Invalid input! Please enter again!");
-                        System.out.println("\nPlease enter start date and time (yyyy MM dd hh mm):");
+                        System.out.println("Please enter start date and time (yyyy MM dd hh mm):");
                         startDateTime = sc.nextLine();
                     }
                     dateTimeSplit = startDateTime.split(" ");
@@ -330,12 +329,12 @@ public class AdminBoundary {
                 break;
             case 2:
                 do{
-                    System.out.println("\nPlease enter end date and time (yyyy MM dd hh mm):");
+                    System.out.println("Please enter end date and time (yyyy MM dd hh mm):");
                     endDateTime = sc.nextLine();
                     while(!endDateTime.matches("^\\d{4} \\d{2} \\d{2} \\d{2} \\d{2}$"))
                     {
                         System.out.println("Invalid input! Please enter again!");
-                        System.out.println("\nPlease enter end date and time (yyyy MM dd hh mm):");
+                        System.out.println("Please enter end date and time (yyyy MM dd hh mm):");
                         endDateTime = sc.nextLine();
                     }
 
@@ -386,8 +385,7 @@ public class AdminBoundary {
 
 
         while((this.studentMgr.readSingleStudent(username).getName())!=null){
-            //while(adminManager.addStudent(student)==1){
-            //while(adminManager.addStudent(student)==0){
+
             System.out.println("Username already exist");
             System.out.println("\n***********What would you like to do next ?***********");
             System.out.println("                  Student Information          ");
@@ -411,12 +409,12 @@ public class AdminBoundary {
                     System.out.println("Invalid input! Please enter your choice:");
             } while ((choice < 0) || (choice > 2));
             if(choice == 1){
-                System.out.println("\nPlease enter the student's username:");
+                System.out.println("Please enter the student's username:");
                 username = sc.nextLine();
                 while(!username.matches("^[a-zA-Z0-9]+$"))
                 {
                     System.out.println("Invalid input! Please enter again!");
-                    System.out.println("\nPlease enter the student's username:");
+                    System.out.println("Please enter the student's username:");
                     username = sc.nextLine();
                 }
                 username = username.toUpperCase();
@@ -434,12 +432,12 @@ public class AdminBoundary {
         student.setUsername(username);
         System.out.println(username);
 
-        System.out.println("\nPlease enter "+username+"'s student name:");
+        System.out.println("Please enter "+username+"'s student name:");
         String name = sc.nextLine();
         while(!name.matches("^[ A-Za-z]+$"))
         {
             System.out.println("Invalid input! Please enter again!");
-            System.out.println("\nPlease enter the student's name:");
+            System.out.println("Please enter "+username+"'s student name:");
             name = sc.nextLine();
         }
         name = name.toUpperCase();
@@ -449,31 +447,31 @@ public class AdminBoundary {
         System.out.println("Please enter "+username+"'s password:");
         String password = sc.nextLine();
         student.setPassword(password);
-        System.out.println(password);
+
 
 
         //matric num
-        System.out.println("\nPlease enter "+username+"'s matric num (A1234567B):");
+        System.out.println("Please enter "+username+"'s matric num (A1234567B):");
         String matricNum = sc.nextLine();
         while(!matricNum.matches("[a-zA-Z]\\d{7}[a-zA-Z]"))
         {
             System.out.println("Invalid input! Please enter again!");
-            System.out.println("\nPlease enter "+username+"'s matric num (A1234567B):");
+            System.out.println("Please enter "+username+"'s matric num (A1234567B):");
             matricNum = sc.nextLine();
         }
         matricNum = matricNum.toUpperCase();
         student.setMatricNumber(matricNum);
 
         //gender
-        System.out.println("\nPlease enter "+username+"'s gender, M or F?");
+        System.out.println("Please enter "+username+"'s gender, M or F?");
         char genderChar = sc.next().charAt(0);
         while((Character.toUpperCase(genderChar)!='M')&&(Character.toUpperCase(genderChar)!='F'))
         {
             System.out.println("Invalid input! Please enter again!");
-            System.out.println("\nPlease enter "+username+"'s gender, M or F?");
+            System.out.println("Please enter "+username+"'s gender, M or F?");
             genderChar = sc.next().charAt(0);
         }
-        sc.nextLine();///////////////////////////////////////////////////////////////
+        sc.nextLine();
         genderChar = Character.toUpperCase(genderChar);
         if(genderChar=='F')
             gender = "FEMALE";
@@ -481,21 +479,21 @@ public class AdminBoundary {
         student.setGender(gender);
 
         //nationality
-        System.out.println("\nPlease enter "+username+"'s nationality :");
+        System.out.println("Please enter "+username+"'s nationality :");
         String nationality = sc.nextLine();
         while(!nationality.matches("^[a-zA-Z]*$"))
         {
             System.out.println("Invalid input! Please enter again!");
-            System.out.println("\nPlease enter "+username+"'s nationality: ");
+            System.out.println("Please enter "+username+"'s nationality: ");
             nationality = sc.nextLine();
         }
         nationality = nationality.toUpperCase();
 
         student.setNationality(nationality);
 
-        //System.out.println(student.getMatricNumber());
+
         adminManager.addStudent(student);
-        System.out.println("\nAdd student successfully!\n");
+        System.out.println("Add student successfully!\n");
         printAllStudentInDB();
         //add student information
     }
@@ -526,15 +524,15 @@ public class AdminBoundary {
             }
             username = username.toUpperCase();
         }
-        //???????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+
         else
             username = this.nameExist;
         newStudent = this.studentMgr.readSingleStudent(username);
         if(newStudent!=null) {
 
 
-            //newStudent = new Student();
-            //updStudentName = name;
+            
+            
             System.out.println("\n*****Which information would you like to update ?*****");
             System.out.println("              Update Student Information             ");
             System.out.println("______________________________________________________\n");
@@ -569,7 +567,7 @@ public class AdminBoundary {
                         String password = sc.nextLine();
 
                         newStudent.setPassword(password);
-                        System.out.println(password);
+                        
                         break;
                     }
 
@@ -586,7 +584,7 @@ public class AdminBoundary {
                         newName = newName.toUpperCase();
 
                         newStudent.setName(newName);
-                        System.out.println(newName);
+                        
                         break;
                     }
 
@@ -621,7 +619,7 @@ public class AdminBoundary {
                         if (genderChar == 'F')
                             gender = "FEMALE";
                         newStudent.setGender(gender);
-                        System.out.println(gender);
+                        
                         break;
                     }
 
@@ -638,7 +636,7 @@ public class AdminBoundary {
                         nationality = nationality.toUpperCase();
                         newStudent.setNationality(nationality);
 
-                        System.out.println(nationality);
+                        
                         break;
                     }
 
@@ -745,12 +743,12 @@ public class AdminBoundary {
         course.setCourseID(courseID);
 
 
-        System.out.println("\nPlease enter the school:");
+        System.out.println("Please enter the school:");
         String school = sc.nextLine();
         while(!school.matches("^[a-zA-Z]*$"))
         {
             System.out.println("Invalid input! Please enter again!");
-            System.out.println("\nPlease enter the school:");
+            System.out.println("Please enter the school:");
             school = sc.nextLine();
         }
         school = school.toUpperCase();
@@ -797,8 +795,8 @@ public class AdminBoundary {
 
         for(int i=0;i<noOfIndex;i++){
             courseIndex = this.addCourseIndex(courseID);
-            System.out.println("print AUAUAUAUA");
-            System.out.println(courseIndex.getAu());
+            
+            
             if (courseIndex==null)
                 return;
             courseCompoList = this.addCourseComp(courseType);
@@ -806,23 +804,23 @@ public class AdminBoundary {
                 courseIndex.addCourseCompo(courseComp);
             }
 
-            /*System.out.println("\nPlease enter the date and time for lecture:\n");
-            dateAndTime = this.dateTimeSelection();
-            courseIndex.addCourseCompo(new CourseCompo("LEC",dateAndTime.get(0),dateAndTime.get(1)));
-            if(courseType ==2){
-                System.out.println("\nPlease enter the date and time for tutorial:\n");
-                dateAndTime = this.dateTimeSelection();
-                courseIndex.addCourseCompo(new CourseCompo("TUT",dateAndTime.get(0),dateAndTime.get(1)));
-            }
-            else if (courseType ==3){
-                System.out.println("\nPlease enter the date and time for tutorial:\n");
-                dateAndTime = this.dateTimeSelection();
-                courseIndex.addCourseCompo(new CourseCompo("TUT",dateAndTime.get(0),dateAndTime.get(1)));
-                System.out.println("\nPlease enter the date and time for lab:\n");
-                dateAndTime = this.dateTimeSelection();
-                courseIndex.addCourseCompo(new CourseCompo("LAB",dateAndTime.get(0),dateAndTime.get(1)));
-            //course.addCourseIndex(courseIndex);
-            //CourseCompo courseComponent = this.addCourseComponent(courseType);
+            /*
+            
+            
+            
+                
+                
+                
+            
+            
+                
+               
+                
+                
+                
+                
+            
+            
         }*/
             course.addCourseIndex(courseIndex);
             CourseManager courseManager = new CourseManager();
@@ -844,7 +842,7 @@ public class AdminBoundary {
         CourseCompo courseCompo = new CourseCompo(null,null,null);
         System.out.println("\nPlease enter the date and time for lecture:\n");
         dateAndTime = this.dateTimeSelection();
-        //courseIndex.addCourseCompo(new CourseCompo("LEC",dateAndTime.get(0),dateAndTime.get(1)));
+        
         courseCompoList.add(new CourseCompo("LEC",dateAndTime.get(0),dateAndTime.get(1)));
         if(courseType ==2){
 
@@ -861,9 +859,9 @@ public class AdminBoundary {
             dateAndTime = this.dateTimeSelection();
             courseCompoList.add(new CourseCompo("LAB",dateAndTime.get(0),dateAndTime.get(1)));
 
-            //course.addCourseIndex(courseIndex);
+            
 
-            //CourseCompo courseComponent = this.addCourseComponent(courseType);
+            
         }
         return courseCompoList;
     }
@@ -905,8 +903,8 @@ public class AdminBoundary {
             System.out.println("|----------------------------------------------------|");
             System.out.println("______________________________________________________");
 
-            //sc.nextLine();
-            //sc.nextLine();
+            
+            
             int choice;
             do {
                 while (!sc.hasNextInt()) {
@@ -1129,15 +1127,15 @@ public class AdminBoundary {
                                 courseIndex.addCourseCompo(new CourseCompo("LEC", dateAndTime.get(0), dateAndTime.get(1)));
                                 if (courseType == 2) {
 
-                                    System.out.println("\nPlease enter the date and time for tutorial:\n");
+                                    System.out.println("Please enter the date and time for tutorial:\n");
                                     dateAndTime = this.dateTimeSelection();
                                     courseIndex.addCourseCompo(new CourseCompo("TUT", dateAndTime.get(0), dateAndTime.get(1)));
                                 } else if (courseType == 3) {
-                                    System.out.println("\nPlease enter the date and time for tutorial:\n");
+                                    System.out.println("Please enter the date and time for tutorial:\n");
                                     dateAndTime = this.dateTimeSelection();
                                     courseIndex.addCourseCompo(new CourseCompo("TUT", dateAndTime.get(0), dateAndTime.get(1)));
 
-                                    System.out.println("\nPlease enter the date and time for lab:\n");
+                                    System.out.println("Please enter the date and time for lab:\n");
                                     dateAndTime = this.dateTimeSelection();
                                     courseIndex.addCourseCompo(new CourseCompo("LAB", dateAndTime.get(0), dateAndTime.get(1)));
 
@@ -1286,11 +1284,11 @@ public class AdminBoundary {
                 continue;
             }
 
-            System.out.println("\nPlease enter end time (HH mm):");
+            System.out.println("Please enter end time (HH mm):");
             endTime = sc.nextLine();
             while (!endTime.matches("^\\d{2} \\d{2}$")) {
                 System.out.println("Invalid input! Please enter end time again!");
-                System.out.println("\nPlease enter end time (HH mm):");
+                System.out.println("Please enter end time (HH mm):");
                 endTime = sc.nextLine();
             }
             dateTimeSplit = endTime.split(" ");
