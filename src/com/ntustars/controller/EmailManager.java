@@ -33,7 +33,7 @@ public class EmailManager extends SendNotificatoin {
      * @param usernameTo email address of the receiver
      */
 	public EmailManager(String usernameTo) {
-		super("adminSCSE@e.ntu.edu.sg",usernameTo+ "@e.ntu.edu.sg");
+		super(username,usernameTo+ "@e.ntu.edu.sg");
 
 	}
 
@@ -55,7 +55,7 @@ public class EmailManager extends SendNotificatoin {
 
 		try {
 			MimeMessage message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(usernameFrom));
+			message.setFrom(new InternetAddress(username));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(usernameTo));
 			message.setSubject("Notification");  
 			message.setText("Hello, you have been registered to the course");  
