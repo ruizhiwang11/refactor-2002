@@ -54,32 +54,39 @@ public class AdminBoundary {
      get the admin menu
      */
     public void adminMenu() throws Exception {
-        System.out.println("===============- CONSOLE - ADMIN MODE -===============");
-        System.out.println("                       Main Menu             ");
-        System.out.println("______________________________________________________\n");
-        System.out.println("|1. Set Student Access Period                        |");
-        System.out.println("|2. Update Student Access Period                     |");
-        System.out.println("|3. Add A Student                                    |");
-        System.out.println("|4. Update A Student                                 |");
-        System.out.println("|5. Add A Course                                     |");
-        System.out.println("|6. Update A Course                                  |");
-        System.out.println("|7. Check Available Slot For an index number         |");
-        System.out.println("|8. Print student list by index number               |");
-        System.out.println("|9. Print student list by course                     |");
-        System.out.println("|----------------------------------------------------|");
-        System.out.println("|0. Exit                                             |");
-        System.out.println("|----------------------------------------------------|");
-        System.out.println("______________________________________________________");
+        int choice;
+        do{
+            System.out.println("===============- CONSOLE - ADMIN MODE -===============");
+            System.out.println("                       Main Menu             ");
+            System.out.println("______________________________________________________\n");
+            System.out.println("|1. Set Student Access Period                        |");
+            System.out.println("|2. Update Student Access Period                     |");
+            System.out.println("|3. Add A Student                                    |");
+            System.out.println("|4. Update A Student                                 |");
+            System.out.println("|5. Add A Course                                     |");
+            System.out.println("|6. Update A Course                                  |");
+            System.out.println("|7. Check Available Slot For an index number         |");
+            System.out.println("|8. Print student list by index number               |");
+            System.out.println("|9. Print student list by course                     |");
+            System.out.println("|----------------------------------------------------|");
+            System.out.println("|0. Exit                                             |");
+            System.out.println("|----------------------------------------------------|");
+            System.out.println("______________________________________________________");
 
-        System.out.println("\n\nWhat would you like to do?");
-        System.out.println("Please enter your choice:");
+            System.out.println("\n\nWhat would you like to do?");
+            System.out.println("Please enter your choice:");
+            choice = this.enterChoice();
+            try {
 
-        try {
-            this.adminMenuSelection(this.enterChoice());
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+                this.adminMenuSelection(choice);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            if(choice==0){
+                return;
+            }
+        }while(choice!=0);
     }
     /**
      enter the choice
@@ -108,47 +115,47 @@ public class AdminBoundary {
     private void adminMenuSelection(int choice) throws Exception {
         switch (choice) {
             case 1:
-                System.out.println("1. Set Student Access Period");
+                System.out.println("Selection 1. Set Student Access Period");
                 this.setStudAccPeriod();
                 break;
 
             case 2:
-                System.out.println("2. Update Student Access Period");
+                System.out.println("Selection 2. Update Student Access Period");
                 this.updStudAccPeriod();
                 break;
 
             case 3:
-                System.out.println("3. Add A Student");
+                System.out.println("Selection 3. Add A Student");
                 this.addStudentParticulars();
                 break;
 
             case 4:
-                System.out.println("4. Update A Student");
+                System.out.println("Selection 4. Update A Student");
                 this.updStudentParticulars();
                 break;
 
             case 5:
-                System.out.println("5. Add A Course");
+                System.out.println("Selection 5. Add A Course");
                 this.addCourse();
                 break;
 
             case 6:
-                System.out.println("6. Update A Course");
+                System.out.println("Selection 6. Update A Course");
                 this.updCourse();
                 break;
 
             case 7:
-                System.out.println("7. Check Available Slot For an index number");
+                System.out.println("Selection 7. Check Available Slot For an index number");
                 this.checkVacancy();
                 break;
 
             case 8:
-                System.out.println("8. Print student list by index ");
+                System.out.println("Selection 8. Print student list by index ");
                 this.printStudListByIndex();
                 break;
 
             case 9:
-                System.out.println("9. Print student list by course ");
+                System.out.println("Selection 9. Print student list by course ");
                 this.printStudListByCourse();
                 break;
 
@@ -430,7 +437,7 @@ public class AdminBoundary {
         }
 
         student.setUsername(username);
-        System.out.println(username);
+        
 
         System.out.println("Please enter "+username+"'s student name:");
         String name = sc.nextLine();
