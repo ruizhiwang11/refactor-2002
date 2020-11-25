@@ -269,6 +269,20 @@ public class StudentBoundary {
                     courseIndexToAdd.setSlot(courseIndexToAdd.getSlot() - 1);
                     courseManager.updateCourseIndexInfoCompoDB(courseIndexToAdd);
                     System.out.println("You have successfully added " + courseID + ": " + courseIndexToAddStr);
+              
+                    System.out.println("Your current timetable:" );
+                    ArrayList<String> indexArrayList = studentManager.readSingleStudent(userName).getCourseIndexList();
+                    for(String indexID: indexArrayList){
+                        String getCourID = courseManager.getCourseIDbyCourseIndex(indexID);
+                        CourseIndex courseIndexIndex = courseManager.readCourseIndexbyID(indexID);
+                        for(CourseCompo courseCompopo: courseIndexIndex.getCourseCompos()){
+                            System.out.print(getCourID+"\t");
+                            System.out.print(indexID+"\t");
+                            System.out.print(courseCompopo.getCompoType()+"\t");
+                            System.out.print(courseCompopo.getDay()+"\t");
+                            System.out.println(courseCompopo.getTimeSlot());
+                        }
+                    }
                     break;
                 case 2:
                     System.out.println("Select 2. Drop Course");
