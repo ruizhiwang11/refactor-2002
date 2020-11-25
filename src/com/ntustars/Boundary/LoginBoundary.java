@@ -47,7 +47,7 @@ public class LoginBoundary  {
         String userGroup = sc.next();
         switch (userGroup){
             case "1":
-                System.out.println("");
+                
                 System.out.println("            *  Please login as STUDENT   *");
                 System.out.println("");
                 if(!DateTimeManager.isAccessible()){
