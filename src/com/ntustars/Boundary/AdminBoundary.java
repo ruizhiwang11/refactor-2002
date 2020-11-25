@@ -385,7 +385,7 @@ public class AdminBoundary {
         username = username.toUpperCase();
 
 
-        while((this.studentMgr.readSingleStudent(username))!=null){
+        while((this.studentMgr.readSingleStudent(username).getName())!=null){
             //while(adminManager.addStudent(student)==1){
             //while(adminManager.addStudent(student)==0){
             System.out.println("Username already exist");
